@@ -38,6 +38,7 @@ $ yarn start or npm run start
 ## 팀 정보 (Team Information)
 - Park Yujin (eugene5802@gmail.com), Github ID: LatteHorse
 - Lee Seung Hyo (spinelee2002@gmail.com), Github ID: AstroHyo
+- Park JuHwan (standardjuhwan@gamil.com), Github ID: Jkworldchampion
 
 ## 저작권 및 사용권 정보 (Copyleft / End User License) -> 추후 확정 예정
  * [MIT](https://github.com/osam2020-WEB/Sample-ProjectName-TeamName/blob/master/license.md)
