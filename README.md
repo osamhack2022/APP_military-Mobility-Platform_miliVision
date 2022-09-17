@@ -44,13 +44,81 @@ $ git clone git주소
 $ yarn or npm install
 $ yarn start or npm run start
 ```
- 
+
 ## 팀 정보 (Team Information)
 - Park Yujin (eugene5802@gmail.com), Github ID: LatteHorse
 - Lee Seung Hyo (spinelee2002@gmail.com), Github ID: AstroHyo
-- Park JuHwan (standardjuhwan@gamil.com), Github ID: Jkworldchampion
+- Park JuHwan (standardjuhwan@gmail.com), Github ID: Jkworldchampion
 - Park Sehwan (sehwan505@gmail.com), Github ID: sehwan505
 - Park Cheolwan (cheolwan.park552@gmail.com), Github ID: CodingVillain
+
+<table width="800">
+<thead>
+<tr>
+<th width="100" align="center">이름</th>
+<th width="250" align="center">역할</th>
+<th width="150" align="center">Github 계정</th>
+<th width="300" align="center">E-mail</th>
+</tr> 
+</thead>
+
+<tbody>
+<tr>
+<td width="100" align="center">박유진</td>
+<td width="250" align="center">팀장(PM), UI/UX 디자인</td>
+<td width="150" align="center">	
+	<a href="https://github.com/LatteHorse" target="_blank"><img src="https://img.shields.io/badge/LatteHorse-655ced?style=social&logo=github"/></a>
+</td>
+<td width="300" align="center">
+	<a href="mailto:eugene5802@gmail.com">eugene5802@gmail.com</a>
+</td>
+</tr>
+	
+<tr>
+<td width="100" align="center">박철완</td>
+<td width="250" align="center">프론트엔드(Front-end) 개발</td>
+<td width="150" align="center">	
+	<a href="https://github.com/CodingVillain" target="_blank"><img src="https://img.shields.io/badge/CodingVillain-655ced?style=social&logo=github"/></a>
+</td>
+<td width="300" align="center">
+	<a href="mailto:cheolwan.park552@gmail.com">cheolwan.park552@gmail.com</a>
+</td>
+</tr>
+
+<tr>
+<td width="100" align="center">이승효</td>
+<td width="250" align="center">프론트엔드(Front-end) 개발</td>
+<td width="150" align="center">	
+	<a href="https://github.com/AstroHyo" target="_blank"><img src="https://img.shields.io/badge/AstroHyo-655ced?style=social&logo=github"/></a>
+</td>
+<td width="300" align="center">
+	<a href="mailto:spinelee2002@gmail.com">spinelee2002@gmail.com</a>
+</td>
+</tr>
+	
+<tr>
+<td width="100" align="center">박세환</td>
+<td width="250" align="center">백엔드(Back-end) 개발</td>
+<td width="150" align="center">	
+	<a href="https://github.com/sehwan505" target="_blank"><img src="https://img.shields.io/badge/sehwan505-655ced?style=social&logo=github"/></a>
+</td>
+<td width="300" align="center">
+	<a href="mailto:sehwan505@gmail.com">sehwan505@gmail.com</a>
+</td>
+</tr>
+
+<tr>
+<td width="100" align="center">박주환</td>
+<td width="250" align="center">백엔드(Back-end) 개발</td>
+<td width="150" align="center">	
+	<a href="https://github.com/Jkworldchampion" target="_blank"><img src="https://img.shields.io/badge/Jkworldchampion-655ced?style=social&logo=github"/></a>
+</td>
+<td width="300" align="center">
+	<a href="mailto:standardjuhwan@gmail.com">standardjuhwan@gmail.com</a>
+</td>
+</tr>
+</tbody>
+</table>
 
 ## 저작권 및 사용권 정보 (Copyleft / End User License) -> 추후 확정 예정
  * [MIT](https://github.com/osam2020-WEB/Sample-ProjectName-TeamName/blob/master/license.md)
