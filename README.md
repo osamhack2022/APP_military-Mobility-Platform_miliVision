@@ -1,6 +1,15 @@
 # Military Mobility Platform (군 모빌리티 플랫폼)
 프로젝트명 또는 프로젝트 로고 이미지 **(택1)**
 
+# 목차 (Table of contents)
+- [프로젝트 소개](#프로젝트-소개)
+- [기능 설명](#기능-설명)
+- [App 구성 및 필수 조건 안내](#app-구성-및-필수-조건-안내)
+- [기술 스택](#기술-스택)
+- [설치 안내](#설치-안내)
+- [팀 정보](#팀-정보)
+- [저작권 및 사용권 정보](#저작권-및-사용권-정보)
+
 ## 프로젝트 소개
 - 스마트폰 app을 통해 군 이동수단(차량)에 대한 정보를 실시간으로 공유하고 관리할 수 있는 플랫폼 제작
 
@@ -13,11 +22,11 @@
  - 군 이동수단 관련 사고접수 및 구난차량 요청 / 응급환자 이송 요청
  - 사용자, 운행자, 수송업무담당자들의 커뮤니티 형성
 
-## App 구성 / 필수 조건 안내 (Prerequisites)
+## App 구성 및 필수 조건 안내
 * 크로스 플랫폼: iOS, Android 사용 가능
 * 권장: 
 
-## 기술 스택 (Technique Used)
+## 기술 스택
 ### 📲 Front-end
 
 | Name     | Badge                                                                                                           | Version        | Website               |
@@ -38,14 +47,14 @@
 | -------- | --------------------------------------------------------------------------------------------------------- | ----------------- | --------------------- |
 | MariaDB  | ![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)  | undefined         | https://mariadb.org/  |
 
-## 설치 안내 (Installation Process) -> 배포 후 작성 예정
+## 설치 안내
 ```bash
 $ git clone git주소
 $ yarn or npm install
 $ yarn start or npm run start
 ```
 
-## 팀 정보 (Team Information)
+## 팀 정보
 - Park Yujin (eugene5802@gmail.com), Github ID: LatteHorse
 - Lee Seung Hyo (spinelee2002@gmail.com), Github ID: AstroHyo
 - Park JuHwan (standardjuhwan@gmail.com), Github ID: Jkworldchampion
@@ -120,8 +129,8 @@ $ yarn start or npm run start
 </tbody>
 </table>
 
-## 저작권 및 사용권 정보 (Copyleft / End User License) -> 추후 확정 예정
- * [MIT](https://github.com/osam2020-WEB/Sample-ProjectName-TeamName/blob/master/license.md)
+## 저작권 및 사용권 정보
+ * [MIT](https://github.com/osamhack2022/APP_Military-Mobility-Platform_TeamName/LICENSE)
 
 This project is licensed under the terms of the MIT license.
 
