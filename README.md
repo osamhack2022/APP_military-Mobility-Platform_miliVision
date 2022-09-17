@@ -17,16 +17,18 @@
 * 크로스 플랫폼: iOS, Android 사용 가능
 * 권장: 
 
-## 기술 스택 (Technique Used) 
+## 기술 스택 (Technique Used)
+### 📲 Front-end
+
+| Name     | Badge                                                                                                           | Version        | Website               |
+| -------- | --------------------------------------------------------------------------------------------------------------- | -------------  | --------------------- |
+| Dart     | ![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)          | undefined      | https://dart.dev/     |
+| Flutter  | ![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white) | undefined      | https://flutter.dev/  |
+
 ### Server(back-end)
  - 언어: Python 
  - 프레임워크: Django
  - DBMS: Maria DB
- 
-### Front-end
- - 언어: Dart
- - 프레임워크: Flutter
- - 기타 사용한 라이브러리: 
  
 ### 💾 Databases
 
