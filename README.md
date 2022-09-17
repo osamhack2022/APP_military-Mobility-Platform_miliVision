@@ -27,6 +27,12 @@
  - 언어: Dart
  - 프레임워크: Flutter
  - 기타 사용한 라이브러리: 
+ 
+### 💾 Databases
+
+| Name     | Badge                                                                                                     | Version           | Website               |
+| -------- | --------------------------------------------------------------------------------------------------------- | ----------------- | --------------------- |
+| MariaDB  | ![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)  | undefined         | https://mariadb.org/  |
 
 ## 설치 안내 (Installation Process) -> 배포 후 작성 예정
 ```bash
