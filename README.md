@@ -130,7 +130,7 @@ $ yarn start or npm run start
 </table>
 
 ## 저작권 및 사용권 정보
- * [MIT](https://github.com/osamhack2022/APP_Military-Mobility-Platform_TeamName/LICENSE)
+ * [MIT](https://github.com/osamhack2022/APP_Military-Mobility-Platform_TeamName/blob/main/LICENSE)
 
 This project is licensed under the terms of the MIT license.
 
