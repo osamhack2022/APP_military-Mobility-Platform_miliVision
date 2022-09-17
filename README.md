@@ -25,10 +25,12 @@
 | Dart     | ![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)          | undefined      | https://dart.dev/     |
 | Flutter  | ![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white) | undefined      | https://flutter.dev/  |
 
-### Server(back-end)
- - 언어: Python 
- - 프레임워크: Django
- - DBMS: Maria DB
+### 🖥️ Back-end
+
+| Name       | Badge                                                                                                          | Version    | Website                  |
+| ---------- | -------------------------------------------------------------------------------------------------------------- | ---------- | ------------------------ |
+| Python     | ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)         | undefined  | https://www.python.org/  |
+| DjangoREST | ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray) | undefined | https://www.django-rest-framework.org/ |
  
 ### 💾 Databases
 
