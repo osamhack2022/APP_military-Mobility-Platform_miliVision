@@ -1,5 +1,8 @@
 # Military Mobility Platform (군 모빌리티 플랫폼)
-프로젝트명 또는 프로젝트 로고 이미지 **(택1)**
+<br>
+<div align="center">
+    <img src="logo.png" alt="군 모빌리티 플랫폼 로고" width="300" height="300">
+</div>
 
 # 목차
 - [프로젝트 소개](#프로젝트-소개)
