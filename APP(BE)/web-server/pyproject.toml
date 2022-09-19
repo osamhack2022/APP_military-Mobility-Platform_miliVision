@@ -16,6 +16,7 @@ pytest-asyncio = "0.16.0"
 pytest-django = "4.5.2"
 Pillow = "8.4.0"
 djangorestframework-jwt = "1.11.0"
+mysqlclient = "^2.1.1"
 
 
 [build-system]
