@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import permissions, status
 from .utils import get_user, get_notification
 from .serializers import NotificationSerializer
+from drf_yasg.utils import swagger_auto_schema
 
 # ws test - 1
 def index(request):
@@ -18,6 +20,7 @@ class notification(APIView):
     def get(self, request):
         return Response(get_notification())
     
+    @swagger_auto_schema(request_body=NotificationSerializer)
     def post(self, request):
         serializer = NotificationSerializer(data=request.data)
         if serializer.is_valid():

@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ["34.105.35.232"]
 INSTALLED_APPS = [
     'channels',
     'tms',
-    # 'drf_yasg',
+    'drf_yasg',
     'rest_framework',
     
     'django.contrib.admin',

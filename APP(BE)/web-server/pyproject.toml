@@ -18,6 +18,7 @@ Pillow = "8.4.0"
 djangorestframework-jwt = "1.11.0"
 mysqlclient = "^2.1.1"
 daphne = "^3.0.2"
+drf-yasg = "^1.21.3"
 
 
 [build-system]

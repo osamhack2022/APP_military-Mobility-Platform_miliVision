@@ -18,7 +18,7 @@ def send_update(sender, instance, created, **kwargs):
         print("New saving in DB")
         channel_layer=get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            "battalion", {
+            "battalion_1", { #테스트용 group = 1
                 "type": "notify",
                 "data": serializer.data
             }
@@ -27,7 +27,8 @@ def send_update(sender, instance, created, **kwargs):
 class NotificationConsumer(WebsocketConsumer):
     def connect(self):
         self.battalion = self.scope['url_route']['kwargs']['battalion'] #url에서 값 가져오기
-        self.group_name = 'center_%s' % self.battalion
+        self.group_name = 'battalion_%s' % self.battalion
+        print(self.group_name)
 
         async_to_sync(self.channel_layer.group_add)( # group 참여
             self.group_name,
