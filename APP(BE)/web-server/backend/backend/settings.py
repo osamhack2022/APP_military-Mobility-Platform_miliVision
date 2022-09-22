@@ -31,14 +31,17 @@ ALLOWED_HOSTS = ["34.105.35.232"]
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'tms',
+    # 'drf_yasg',
+    'rest_framework',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'tms',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +55,29 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'backend.urls'
+
+REST_FRAMEWORK = {  # drf 설정
+    #   'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    #   'PAGE_SIZE': 5,
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+        "rest_framework.permissions.AllowAny",
+    ),
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        # "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
+        #'rest_framework.authentication.TokenAuthentication',
+        #   'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+    ],
+    "DEFAULT_PARSER_CLASSES": [
+        "rest_framework.parsers.JSONParser",
+        "rest_framework.parsers.FormParser",
+        "rest_framework.parsers.MultiPartParser",
+    ],
+}
 
 TEMPLATES = [
     {
@@ -70,6 +96,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
+ASGI_APPLICATION = 'backend.asgi.application'
 
 
 # Database
@@ -84,6 +111,15 @@ DATABASES = {
         'HOST': '34.105.35.232',
         'PORT': '3306'
     }
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("34.105.35.232", 6379)],
+        },
+    },
 }
 
 
@@ -105,6 +141,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'tms.Users'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
