@@ -1,9 +1,10 @@
-from .models import Users, Notification
+from .models import Notification
+from login.models import User
 from .serializers import NotificationSerializer
 
 def get_user(user_id):
     try:
-        return Users.objects.get(id=user_id)
+        return User.objects.get(id=user_id)
     except:
         return AnonymousUser()
 
