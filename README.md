@@ -3,6 +3,9 @@
 <div align="center">
     <img src="logo.png" alt="군 모빌리티 플랫폼 로고" width="300" height="300">
 </div>
+<center><h3>군 모빌리티 플랫폼 : Military Mobility Platform</h3></center>
+
+><center><h3>언제 어디서나 실시간으로 군 이동수단을 공유하는 플랫폼</h3></center>
 
 # 목차
 1. [프로젝트 소개](#프로젝트-소개)
