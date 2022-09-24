@@ -107,12 +107,6 @@ $ yarn start or npm run start
 [(Back to top)](#목차)
 
 ## 팀 정보
-- Park Yujin (eugene5802@gmail.com), Github ID: LatteHorse
-- Lee Seung Hyo (spinelee2002@gmail.com), Github ID: AstroHyo
-- Park JuHwan (standardjuhwan@gmail.com), Github ID: Jkworldchampion
-- Park Sehwan (sehwan505@gmail.com), Github ID: sehwan505
-- Park Cheolwan (cheolwan.park552@gmail.com), Github ID: CodingVillain
-
 <table width="800">
 <thead>
 <tr>
