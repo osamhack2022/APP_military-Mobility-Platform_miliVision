@@ -19,6 +19,7 @@
 [(Back to top)](#목차)
 
 ## 기능 설명
+ - [Figma 프로젝트](https://www.figma.com/file/UTHVGHLnpkpmhcldx03Cjj/Military-Mobility-Platform?node-id=0%3A1)
  - 실시간 군 이동수단 배차 신청/승인
  - 군 이동수단의 입체적인 관리
  - 운전병 마일리지 전산화
