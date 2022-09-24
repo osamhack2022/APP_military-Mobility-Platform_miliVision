@@ -23,7 +23,7 @@ class NavigatedHome extends StatelessWidget {
       leading: const IconButton(onPressed: null, icon: Icon(Icons.menu)),
       title: Consumer<TitleProvider>(
           builder: (context, value, child) =>
-              Text(value.title, style: theme.primaryTextTheme.titleMedium)),
+              Text(value.title, style: theme.textTheme.titleMedium)),
       actions: const [
         IconButton(onPressed: null, icon: Icon(Icons.notifications)),
         IconButton(onPressed: null, icon: Icon(Icons.share)),
