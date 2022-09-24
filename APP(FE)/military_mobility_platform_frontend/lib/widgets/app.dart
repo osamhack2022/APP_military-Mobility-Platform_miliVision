@@ -13,7 +13,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: theme,
+      theme: kAppTheme,
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => NavigationProvider()),
