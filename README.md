@@ -37,7 +37,7 @@
   </tr>
 </table>
 <br>
- ### 2. 군 이동수단의 입체적인 관리
+ ### 2. 군 이동수단의 입체적인 
 <table>
   <tr>
     <td align="center" width="50%"><img src="images/img02.png" alt="사고접수" width="195" height="422" /></td>
