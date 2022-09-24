@@ -74,6 +74,7 @@
 ```
 https://drive.google.com/file/d/11RziUgbjisyE4HGthM9cjbLjWzOdIjM7/view?usp=sharing
 ```
+<[draw.io바로가기](https://drive.google.com/file/d/11RziUgbjisyE4HGthM9cjbLjWzOdIjM7/view?usp=sharing)>
 
 [(Back to top)](#목차)
 
