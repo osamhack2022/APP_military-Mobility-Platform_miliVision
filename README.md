@@ -10,13 +10,12 @@
 # 목차
 1. [프로젝트 소개](#프로젝트-소개)
 2. [기능 설명](#기능-설명)
-3. [DataBase 구조 및 ERD](#DataBase-구조-및-ERD)
-4. [App 구성 및 필수 조건 안내](#app-구성-및-필수-조건-안내)
-5. [기술 스택](#기술-스택)
-6. [설치 안내](#설치-안내)
-7. [프로젝트 관리 및 개발 문서](#프로젝트-관리-및-개발-문서)
-8. [팀 정보](#팀-정보)
-9. [저작권 및 사용권 정보](#저작권-및-사용권-정보)
+3. [App 구성 및 필수 조건 안내](#app-구성-및-필수-조건-안내)
+4. [기술 스택](#기술-스택)
+5. [설치 안내](#설치-안내)
+6. [프로젝트 관리 및 개발 문서](#프로젝트-관리-및-개발-문서)
+7. [팀 정보](#팀-정보)
+8. [저작권 및 사용권 정보](#저작권-및-사용권-정보)
 
 ## 프로젝트 소개
 - 스마트폰 app을 통해 군 이동수단(차량)에 대한 정보를 실시간으로 공유하고 관리할 수 있는 플랫폼 제작
@@ -70,14 +69,6 @@
 
 [(Back to top)](#목차)
 
-## DataBase 구조 및 ERD
-```
-https://drive.google.com/file/d/11RziUgbjisyE4HGthM9cjbLjWzOdIjM7/view?usp=sharing
-```
-[db.draw.io 바로가기](https://drive.google.com/file/d/11RziUgbjisyE4HGthM9cjbLjWzOdIjM7/view?usp=sharing)
-
-[(Back to top)](#목차)
-
 ## App 구성 및 필수 조건 안내
 * 크로스 플랫폼: iOS, Android 사용 가능
 * 권장: 
@@ -118,6 +109,7 @@ $ yarn start or npm run start
 
 ## 프로젝트 관리 및 개발 문서
  - [Figma 프로젝트 화면설계서 링크](https://www.figma.com/file/UTHVGHLnpkpmhcldx03Cjj/Military-Mobility-Platform?node-id=0%3A1)
+ - [Database 설계 Diagram 링크](https://drive.google.com/file/d/11RziUgbjisyE4HGthM9cjbLjWzOdIjM7/view?usp=sharing)
 
 [(Back to top)](#목차)
 
