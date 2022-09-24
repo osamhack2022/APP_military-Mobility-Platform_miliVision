@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:military_mobility_platform_frontend/constatns/theme.dart';
+import 'package:military_mobility_platform_frontend/provider/title.dart';
+import 'package:provider/provider.dart';
+import 'package:military_mobility_platform_frontend/provider/navigation.dart';
+import 'package:military_mobility_platform_frontend/widgets/navigated_home.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -8,23 +13,15 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: theme,
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => NavigationProvider()),
+          ChangeNotifierProvider(create: (context) => TitleProvider()),
+        ],
+        child: NavigatedHome(),
       ),
-      home: const Home(),
-    );
-  }
-}
-
-class Home extends StatelessWidget {
-  const Home({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Military Mobility Platform')),
-      body: const Center(
-        child: Text("Home"),
-      ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
