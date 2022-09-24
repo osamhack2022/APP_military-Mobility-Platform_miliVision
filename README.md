@@ -71,9 +71,11 @@
 [(Back to top)](#목차)
 
 ## DataBase 구조 및 ERD
+```
+https://drive.google.com/file/d/11RziUgbjisyE4HGthM9cjbLjWzOdIjM7/view?usp=sharing
+```
 
-
-
+[(Back to top)](#목차)
 
 ## App 구성 및 필수 조건 안내
 * 크로스 플랫폼: iOS, Android 사용 가능
