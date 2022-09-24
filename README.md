@@ -13,6 +13,7 @@
 3. [App 구성 및 필수 조건 안내](#app-구성-및-필수-조건-안내)
 4. [기술 스택](#기술-스택)
 5. [설치 안내](#설치-안내)
+6. [프로젝트 관리 및 개발 문서]
 6. [팀 정보](#팀-정보)
 7. [저작권 및 사용권 정보](#저작권-및-사용권-정보)
 
@@ -22,7 +23,7 @@
 [(Back to top)](#목차)
 
 ## 기능 설명
- - [Figma 프로젝트 화면설계서 링크](https://www.figma.com/file/UTHVGHLnpkpmhcldx03Cjj/Military-Mobility-Platform?node-id=0%3A1)
+
  ### 1. 실시간 군 이동수단 배차 신청/승인
  
 <table>
@@ -103,6 +104,11 @@ $ git clone git주소
 $ yarn or npm install
 $ yarn start or npm run start
 ```
+
+[(Back to top)](#목차)
+
+## 프로젝트 관리 및 개발 문서
+ - [Figma 프로젝트 화면설계서 링크](https://www.figma.com/file/UTHVGHLnpkpmhcldx03Cjj/Military-Mobility-Platform?node-id=0%3A1)
 
 [(Back to top)](#목차)
 
