@@ -20,7 +20,7 @@
 
 ## 기능 설명
  - [Figma 프로젝트 화면설계서 링크](https://www.figma.com/file/UTHVGHLnpkpmhcldx03Cjj/Military-Mobility-Platform?node-id=0%3A1)
- ### 1. 배차 신청
+ ### 1. 실시간 군 이동수단 배차 신청/승인
 <table>
   <tr>
     <td><img src="images/img01.png" alt="배차신청" /></td>
@@ -30,6 +30,7 @@
       행선지가 같거나 시간을 분배해서 차량을 사용할 수 있다면 효율적으로 이용할 수 있습니다.</td>
   </tr>
 </table>
+<br>
  - 실시간 군 이동수단 배차 신청/승인
  - 군 이동수단의 입체적인 관리
  - 운전병 마일리지 전산화
