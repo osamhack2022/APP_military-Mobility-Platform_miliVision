@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:military_mobility_platform_frontend/constatns/locations.dart';
 import 'package:military_mobility_platform_frontend/provider/mobility_request.dart';
 import 'package:provider/provider.dart';
@@ -8,9 +9,14 @@ class LocationSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const buttonStyle = ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll(Colors.transparent));
+    final buttonTextStyle =
+        GoogleFonts.roboto(fontSize: 40.0, color: Colors.black);
+
     final mobilityRequestProvider =
         Provider.of<MobilityRequestProvider>(context);
-    final theme = Theme.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -18,13 +24,14 @@ class LocationSection extends StatelessWidget {
         Column(children: [
           const Text('출발'),
           TextButton(
+              style: buttonStyle,
               onPressed: () => showModalBottomSheet(
                   context: context,
                   builder: (context) => LocationSelectModal((location) =>
                       mobilityRequestProvider.setLocations(
                           departure: location))),
               child: Text(mobilityRequestProvider.departure,
-                  style: theme.textTheme.bodyLarge))
+                  style: buttonTextStyle))
         ]),
         const Padding(
             padding: EdgeInsets.only(bottom: 10.0),
@@ -32,13 +39,14 @@ class LocationSection extends StatelessWidget {
         Column(children: [
           const Text('도착'),
           TextButton(
+              style: buttonStyle,
               onPressed: () => showModalBottomSheet(
                   context: context,
                   builder: (context) => LocationSelectModal((location) =>
                       mobilityRequestProvider.setLocations(
                           destination: location))),
               child: Text(mobilityRequestProvider.destination,
-                  style: theme.textTheme.bodyLarge))
+                  style: buttonTextStyle))
         ]),
       ],
     );

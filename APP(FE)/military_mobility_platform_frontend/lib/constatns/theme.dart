@@ -17,6 +17,14 @@ final kAppTheme = ThemeData(
         labelLarge: GoogleFonts.roboto(color: Colors.black, fontSize: 27.0),
         labelMedium: GoogleFonts.roboto(color: Colors.black, fontSize: 12.0),
         labelSmall: GoogleFonts.roboto(color: Colors.black, fontSize: 8.0)),
+    buttonTheme: const ButtonThemeData(
+        buttonColor: Color(0xFF6200EE),
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 18)),
+    elevatedButtonTheme: const ElevatedButtonThemeData(
+        style: ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(Color(0xFF6200EE)),
+            padding: MaterialStatePropertyAll(
+                EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0)))),
     appBarTheme: const AppBarTheme(
         backgroundColor: Color(0xFF6200EE),
         iconTheme: IconThemeData(

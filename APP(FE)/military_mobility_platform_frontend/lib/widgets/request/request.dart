@@ -40,6 +40,7 @@ class RequestTab extends StatelessWidget {
   }
 
   Widget _buildRequestButton(BuildContext context) {
-    return const TextButton(onPressed: null, child: Text('배차 가능 차량 검색'));
+    return ElevatedButton(
+        onPressed: () => print('clicked'), child: const Text('배차 가능 차량 검색'));
   }
 }
