@@ -32,19 +32,14 @@ class RequestTab extends StatelessWidget {
   }
 
   Widget _buildDivider(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
+    return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
         child: Divider(
           thickness: 1.0,
-          color: theme.dividerColor,
         ));
   }
 
   Widget _buildRequestButton(BuildContext context) {
-    final theme = Theme.of(context);
-    return TextButton(
-        onPressed: null,
-        child: Text('배차 가능 차량 검색', style: theme.textTheme.bodyMedium));
+    return const TextButton(onPressed: null, child: Text('배차 가능 차량 검색'));
   }
 }

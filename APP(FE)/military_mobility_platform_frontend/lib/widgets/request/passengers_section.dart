@@ -15,12 +15,9 @@ class PassengersSection extends StatelessWidget {
     final seniorPassengers = mobilityRequestProvider.seniorPassengers;
     final passengers = mobilityRequestProvider.passengers;
     final summary = '운전자 $drivers명, 선탑자 $seniorPassengers명, 탑승자 $passengers명';
-    final theme = Theme.of(context);
     return Column(children: [
-      Text('탑승인원', style: theme.textTheme.bodyMedium),
-      Padding(
-          padding: const EdgeInsets.only(top: 30.0),
-          child: Text(summary, style: theme.textTheme.bodyMedium)),
+      const Text('탑승인원'),
+      Padding(padding: const EdgeInsets.only(top: 30.0), child: Text(summary)),
       Padding(
           padding: const EdgeInsets.only(top: 15),
           child: IconButton(
@@ -92,13 +89,12 @@ class PassengersSelectModalState extends State<PassengersSelectModal> {
 
   Widget _buildNumberField(String name,
       {required int Function() getter, required void Function(int) setter}) {
-    final theme = Theme.of(context);
     return Row(children: [
-      Text(name, style: theme.textTheme.bodyMedium),
+      Text(name),
       IconButton(
           onPressed: () => setter(max(0, getter() - 1)),
           icon: const Icon(Icons.remove)),
-      Text('${getter()}', style: theme.textTheme.bodyMedium),
+      Text('${getter()}'),
       IconButton(
           onPressed: () => setter(getter() + 1), icon: const Icon(Icons.add)),
     ]);

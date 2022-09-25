@@ -16,7 +16,7 @@ class LocationSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Column(children: [
-          Text('출발', style: theme.textTheme.bodyMedium),
+          const Text('출발'),
           TextButton(
               onPressed: () => showModalBottomSheet(
                   context: context,
@@ -30,7 +30,7 @@ class LocationSection extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 10.0),
             child: Icon(Icons.navigate_next, size: 30.0)),
         Column(children: [
-          Text('도착', style: theme.textTheme.bodyMedium),
+          const Text('도착'),
           TextButton(
               onPressed: () => showModalBottomSheet(
                   context: context,

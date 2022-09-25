@@ -17,33 +17,23 @@ class NavigatedHome extends StatelessWidget {
   }
 
   AppBar _buildAppBar(BuildContext context) {
-    final theme = Theme.of(context);
     return AppBar(
-      leading: const IconButton(onPressed: null, icon: Icon(Icons.menu)),
-      title: Consumer<TitleProvider>(
-          builder: (context, value, child) =>
-              Text(value.title, style: theme.textTheme.titleMedium)),
-      actions: const [
-        IconButton(onPressed: null, icon: Icon(Icons.notifications)),
-        IconButton(onPressed: null, icon: Icon(Icons.share)),
-        IconButton(onPressed: null, icon: Icon(Icons.search)),
-      ],
-      backgroundColor: theme.appBarTheme.backgroundColor,
-      iconTheme: theme.appBarTheme.iconTheme,
-      actionsIconTheme: theme.appBarTheme.actionsIconTheme,
-    );
+        leading: const IconButton(onPressed: null, icon: Icon(Icons.menu)),
+        title: Consumer<TitleProvider>(
+            builder: (context, value, child) => Text(value.title)),
+        actions: const [
+          IconButton(onPressed: null, icon: Icon(Icons.notifications)),
+          IconButton(onPressed: null, icon: Icon(Icons.share)),
+          IconButton(onPressed: null, icon: Icon(Icons.search)),
+        ]);
   }
 
   Widget _buildNavigationBar(BuildContext context) {
     final navigationProvider = Provider.of<NavigationProvider>(context);
-    final theme = Theme.of(context).bottomNavigationBarTheme;
     return BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: navigationProvider.navigationBarOptions,
         currentIndex: navigationProvider.currentTabIdx,
-        selectedItemColor: theme.selectedItemColor,
-        unselectedItemColor: theme.unselectedItemColor,
-        backgroundColor: theme.backgroundColor,
         onTap: (index) => navigationProvider.changeTab(index));
   }
 }

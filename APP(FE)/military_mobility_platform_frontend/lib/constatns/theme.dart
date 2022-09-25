@@ -6,11 +6,11 @@ final kAppTheme = ThemeData(
     dividerColor: const Color(0xFFD1C9C9),
     textTheme: TextTheme(
         titleLarge: GoogleFonts.roboto(
-            color: Colors.white, fontSize: 40.0, fontWeight: FontWeight.bold),
+            color: Colors.white, fontSize: 21.0, fontWeight: FontWeight.bold),
         titleMedium: GoogleFonts.roboto(
-            color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
+            color: Colors.white, fontSize: 12.0, fontWeight: FontWeight.bold),
         titleSmall: GoogleFonts.roboto(
-            color: Colors.white, fontSize: 10.0, fontWeight: FontWeight.bold),
+            color: Colors.white, fontSize: 8.0, fontWeight: FontWeight.bold),
         bodyLarge: GoogleFonts.roboto(color: Colors.black, fontSize: 40.0),
         bodyMedium: GoogleFonts.roboto(color: Colors.black, fontSize: 20.0),
         bodySmall: GoogleFonts.roboto(color: Colors.black, fontSize: 10.0),
