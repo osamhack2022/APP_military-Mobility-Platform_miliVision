@@ -43,7 +43,19 @@
 </table>
 <br>
 
- #### 0-2. 회원가입(추가 예정) 
+ #### 0-2. 회원가입(추가 예정)
+ <table>
+  <tr>
+    <td align="center" width="50%"><img src="images/null.png" alt="이미지" width="195" height="422" /></td>
+    <td>o 기능명: -<br><br>
+     	o 개요: - <br><br>
+	o 엑터명: -<br><br>
+	o 사전 조건: -<br>
+	o 사후 조건: -<br><br>
+	o 기능 흐름: -</td>
+  </tr>
+</table>
+<br>
 
  ### 1. 실시간 군 이동수단 배차 신청/확인
  #### 1-1. 배차 신청 
