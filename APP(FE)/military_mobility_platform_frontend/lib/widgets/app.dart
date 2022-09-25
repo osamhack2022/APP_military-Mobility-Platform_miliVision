@@ -19,7 +19,7 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => NavigationProvider()),
           ChangeNotifierProvider(create: (context) => TitleProvider()),
         ],
-        child: NavigatedHome(),
+        child: const NavigatedHome(),
       ),
       debugShowCheckedModeBanner: false,
     );

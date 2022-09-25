@@ -38,15 +38,15 @@ class PassengersSelectModal extends StatefulWidget {
   const PassengersSelectModal({super.key});
 
   @override
-  _PassengersSelectModalState createState() => _PassengersSelectModalState();
+  PassengersSelectModalState createState() => PassengersSelectModalState();
 }
 
-class _PassengersSelectModalState extends State<PassengersSelectModal> {
+class PassengersSelectModalState extends State<PassengersSelectModal> {
   int _drivers = 0;
   int _seniorPassengers = 0;
   int _passengers = 0;
 
-  _PassengersSelectModalState();
+  PassengersSelectModalState();
 
   @override
   initState() {

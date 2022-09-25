@@ -4,16 +4,15 @@ import 'package:military_mobility_platform_frontend/provider/title.dart';
 import 'package:provider/provider.dart';
 
 class NavigatedHome extends StatelessWidget {
-  NavigatedHome({super.key});
+  const NavigatedHome({super.key});
 
-  late NavigationProvider _navigationProvider;
   @override
   Widget build(BuildContext context) {
-    _navigationProvider = Provider.of<NavigationProvider>(context);
+    final navigationProvider = Provider.of<NavigationProvider>(context);
 
     return Scaffold(
         appBar: _buildAppBar(context),
-        body: _navigationProvider.currentTabBuilder(),
+        body: navigationProvider.currentTabBuilder(),
         bottomNavigationBar: _buildNavigationBar(context));
   }
 
@@ -36,14 +35,15 @@ class NavigatedHome extends StatelessWidget {
   }
 
   Widget _buildNavigationBar(BuildContext context) {
+    final navigationProvider = Provider.of<NavigationProvider>(context);
     final theme = Theme.of(context).bottomNavigationBarTheme;
     return BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        items: _navigationProvider.navigationBarOptions,
-        currentIndex: _navigationProvider.currentTabIdx,
+        items: navigationProvider.navigationBarOptions,
+        currentIndex: navigationProvider.currentTabIdx,
         selectedItemColor: theme.selectedItemColor,
         unselectedItemColor: theme.unselectedItemColor,
         backgroundColor: theme.backgroundColor,
-        onTap: (index) => _navigationProvider.changeTab(index));
+        onTap: (index) => navigationProvider.changeTab(index));
   }
 }
