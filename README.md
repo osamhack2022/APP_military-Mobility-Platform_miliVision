@@ -61,10 +61,11 @@
   </tr>
 </table>
 <br>
+
  #### 1-2. 차량 선택 
 <table>
   <tr>
-    <td align="center" width="50%"><img src="images/img01.png" alt="배차신청" width="195" height="422" /></td>
+    <td align="center" width="50%"><img src="images/img04.png" alt="차량선택" width="195" height="422" /></td>
     <td>o 기능명: 실시간 배차신청<br><br>
      	o 개요: 군 이동수단(차량) 관련 실시간 배차신청 화면입니다. 출발지 목적지를 설정할 수 있으며, 탑승인원 그리고 경유지 등 세부사항을 설정할 수 있습니다. 군 이동수단의 효율적인 이용을 위해 세부 옵션을 같이 신청받아서 유동적으로 활용할 수 있습니다. 행선지가 같거나 시간을 분배해서 차량을 사용할 수 있다면 효율적으로 이용할 수 있습니다.<br><br>
 	o 엑터명: 탑승자<br><br>
