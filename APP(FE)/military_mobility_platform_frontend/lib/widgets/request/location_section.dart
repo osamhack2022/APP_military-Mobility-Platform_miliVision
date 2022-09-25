@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/constatns/locations.dart';
+import 'package:military_mobility_platform_frontend/provider/mobility_request.dart';
+import 'package:provider/provider.dart';
 
-class LocationSelector extends StatefulWidget {
-  const LocationSelector({super.key});
-
-  @override
-  _State createState() => _State();
-}
-
-class _State extends State<LocationSelector> {
-  String _departure = kLocations[0];
-  String _destination = kLocations[0];
-
-  _State();
+class LocationSection extends StatelessWidget {
+  const LocationSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final mobilityRequestProvider =
+        Provider.of<MobilityRequestProvider>(context);
     final theme = Theme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -26,12 +20,11 @@ class _State extends State<LocationSelector> {
           TextButton(
               onPressed: () => showModalBottomSheet(
                   context: context,
-                  builder: (context) => LocationSelectModal(
-                        (value) => setState(() {
-                          _departure = value;
-                        }),
-                      )),
-              child: Text(_departure, style: theme.textTheme.bodyLarge))
+                  builder: (context) => LocationSelectModal((location) =>
+                      mobilityRequestProvider.setLocations(
+                          departure: location))),
+              child: Text(mobilityRequestProvider.departure,
+                  style: theme.textTheme.bodyLarge))
         ]),
         const Padding(
             padding: EdgeInsets.only(bottom: 10.0),
@@ -41,12 +34,11 @@ class _State extends State<LocationSelector> {
           TextButton(
               onPressed: () => showModalBottomSheet(
                   context: context,
-                  builder: (context) => LocationSelectModal(
-                        (value) => setState(() {
-                          _destination = value;
-                        }),
-                      )),
-              child: Text(_destination, style: theme.textTheme.bodyLarge))
+                  builder: (context) => LocationSelectModal((location) =>
+                      mobilityRequestProvider.setLocations(
+                          destination: location))),
+              child: Text(mobilityRequestProvider.destination,
+                  style: theme.textTheme.bodyLarge))
         ]),
       ],
     );
@@ -54,8 +46,8 @@ class _State extends State<LocationSelector> {
 }
 
 class LocationSelectModal extends StatelessWidget {
-  final void Function(String) callback;
-  const LocationSelectModal(this.callback) : super();
+  final void Function(String) setter;
+  const LocationSelectModal(this.setter, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +59,7 @@ class LocationSelectModal extends StatelessWidget {
         return ListTile(
           title: Text(kLocations[index], style: theme.textTheme.bodyMedium),
           onTap: () {
-            callback(kLocations[index]);
+            setter(kLocations[index]);
             Navigator.pop(context);
           },
         );
