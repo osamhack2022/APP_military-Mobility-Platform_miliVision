@@ -16,7 +16,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User(
             login_id=login_id,
             email=email,
-            battalion_id=battalion_id
+            battalion_id=battalion_id,
+            is_active=True
         )
         user.set_password(password)
         user.save()
@@ -25,4 +26,4 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['login_id', 'password']

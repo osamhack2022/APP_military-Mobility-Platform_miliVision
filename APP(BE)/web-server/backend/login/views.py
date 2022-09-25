@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,6 +8,7 @@ from .serializers import RegisterSerializer, UserSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 
 # Create your views here.
@@ -68,10 +70,16 @@ class AuthView(APIView):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)        
         
-
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
+    @swagger_auto_schema(request_body=openapi.Schema(
+            'refresh_token',
+          type=openapi.TYPE_OBJECT,
+          properties={
+              'refresh_token': openapi.Parameter('refresh_token', openapi.IN_BODY, type=openapi.TYPE_STRING)
+        },
+    ),)
     def post(self, request):
         try:
             refresh_token = request.data["refresh_token"]
@@ -80,4 +88,5 @@ class LogoutView(APIView):
 
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
+            print(e)
             return Response(status=status.HTTP_400_BAD_REQUEST)

@@ -2,9 +2,11 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
+from rest_framework.decorators import authentication_classes
 from .utils import get_user, get_notification
 from .serializers import NotificationSerializer
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # ws test - 1
 def index(request):
@@ -17,6 +19,8 @@ def battalion(request, battalion):
     })
 
 class notification(APIView):
+    authentication_classes = (JWTAuthentication,)
+
     def get(self, request):
         return Response(get_notification())
     
