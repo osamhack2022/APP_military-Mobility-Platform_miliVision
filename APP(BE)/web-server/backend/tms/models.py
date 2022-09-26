@@ -6,6 +6,7 @@ from datetime import datetime
 class Car(models.Model):
     id=models.PositiveIntegerField(primary_key=True)
     car_model=models.CharField(max_length=30, null=True)
+    can_ride=models.PositiveIntegerField(default=4)
     propulsion_type=models.CharField(max_length=30, null=True)
     color=models.CharField(max_length=30, null=True)
     # location=models.CharField(max_length=30, null=True)
@@ -27,6 +28,8 @@ class Reservation(models.Model):
 
 class Notification(models.Model):
     user_sender=models.ForeignKey(User,null=True,blank=True,related_name='user_sender',on_delete=models.CASCADE)
+    battalion_receiver=models.CharField(max_length=10, null=False, blank=False, default="0")
+    permission=models.IntegerField(default=0) #관리자 2, 대대원 전체 1, 모든 앱 사용자 0
     message=models.CharField(max_length=264,null=True,blank=True,default="")
     status=models.CharField(max_length=264,null=True,blank=True,default="unread")
     reservation=models.ForeignKey(Reservation,null=True,blank=True,related_name='reservation',on_delete=models.CASCADE)
