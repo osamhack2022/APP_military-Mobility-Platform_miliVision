@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/provider/mobility_request.dart';
-import 'package:military_mobility_platform_frontend/provider/title.dart';
+import 'package:military_mobility_platform_frontend/provider/appbar.dart';
 import 'package:military_mobility_platform_frontend/widgets/request/detailed_option_section.dart';
 import 'package:military_mobility_platform_frontend/widgets/request/location_section.dart';
 import 'package:military_mobility_platform_frontend/widgets/request/passengers_section.dart';
@@ -12,7 +12,7 @@ class RequestTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<TitleProvider>(context, listen: false).setTitle('배차신청');
+      Provider.of<AppBarProvider>(context, listen: false).setTitle('배차신청');
     });
     return ChangeNotifierProvider(
       create: (context) => MobilityRequestProvider(),
