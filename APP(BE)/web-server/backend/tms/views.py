@@ -61,9 +61,9 @@ class reservation(APIView):
         try:
             user_id = int(request.GET['user_id'])
             reservation_id = int(request.GET['reservation_id'])
-            if user_id is not -1:
+            if user_id != -1:
                 return Response(get_reservation_by_user(user_id), status=status.HTTP_200_OK)
-            elif reservation_id is not -1:
+            elif reservation_id != -1:
                 return Response(get_reservation(reservation_id), status=status.HTTP_200_OK)
         except Exception as e:
             print(e)
@@ -124,18 +124,23 @@ def approve_reservation(request):
         print(e)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-
-@api_view(['GET'])
+@swagger_auto_schema(method='post', request_body=AvailableCarSerializer , operation_summary='배차 예약하기')    
+@api_view(['POST'])
 def get_available_car(request):
     try:
         serializer = AvailableCarSerializer(data=request.data)
         if serializer.is_valid():
-            reservation = Reservation.objects.select_related('car').filter(car.id__startswith=serializer.data["battalion"])
+            reservation = Reservation.objects.select_related('car').filter(car__id__startswith=serializer.data["battalion"])
+            reservation = reservation.values()
+            already_reserved = [rv["car_id"] for rv in reservation]
             available_car = Car.objects.filter(
                 Q(can_ride__gte=(serializer.data["followers_num"]+2)) &
-                Q(id=reservation.car.id)
+                ~Q(id__in=already_reserved)
             )
-            ret_seriallizer = CarSerializer(data=available_car, many=True)
-        return Response(ret_seriallizer.data, status=status.HTTP_202_ACCEPTED)
+            print(available_car.values())
+            ret_seriallizer = CarSerializer(available_car, many=True)
+            return Response(ret_seriallizer.data, status=status.HTTP_202_ACCEPTED)
+        return Response("serilalizer isn't valid",status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
+        print(e)
         return Response(status=status.HTTP_400_BAD_REQUEST)

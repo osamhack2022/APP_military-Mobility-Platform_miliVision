@@ -8,4 +8,5 @@ urlpatterns = [
     path('notification/', views.notification.as_view(), name='notification'),
     path('reservation/', views.reservation.as_view(), name='reservation'),
     path('approve_reservation/', views.approve_reservation, name='approve_reservation'),
+    path('get_available_car/', views.get_available_car, name='get_available_car'),
 ]

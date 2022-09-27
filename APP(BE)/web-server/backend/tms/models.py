@@ -9,6 +9,7 @@ class Car(models.Model):
     can_ride=models.PositiveIntegerField(default=4)
     propulsion_type=models.CharField(max_length=30, null=True)
     color=models.CharField(max_length=30, null=True)
+    # in_use=models.BooleanField(default=False)
     # location=models.CharField(max_length=30, null=True)
 
 class Reservation(models.Model):
