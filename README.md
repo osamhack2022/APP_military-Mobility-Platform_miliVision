@@ -63,7 +63,7 @@
  #### 0-2. 회원가입(추가 예정)
  <table>
   <tr>
-    <td align="center" width="50%"><img src="images/null.png" alt="이미지" width="195" height="422" /></td>
+    <td align="center" width="50%"><img src="images/img07.png" alt="회원가입" width="195" height="422" /></td>
     <td>o 기능명: -<br><br>
      	o 개요: - <br><br>
 	o 엑터명: -<br><br>
