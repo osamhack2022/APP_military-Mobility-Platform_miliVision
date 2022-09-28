@@ -17,6 +17,13 @@ class CarSerializer(serializers.ModelSerializer):
         model = Car
         fields = '__all__'
 
+class ReservationJoinCarSerializer(serializers.ModelSerializer):
+    car_id = serializers.RelatedField(source='car', read_only=True)
+
+    class Meta:
+        model = Reservation
+        fields = '__all__'
+
 class AvailableCarSerializer(serializers.Serializer):
     battalion = serializers.CharField(max_length=10, default="0")
     departure = serializers.CharField(max_length=264,default="")
