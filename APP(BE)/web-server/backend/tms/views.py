@@ -45,8 +45,7 @@ class car(APIView):
             type=openapi.TYPE_STRING,
             default=""
     )]
-    @swagger_auto_schema(manual_parameters=get_params, operation_summary='차량 정보 얻기', 
-                        )
+    @swagger_auto_schema(manual_parameters=get_params, operation_summary='차량 정보 얻기')
     def get(self, request):
         car_id = request.GET['car_id']
         return Response(get_car(car_id))
@@ -59,7 +58,22 @@ class car(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
+    @swagger_auto_schema(manual_parameters=[
+        openapi.Parameter(
+            "car_id",
+            openapi.IN_QUERY,
+            description="car_id",
+            type=openapi.TYPE_STRING,
+            default=""
+    )], operation_summary='차량 정보 삭제하기')
+    def delete(self, request):
+        try: 
+            car_id = request.GET['car_id']
+            Car.objects.get(id=reservation_id).delete()
+            return Response(status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class reservation(APIView):
     get_params = [
@@ -99,7 +113,7 @@ class reservation(APIView):
                         booker_id에 값을 넣으면 사용자가 신청한 예약을 전부 반환
                         driver_id에 값을 넣으면 사용자가 신청한 예약을 전부 반환
                         reservation_id에 값을 넣으면 그 예약 정보 반환
-                        battalion_id에 값을 넣으면 대대에 넣어진 예약 정보 반환
+                        battalion_id에 값을 넣으면 대대에 신청된 예약 정보 반환
                         하나에만 값을 넣어야 함
                         ''')
     def get(self, request):
@@ -132,6 +146,7 @@ class reservation(APIView):
                 user_sender=user,
                 battalion_receiver=battalion_receiver,
                 permission=1,
+                reservation=serializer.instance,
                 message=f"{user.login_id}이(가) 배차를 신청했습니다."
             )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -143,7 +158,7 @@ class reservation(APIView):
             "reservation_id",
             openapi.IN_QUERY,
             description="reservation_id",
-            type=openapi.TYPE_STRING,
+            type=openapi.TYPE_INTEGER,
             default=""
     )], operation_summary='배차 예약 정보 삭제하기')
     def delete(self, request):
@@ -183,7 +198,8 @@ def get_available_car(request):
         serializer = AvailableCarSerializer(data=request.data)
         if serializer.is_valid():
             reservation = Reservation.objects.select_related('car').filter(Q(car__id__startswith=serializer.data["battalion"]) &
-                                                                           Q(reservation_date__date=datetime.date.today() + datetime.timedelta(days=1)))
+                                                                           Q(reservation_date__date=datetime.date.today() + datetime.timedelta(days=1)) &
+                                                                           Q(is_approved=True))
             reservation = reservation.values()
             already_reserved = [rv["car_id"] for rv in reservation]
             available_car = Car.objects.filter(

@@ -14,7 +14,8 @@ class RegisterSerializer(serializers.ModelSerializer):
                     "is_active",
                     "is_superuser",
                     "is_staff",
-                    "is_admin"] #나중에 이걸 바꿔서 회원가입할 때 쓸 값을 추가해야 함
+                    "is_admin",
+                    "permission"] #나중에 이걸 바꿔서 회원가입할 때 쓸 값을 추가해야 함
 
     def create(self, validated_data):
         login_id = validated_data.get('login_id')

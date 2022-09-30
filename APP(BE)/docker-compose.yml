@@ -1,22 +1,12 @@
 # docker-compose.yml
 version: "1"
 services:
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    ports:
-      - "80:80/tcp"
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - ./static:/staticfiles
-    depends_on:
-      - web
   web:
     build:
       context: ./web-server
       dockerfile: Dockerfile
     container_name: web-server
-    command: gunicorn project_name.wsgi:application --bind 0.0.0.0:8000
+    command: pooetry run daphne -b 0.0.0.0 -p 8000 backend.asgi:application
     expose:
       - "8000"
     depends_on:

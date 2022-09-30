@@ -18,7 +18,7 @@ sudo docker run -d -p3306:3306 -v /home/sehwan505/data:/var/lib/mysql --name $CO
 echo ""
 echo "[RUN] 3. Set DB"
 echo "Wait for 5 second"
-sleep $SET_SQL_DELAY s
+sleep 20s
 sudo docker exec $CONTAINER_NAME sh -c "mysql -u$DB_ROOT_UID -p$DB_ROOT_PASSWORD < $SET_SQL_PATH"
 echo ""
 echo "[RUN COMPLETE]"
