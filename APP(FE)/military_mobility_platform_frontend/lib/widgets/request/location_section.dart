@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:military_mobility_platform_frontend/constatns/locations.dart';
 import 'package:military_mobility_platform_frontend/provider/mobility_request.dart';
+import 'package:military_mobility_platform_frontend/services/hangul.dart';
 import 'package:provider/provider.dart';
 
 class LocationSection extends StatelessWidget {
@@ -53,25 +54,81 @@ class LocationSection extends StatelessWidget {
   }
 }
 
-class LocationSelectModal extends StatelessWidget {
+class LocationSelectModal extends StatefulWidget {
   final void Function(String) setter;
   const LocationSelectModal(this.setter, {super.key});
 
   @override
+  LocationSelectModalState createState() => LocationSelectModalState();
+}
+
+class LocationSelectModalState extends State<LocationSelectModal> {
+  String _searchKeyword = "";
+  LocationSelectModalState();
+
+  @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 40.0),
+        child: Column(children: [
+          _buildSearchField(),
+          Expanded(child: _buildListView()),
+        ]));
+  }
+
+  Widget _buildSearchField() {
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: SizedBox(
+            height: 40.0,
+            child: TextField(
+              keyboardType: TextInputType.text,
+              onChanged: (value) => setState(() => _searchKeyword = value),
+              decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.all(8),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  icon: const Padding(
+                    padding: EdgeInsets.only(left: 10.0),
+                    child: Icon(Icons.search),
+                  )),
+            )));
+  }
+
+  Widget _buildListView() {
+    final locations = _getFilteredLocations();
     return ListView.builder(
-      padding: const EdgeInsets.all(8),
-      itemCount: kLocations.length,
+      padding: const EdgeInsets.symmetric(horizontal: 7),
+      itemCount: (locations.length / 2).round(),
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(kLocations[index], style: theme.textTheme.bodyMedium),
-          onTap: () {
-            setter(kLocations[index]);
-            Navigator.pop(context);
-          },
-        );
+        final loc1 = index * 2 < locations.length ? locations[index * 2] : null;
+        final loc2 =
+            index * 2 + 1 < locations.length ? locations[index * 2 + 1] : null;
+        return Row(children: [
+          _buildListTile(loc1),
+          _buildListTile(loc2),
+        ]);
       },
     );
+  }
+
+  Widget _buildListTile(String? location) {
+    return Expanded(
+        child: ListTile(
+      title: Center(child: Text(location ?? "")),
+      onTap: location != null
+          ? () {
+              widget.setter(location);
+              Navigator.pop(context);
+            }
+          : null,
+    ));
+  }
+
+  List<String> _getFilteredLocations() {
+    final hangulMatcher = getHangulMatcher(_searchKeyword);
+    return kLocations
+        .where((element) => hangulMatcher.hasMatch(element))
+        .toList();
   }
 }
