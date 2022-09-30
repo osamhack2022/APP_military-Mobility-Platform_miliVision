@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:military_mobility_platform_frontend/provider/title.dart';
+import 'package:military_mobility_platform_frontend/provider/appbar.dart';
 import 'package:provider/provider.dart';
 
 class ManageTab extends StatelessWidget {
@@ -8,7 +8,7 @@ class ManageTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<TitleProvider>(context, listen: false).setTitle('차량관리');
+      Provider.of<AppBarProvider>(context, listen: false).setTitle('차량관리');
     });
     return const Center(child: Text('manage'));
   }

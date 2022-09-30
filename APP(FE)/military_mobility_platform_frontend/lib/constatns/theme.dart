@@ -20,11 +20,19 @@ final kAppTheme = ThemeData(
     buttonTheme: const ButtonThemeData(
         buttonColor: Color(0xFF6200EE),
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 18)),
-    elevatedButtonTheme: const ElevatedButtonThemeData(
+    elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Color(0xFF6200EE)),
-            padding: MaterialStatePropertyAll(
-                EdgeInsets.symmetric(vertical: 15.0, horizontal: 30.0)))),
+            textStyle: MaterialStatePropertyAll(
+                GoogleFonts.roboto(color: Colors.white, fontSize: 16.0)),
+            backgroundColor: const MaterialStatePropertyAll(Color(0xFF6200EE)),
+            minimumSize: const MaterialStatePropertyAll(Size.fromHeight(58.0)),
+            shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0))))),
+    textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+            foregroundColor: const MaterialStatePropertyAll(Color(0xFF6200EE)),
+            textStyle: MaterialStatePropertyAll(GoogleFonts.roboto(
+                color: const Color(0xFF6200EE), fontSize: 16.0)))),
     appBarTheme: const AppBarTheme(
         backgroundColor: Color(0xFF6200EE),
         iconTheme: IconThemeData(
