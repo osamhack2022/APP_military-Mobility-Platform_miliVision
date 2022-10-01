@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Vehicle, Notification
+from .models import Car, Notification, Reservation
 
-admin.site.register(Vehicle)
+admin.site.register(Car)
+admin.site.register(Reservation)
 admin.site.register(Notification)
 # Register your models here.
