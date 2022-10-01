@@ -20,7 +20,7 @@ class Driver(models.Model):
     rank = models.IntegerField()                  # 0=이등병, 13=대장
     department = models.CharField(max_length=100) # ~~대대~~중대~~소대
     mileage = models.IntegerField()               
-    license = models.IntegerField()
+    license = models.IntegerField()               # 면허의 포함관계 설정 필요
     
     
     
