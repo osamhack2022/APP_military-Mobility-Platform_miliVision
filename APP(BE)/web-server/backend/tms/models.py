@@ -23,8 +23,10 @@ class Reservation(models.Model):
     stopover=models.CharField(max_length=264,default="")
     is_sharing=models.BooleanField(default=False)
     reservation_date=models.DateTimeField('reservation date', default=datetime.now)
-    is_approved=models.BooleanField(default=False)
+    status=models.IntegerField(default=0)
     reason=models.CharField(max_length=264,null=True,blank=True,default="")
+    safety_checklist=models.BooleanField(default=False)
+    operation_plan=models.CharField(max_length=256,default="")
     created_at=models.DateTimeField('created_at', default=datetime.now, editable=False)
 
 class Notification(models.Model):

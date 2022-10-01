@@ -176,15 +176,20 @@ class reservation(APIView):
           'reservation_id',
           type=openapi.TYPE_OBJECT,
           properties={
-              'reservation_id': openapi.Parameter('reservation_id', openapi.IN_BODY, type=openapi.TYPE_STRING)
+            'reservation_id': openapi.Parameter('reservation_id', openapi.IN_BODY, type=openapi.TYPE_INTEGER),
+            'status': openapi.Parameter('status', openapi.IN_BODY, type=openapi.TYPE_INTEGER)
         },
-    ), operation_summary='배차 예약 승인하기')
+    ), operation_summary='배차 예약 승인하기'
+    ,operation_description='''
+                        승인이면 status에 1을 넣고
+                        거절이면 status에 -1을 넣어서 사용한다.
+                        ''')
 @api_view(['POST'])
 def approve_reservation(request):
     try:
         reservation_id = request.data['reservation_id']
         reservation = Reservation.objects.get(id=reservation_id)
-        reservation.is_approved = True
+        reservation.status = request.data['status']
         reservation.save()
         return Response(status=status.HTTP_202_ACCEPTED)
     except Exception as e:
@@ -199,7 +204,7 @@ def get_available_car(request):
         if serializer.is_valid():
             reservation = Reservation.objects.select_related('car').filter(Q(car__id__startswith=serializer.data["battalion"]) &
                                                                            Q(reservation_date__date=datetime.date.today() + datetime.timedelta(days=1)) &
-                                                                           Q(is_approved=True))
+                                                                           Q(status=1))
             reservation = reservation.values()
             already_reserved = [rv["car_id"] for rv in reservation]
             available_car = Car.objects.filter(
@@ -207,8 +212,78 @@ def get_available_car(request):
                 ~Q(id__in=already_reserved)
             )
             ret_seriallizer = CarSerializer(available_car, many=True)
-            return Response(ret_seriallizer.data, status=status.HTTP_202_ACCEPTED)
+            return Response(ret_seriallizer.data, status=status.HTTP_200_OK)
         return Response("serilalizer isn't valid",status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        print(e)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@swagger_auto_schema(method='post', request_body=openapi.Schema(
+          'reservation_id',
+          type=openapi.TYPE_OBJECT,
+          properties={
+            'reservation_id': openapi.Parameter('reservation_id', openapi.IN_BODY, type=openapi.TYPE_INTEGER),
+            'safety_checklist': openapi.Parameter('safety_checklist', openapi.IN_BODY, type=openapi.TYPE_BOOLEAN)
+        },
+    ), operation_summary='안전점검표 확인 여부'
+    ,operation_description='''
+                        안전점검표가 전부 체크되었으면 safety_checklist에 True를 넣고,
+                        아니라면 False를 넣는다.
+                        ''')
+@api_view(['POST'])
+def safety_checklist(request):
+    try:
+        reservation_id = request.data['reservation_id']
+        reservation = Reservation.objects.get(id=reservation_id)
+        reservation.safety_checklist = request.data['safety_checklist']
+        reservation.save()
+        return Response(status=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@swagger_auto_schema(method='post', request_body=openapi.Schema(
+          'reservation_id',
+          type=openapi.TYPE_OBJECT,
+          properties={
+            'reservation_id': openapi.Parameter('reservation_id', openapi.IN_BODY, type=openapi.TYPE_INTEGER),
+            'operation_plan': openapi.Parameter('operation_plan', openapi.IN_BODY, type=openapi.TYPE_STRING)
+        },
+    ), operation_summary='운행 계획표 작성'
+)
+@api_view(['POST'])
+def add_operation_plan(request):
+    try:
+        reservation_id = request.data['reservation_id']
+        reservation = Reservation.objects.get(id=reservation_id)
+        reservation.operation_plan = request.data['operation_plan']
+        reservation.save()
+        return Response(status=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+get_params = [
+        openapi.Parameter(
+                "reservation_id",
+                openapi.IN_QUERY,
+                description="reservation_id",
+                type=openapi.TYPE_INTEGER,
+                default=0
+    )
+    ]
+@swagger_auto_schema(method='get', manual_parameters=get_params, operation_summary='차량 반납', 
+                    operation_description='''
+                    ''')
+@api_view(['GET'])
+def finish_using(request):
+    reservation_id = request.GET['reservation_id']
+    try:
+        reservation = Reservation.objects.get(id=reservation_id)
+        reservation.status = 2
+        reservation.save()
+        return Response(status=status.HTTP_200_OK)
     except Exception as e:
         print(e)
         return Response(status=status.HTTP_400_BAD_REQUEST)

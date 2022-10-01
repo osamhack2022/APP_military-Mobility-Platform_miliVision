@@ -1,26 +1,33 @@
 # docker-compose.yml
-version: "1"
+version: "3.1"
 services:
   web:
     build:
       context: ./web-server
       dockerfile: Dockerfile
     container_name: web-server
-    command: pooetry run daphne -b 0.0.0.0 -p 8000 backend.asgi:application
-    expose:
-      - "8000"
+    command: poetry run daphne -b0.0.0.0 -p8000 backend.asgi:application
+    ports:
+      - "8000:8000"
     depends_on:
       - db
   db:
-    image: mariadb:latest
-    container_name: mysql
+    build:
+        context: ./db
+        dockerfile: Dockerfile
+    container_name: MariaDB
     expose:
       - "3306"
     environment:
       MYSQL_DATABASE: db
-      MYSQL_USER: user
+      MYSQL_USER: root
       MYSQL_PASSWORD: user1234
       MYSQL_ROOT_PASSWORD: user1234
     volumes:
       - ./db/data:/var/lib/mysql
       - ./db/data/conf.d:/etc/mysql/conf.d
+  redis:
+    image: redis:latest
+    container_name: Redis
+    expose:
+      - "6379"
