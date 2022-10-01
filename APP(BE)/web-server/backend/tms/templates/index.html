@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Rooms</title>
+</head>
+<body>
+    What chat room would you like to enter?<br>
+    <input id="name-input" type="text" size="100"><br>
+    <input id="name-submit" type="button" value="Enter">
+
+    <script>
+        document.querySelector('#name-input').focus();
+        document.querySelector('#name-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#name-submit').click();
+            }
+        };
+
+        document.querySelector('#name-submit').onclick = function(e) {
+            var battalion = document.querySelector('#name-input').value;
+            window.location.pathname = '/tms/battalion/' + battalion + '/';
+        };
+    </script>
+</body>
+</html>
