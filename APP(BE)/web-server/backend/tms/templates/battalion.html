@@ -24,7 +24,7 @@
         Socket.onmessage = function(e) {
             const data = JSON.parse(e.data);
             console.log(data);
-            document.querySelector('#log').value += (data.data + '\n');
+            document.querySelector('#log').value += (data.data.message + '\n');
         };
 
         Socket.onclose = function(e) {
