@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:military_mobility_platform_frontend/service/auth.dart';
 import 'package:military_mobility_platform_frontend/service/localstorage.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -8,7 +9,7 @@ class AuthProvider extends ChangeNotifier {
   String get token => _token ?? "";
 
   void login(String id, String passwd) {
-    _token = '$id-$passwd';
+    _token = AuthService.login(id, passwd);
     LocalStorage().writeUserToken(_token!);
     notifyListeners();
   }
