@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:military_mobility_platform_frontend/provider/auth.dart';
 import 'package:military_mobility_platform_frontend/provider/navigation.dart';
-import 'package:military_mobility_platform_frontend/provider/title.dart';
+import 'package:military_mobility_platform_frontend/provider/appbar.dart';
+import 'package:military_mobility_platform_frontend/widgets/login/login.dart';
 import 'package:provider/provider.dart';
 
 class NavigatedHome extends StatelessWidget {
@@ -9,17 +11,20 @@ class NavigatedHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navigationProvider = Provider.of<NavigationProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
 
-    return Scaffold(
-        appBar: _buildAppBar(context),
-        body: navigationProvider.currentTabBuilder(),
-        bottomNavigationBar: _buildNavigationBar(context));
+    return authProvider.isLoggedIn
+        ? Scaffold(
+            appBar: _buildAppBar(context),
+            body: navigationProvider.currentTabBuilder(),
+            bottomNavigationBar: _buildNavigationBar(context))
+        : const Scaffold(body: LoginTab());
   }
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
         leading: const IconButton(onPressed: null, icon: Icon(Icons.menu)),
-        title: Consumer<TitleProvider>(
+        title: Consumer<AppBarProvider>(
             builder: (context, value, child) => Text(value.title)),
         actions: const [
           IconButton(onPressed: null, icon: Icon(Icons.notifications)),
