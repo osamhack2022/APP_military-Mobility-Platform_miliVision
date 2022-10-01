@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-06#c!!o#5e44+y^82!zbx9rvz02-)w3q=m7o=#1-7_q^8ffz*p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["34.105.35.232"]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -166,6 +166,13 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+# image save settings
+
+import os
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 
 # Password validation
