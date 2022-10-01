@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/model/register.dart';
-import 'package:military_mobility_platform_frontend/service/auth.dart';
+import 'package:military_mobility_platform_frontend/service/api.dart';
 import 'package:military_mobility_platform_frontend/widgets/login/components.dart';
 
 class RegisterTab extends StatefulWidget {
@@ -81,7 +81,7 @@ class RegisterTabState extends State<RegisterTab> {
       child: const Text('회원가입'),
       onPressed: () {
         _formKey.currentState?.save();
-        AuthService.register(RegisterReqDTO(
+        APIService.register(RegisterReqDTO(
             id: id,
             password: passwd,
             grade: grade,

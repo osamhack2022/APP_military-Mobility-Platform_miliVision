@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/constatns/locations.dart';
+import 'package:military_mobility_platform_frontend/model/mobility_request.dart';
+import 'package:military_mobility_platform_frontend/service/api.dart';
 
 class MobilityRequestProvider extends ChangeNotifier {
   String _departure = kLocations[0];
@@ -27,5 +29,15 @@ class MobilityRequestProvider extends ChangeNotifier {
     _seniorPassengers = max(seniorPassengers ?? _seniorPassengers, 0);
     _passengers = max(passengers ?? _passengers, 0);
     notifyListeners();
+  }
+
+  MobilityRequestResDTO request() {
+    final dto = MobilityRequestReqDTO(
+        departure: _departure,
+        destination: _destination,
+        drivers: _drivers,
+        seniorPassengers: _seniorPassengers,
+        passengers: _passengers);
+    return APIService.requestMobilities(dto);
   }
 }
