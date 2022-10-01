@@ -17,10 +17,10 @@ class RequestTab extends StatelessWidget {
     return ChangeNotifierProvider(
         create: (context) => MobilityRequestProvider(),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
           alignment: Alignment.center,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               const LocationSection(),
               _buildDivider(context),
