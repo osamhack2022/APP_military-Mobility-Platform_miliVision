@@ -18,7 +18,7 @@ class NavigatedHome extends StatelessWidget {
             appBar: _buildAppBar(context),
             body: navigationProvider.currentTabBuilder(),
             bottomNavigationBar: _buildNavigationBar(context))
-        : const LoginTab();
+        : const Scaffold(body: LoginTab());
   }
 
   AppBar _buildAppBar(BuildContext context) {
