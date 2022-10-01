@@ -27,13 +27,13 @@ class ManageTab extends StatelessWidget {
             children: [
               SafetyCheckList(),
               const Padding(
-                padding: EdgeInsets.only(left: 15.0)
+                padding: EdgeInsets.only(left: 10.0)
               ),
               OperationPlan(),
             ]
           ),
           const Padding(
-              padding: EdgeInsets.only(bottom: 40.0)
+              padding: EdgeInsets.only(bottom: 15.0)
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +41,7 @@ class ManageTab extends StatelessWidget {
             children: [
               AccidentReport(),
               const Padding(
-                padding: EdgeInsets.only(left: 15.0)
+                padding: EdgeInsets.only(left: 10.0)
               ),
               RecoveryTeamRequest(),
             ]
@@ -55,7 +55,7 @@ class ManageTab extends StatelessWidget {
             children: [
               EmergencyEvacuationRequest(),
               const Padding(
-                padding: EdgeInsets.only(left: 20.0)
+                padding: EdgeInsets.only(left: 10.0)
               ),
               VehicleReturn(),
             ]
