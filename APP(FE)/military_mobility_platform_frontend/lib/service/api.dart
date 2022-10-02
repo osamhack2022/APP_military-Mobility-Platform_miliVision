@@ -1,15 +1,33 @@
+import 'dart:convert';
+
 import 'package:military_mobility_platform_frontend/model/mobility.dart';
 import 'package:military_mobility_platform_frontend/model/mobility_request.dart';
-import 'package:military_mobility_platform_frontend/model/register.dart';
+import 'package:military_mobility_platform_frontend/model/user.dart';
+import 'package:http/http.dart' as http;
 
 class APIService {
-  static String? login(String id, String password) {
-    return '$id-$password';
+  static const kBaseUrl = '34.105.35.232:8000';
+
+  static Future<LoginResDTO?> login(LoginReqDTO dto) async {
+    final url = Uri.http(kBaseUrl, 'user/login');
+    final response = await http.post(url, body: dto.toJson());
+    if (response.statusCode != 200) {
+      return null;
+    } else {
+      final body = jsonDecode(response.body);
+      return LoginResDTO.fromJson(body);
+    }
   }
 
-  static bool register(RegisterReqDTO dto) {
-    print(dto.toJson());
-    return true;
+  static Future<RegisterResDTO?> register(RegisterReqDTO dto) async {
+    final url = Uri.http(kBaseUrl, 'user/register');
+    final response = await http.post(url, body: dto.toJson());
+    if (response.statusCode != 201) {
+      return null;
+    } else {
+      final body = jsonDecode(response.body);
+      return RegisterResDTO.fromJson(body);
+    }
   }
 
   static MobilityRequestResDTO requestMobilities(MobilityRequestReqDTO dto) {
