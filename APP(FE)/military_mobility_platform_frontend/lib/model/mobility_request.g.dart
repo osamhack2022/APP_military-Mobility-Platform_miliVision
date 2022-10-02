@@ -11,8 +11,6 @@ MobilityRequestReqDTO _$MobilityRequestReqDTOFromJson(
     MobilityRequestReqDTO(
       departure: json['departure'] as String,
       destination: json['destination'] as String,
-      drivers: json['drivers'] as int,
-      seniorPassengers: json['seniorPassengers'] as int,
       passengers: json['passengers'] as int,
     );
 
@@ -21,8 +19,6 @@ Map<String, dynamic> _$MobilityRequestReqDTOToJson(
     <String, dynamic>{
       'departure': instance.departure,
       'destination': instance.destination,
-      'drivers': instance.drivers,
-      'seniorPassengers': instance.seniorPassengers,
       'passengers': instance.passengers,
     };
 

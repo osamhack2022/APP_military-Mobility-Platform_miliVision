@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 Widget buildTextFormField(
     {void Function(String?)? setter, String? labelText, String? helperText}) {
   return SizedBox(
-      height: 70.0,
+      height: 100.0,
       child: TextFormField(
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
@@ -37,7 +37,7 @@ class PasswordFieldState extends State<PasswordField> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 70.0,
+        height: 100.0,
         child: TextFormField(
           obscureText: !_isPasswordVisible,
           decoration: InputDecoration(

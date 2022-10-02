@@ -8,14 +8,10 @@ class MobilityRequestReqDTO {
   const MobilityRequestReqDTO(
       {required this.departure,
       required this.destination,
-      required this.drivers,
-      required this.seniorPassengers,
       required this.passengers});
 
   final String departure;
   final String destination;
-  final int drivers;
-  final int seniorPassengers;
   final int passengers;
 
   Map<String, dynamic> toJson() => _$MobilityRequestReqDTOToJson(this);

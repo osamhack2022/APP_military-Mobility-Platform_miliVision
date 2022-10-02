@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/provider/mobility_request.dart';
-import 'package:military_mobility_platform_frontend/widgets/request/detailed_option_section.dart';
+import 'package:military_mobility_platform_frontend/widgets/request/time_section.dart';
 import 'package:military_mobility_platform_frontend/widgets/request/location_section.dart';
 import 'package:military_mobility_platform_frontend/widgets/request/passengers_section.dart';
 import 'package:provider/provider.dart';
@@ -22,8 +22,8 @@ class RequestTab extends StatelessWidget {
               _buildDivider(context),
               const PassengersSection(),
               _buildDivider(context),
-              const DetailedOptionSection(),
-              _buildDivider(context),
+              const TimeSection(),
+              const Padding(padding: EdgeInsets.only(top: 10.0)),
               _buildRequestButton(context),
             ],
           ),
