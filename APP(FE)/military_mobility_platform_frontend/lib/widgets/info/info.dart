@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:military_mobility_platform_frontend/constatns/theme.dart';
 import 'package:military_mobility_platform_frontend/widgets/info/profile.dart';
 import 'package:military_mobility_platform_frontend/widgets/info/info_menu.dart';
 import 'package:military_mobility_platform_frontend/provider/user_info.dart';
@@ -18,8 +19,10 @@ class InfoTab extends StatelessWidget {
       child: Column(
         children: [
           const Padding(
-              padding: EdgeInsets.only(top: 40.0)),
+              padding: EdgeInsets.only(top: 80.0)),
           const Profile(),
+          const Padding(
+                padding: EdgeInsets.only(bottom: 30.0)),
           const InfoMenu(),
         ],
       ),
