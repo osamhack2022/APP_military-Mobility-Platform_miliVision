@@ -43,6 +43,7 @@ dependencies:
   http: ^0.13.5
   intl: ^0.17.0
   flutter_datetime_picker: ^1.5.1
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:

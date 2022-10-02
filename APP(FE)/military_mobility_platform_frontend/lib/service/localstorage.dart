@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:military_mobility_platform_frontend/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage {
@@ -13,15 +16,16 @@ class LocalStorage {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  void writeUserToken(String token) {
-    _prefs.setString('token', token);
+  void writeUserToken(TokenDTO token) {
+    _prefs.setString('token', jsonEncode(token));
   }
 
   void removeUserToken() {
     _prefs.remove('token');
   }
 
-  String? readUserToken() {
-    return _prefs.getString('token');
+  TokenDTO? readUserToken() {
+    final token = _prefs.getString('token');
+    return token != null ? TokenDTO.fromJson(jsonDecode(token)) : null;
   }
 }

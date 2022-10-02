@@ -4,24 +4,43 @@ import 'package:military_mobility_platform_frontend/service/api.dart';
 import 'package:military_mobility_platform_frontend/service/localstorage.dart';
 
 class AuthProvider extends ChangeNotifier {
-  String? _token = LocalStorage().readUserToken();
+  TokenDTO? _token = LocalStorage().readUserToken();
 
   bool get isLoggedIn => _token != null;
-  String get token => _token ?? "";
+  TokenDTO? get token => _token;
 
-  void login(String id, String password) async {
+  Future<bool> login({required String id, required String password}) async {
     final response =
         await APIService.login(LoginReqDTO(login_id: id, password: password));
     if (response != null) {
       _token = response.token;
       LocalStorage().writeUserToken(_token!);
+      APIService.setUserToken(_token!);
       notifyListeners();
+      return true;
+    } else {
+      return false;
     }
   }
 
   void logout() {
     _token = null;
     LocalStorage().removeUserToken();
+    APIService.removeUserToken();
     notifyListeners();
+  }
+
+  Future<bool> register(
+      {required String id,
+      required String password,
+      required String email,
+      required String battalionID}) async {
+    final dto = RegisterReqDTO(
+        login_id: id,
+        password: password,
+        email: email,
+        battalion_id: battalionID);
+    final response = await APIService.register(dto);
+    return response != null;
   }
 }

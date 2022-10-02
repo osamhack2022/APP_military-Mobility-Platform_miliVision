@@ -8,6 +8,10 @@ import 'package:http/http.dart' as http;
 class APIService {
   static const kBaseUrl = '34.105.35.232:8000';
 
+  static TokenDTO? _token;
+  static void setUserToken(TokenDTO token) => _token = token;
+  static void removeUserToken() => _token = null;
+
   static Future<LoginResDTO?> login(LoginReqDTO dto) async {
     final url = Uri.http(kBaseUrl, 'user/login/');
     final response = await http.post(url, body: dto.toJson());
@@ -22,7 +26,7 @@ class APIService {
   static Future<RegisterResDTO?> register(RegisterReqDTO dto) async {
     final url = Uri.http(kBaseUrl, 'user/register/');
     final response = await http.post(url, body: dto.toJson());
-    if (response.statusCode != 201) {
+    if (response.statusCode != 200) {
       return null;
     } else {
       final body = jsonDecode(response.body);
