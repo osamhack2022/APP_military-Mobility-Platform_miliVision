@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/constatns/theme.dart';
-import 'package:military_mobility_platform_frontend/provider/title.dart';
+import 'package:military_mobility_platform_frontend/provider/appbar.dart';
+import 'package:military_mobility_platform_frontend/provider/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:military_mobility_platform_frontend/provider/navigation.dart';
 import 'package:military_mobility_platform_frontend/widgets/navigated_home.dart';
@@ -17,7 +18,8 @@ class App extends StatelessWidget {
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => NavigationProvider()),
-          ChangeNotifierProvider(create: (context) => TitleProvider()),
+          ChangeNotifierProvider(create: (context) => AppBarProvider()),
+          ChangeNotifierProvider(create: (context) => AuthProvider()),
         ],
         child: const NavigatedHome(),
       ),

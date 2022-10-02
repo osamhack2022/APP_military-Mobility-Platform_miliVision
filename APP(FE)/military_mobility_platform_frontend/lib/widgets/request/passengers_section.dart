@@ -21,11 +21,12 @@ class PassengersSection extends StatelessWidget {
       Padding(
           padding: const EdgeInsets.only(top: 15),
           child: IconButton(
-              onPressed: () => showModalBottomSheet(
+              onPressed: () => showModalBottomSheet<dynamic>(
+                  isScrollControlled: true,
                   context: context,
                   builder: (context) => ChangeNotifierProvider.value(
                       value: mobilityRequestProvider,
-                      child: const PassengersSelectModal())),
+                      child: Wrap(children: const [PassengersSelectModal()]))),
               icon: const Icon(Icons.add))),
     ]);
   }
@@ -61,42 +62,64 @@ class PassengersSelectModalState extends State<PassengersSelectModal> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _buildNumberField('운전자',
-              getter: () => _drivers,
-              setter: (n) => setState(() => _drivers = n)),
-          _buildNumberField('선탑자',
-              getter: () => _seniorPassengers,
-              setter: (n) => setState(() => _seniorPassengers = n)),
-          _buildNumberField('탑승자',
-              getter: () => _passengers,
-              setter: (n) => setState(() => _passengers = n)),
-          TextButton(
-              onPressed: () {
-                Provider.of<MobilityRequestProvider>(context, listen: false)
-                    .setPassengers(
-                        drivers: _drivers,
-                        seniorPassengers: _seniorPassengers,
-                        passengers: _passengers);
-                Navigator.pop(context);
-              },
-              child: const Text('Apply'))
-        ]);
+    return Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 40.0,
+          vertical: 15.0,
+        ),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Column(children: [
+                _buildNumberField('운전자',
+                    getter: () => _drivers,
+                    setter: (n) => setState(() => _drivers = n)),
+                _buildNumberField('선탑자',
+                    getter: () => _seniorPassengers,
+                    setter: (n) => setState(() => _seniorPassengers = n)),
+                _buildNumberField('탑승자',
+                    getter: () => _passengers,
+                    setter: (n) => setState(() => _passengers = n)),
+              ]),
+              const Padding(padding: EdgeInsets.only(top: 30.0)),
+              ElevatedButton(
+                  onPressed: () {
+                    Provider.of<MobilityRequestProvider>(context, listen: false)
+                        .setPassengers(
+                            drivers: _drivers,
+                            seniorPassengers: _seniorPassengers,
+                            passengers: _passengers);
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Apply'))
+            ]));
   }
 
   Widget _buildNumberField(String name,
       {required int Function() getter, required void Function(int) setter}) {
-    return Row(children: [
-      Text(name),
-      IconButton(
-          onPressed: () => setter(max(0, getter() - 1)),
-          icon: const Icon(Icons.remove)),
-      Text('${getter()}'),
-      IconButton(
-          onPressed: () => setter(getter() + 1), icon: const Icon(Icons.add)),
-    ]);
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 7.0),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text(name),
+          Row(
+            children: [
+              RawMaterialButton(
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  shape: const CircleBorder(),
+                  onPressed: () => setter(max(0, getter() - 1)),
+                  child: const Icon(Icons.remove)),
+              Text('${getter()}'),
+              RawMaterialButton(
+                  elevation: 2.0,
+                  fillColor: Colors.white,
+                  shape: const CircleBorder(),
+                  onPressed: () => setter(getter() + 1),
+                  child: const Icon(Icons.add)),
+            ],
+          )
+        ]));
   }
 }
