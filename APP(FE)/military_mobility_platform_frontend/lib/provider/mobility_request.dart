@@ -44,7 +44,7 @@ class MobilityRequestProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  MobilityRequestResDTO request() {
+  Future<MobilityRequestResDTO?> request() async {
     final dto = MobilityRequestReqDTO(
         departure: _departure,
         destination: _destination,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/model/tab.dart';
+import 'package:military_mobility_platform_frontend/provider/navigation.dart';
 import 'package:military_mobility_platform_frontend/widgets/info/info.dart';
 import 'package:military_mobility_platform_frontend/widgets/list/list.dart';
 import 'package:military_mobility_platform_frontend/widgets/manage/manage.dart';
 import 'package:military_mobility_platform_frontend/widgets/request/request.dart';
 import 'package:military_mobility_platform_frontend/widgets/request/select_mobility/select_mobility.dart';
+import 'package:provider/provider.dart';
 
 const kDefaultAppBarLeading =
     IconButton(onPressed: null, icon: Icon(Icons.menu));
@@ -23,7 +25,14 @@ final kTabs = [
       navBarItem: const NavBarItemVO(label: '배차신청', icon: Icons.info)),
   TabVO(
     name: 'select mobility',
-    appbar: const AppBarVO(title: '차량선택'),
+    appbar: AppBarVO(
+        title: '차량선택',
+        leading: (context) => IconButton(
+            onPressed: () =>
+                Provider.of<NavigationProvider>(context, listen: false)
+                    .animateToTabWithName('request'),
+            icon: const Icon(Icons.arrow_back_ios)),
+        actions: (_) => []),
     builder: () => SelectMobilityTab(),
   ),
   TabVO(

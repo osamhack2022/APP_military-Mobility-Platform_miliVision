@@ -87,27 +87,20 @@ class RegisterTabState extends State<RegisterTab> {
 
   Widget _buildRegisterButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: _register,
+      onPressed: () => _register().then((success) {
+        if (success) {
+          Navigator.pop(context);
+        }
+      }),
       child: const Text('회원가입'),
     );
   }
 
-  void _register() {
-    Future<bool> registerRequest() async {
-      _formKey.currentState?.save();
-      final response = await APIService.register(RegisterReqDTO(
-          login_id: id,
-          password: passwd,
-          email: email,
-          battalion_id: baseName));
-      print(response);
-      return response != null;
-    }
-
-    registerRequest().then((success) {
-      if (success) {
-        Navigator.pop(context);
-      }
-    });
+  Future<bool> _register() async {
+    _formKey.currentState?.save();
+    final response = await APIService.register(RegisterReqDTO(
+        login_id: id, password: passwd, email: email, battalion_id: baseName));
+    print(response);
+    return response != null;
   }
 }

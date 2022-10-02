@@ -9,7 +9,7 @@ class APIService {
   static const kBaseUrl = '34.105.35.232:8000';
 
   static Future<LoginResDTO?> login(LoginReqDTO dto) async {
-    final url = Uri.http(kBaseUrl, 'user/login');
+    final url = Uri.http(kBaseUrl, 'user/login/');
     final response = await http.post(url, body: dto.toJson());
     if (response.statusCode != 200) {
       return null;
@@ -20,7 +20,7 @@ class APIService {
   }
 
   static Future<RegisterResDTO?> register(RegisterReqDTO dto) async {
-    final url = Uri.http(kBaseUrl, 'user/register');
+    final url = Uri.http(kBaseUrl, 'user/register/');
     final response = await http.post(url, body: dto.toJson());
     if (response.statusCode != 201) {
       return null;
@@ -30,7 +30,8 @@ class APIService {
     }
   }
 
-  static MobilityRequestResDTO requestMobilities(MobilityRequestReqDTO dto) {
+  static Future<MobilityRequestResDTO?> requestMobilities(
+      MobilityRequestReqDTO dto) async {
     return const MobilityRequestResDTO([
       MobilityDTO(id: '12하8839', type: 'K3', fuelType: '휘발유', color: '블루'),
       MobilityDTO(id: '12하8829', type: '상용1톤', fuelType: '휘발유', color: '블루'),
