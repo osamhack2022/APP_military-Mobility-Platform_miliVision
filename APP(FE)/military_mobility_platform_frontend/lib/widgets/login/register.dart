@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:military_mobility_platform_frontend/model/register.dart';
+import 'package:military_mobility_platform_frontend/model/user.dart';
 import 'package:military_mobility_platform_frontend/service/api.dart';
 import 'package:military_mobility_platform_frontend/widgets/login/components.dart';
 
@@ -18,7 +18,7 @@ class RegisterTabState extends State<RegisterTab> {
   final _formKey = GlobalKey<FormState>();
   String id = "";
   String name = "";
-  String grade = "";
+  String email = "";
   String baseName = "";
   String passwd = "";
   String role = availableRoles[0];
@@ -57,9 +57,9 @@ class RegisterTabState extends State<RegisterTab> {
           helperText: '이름을 입력해주세요'),
       buildVerticalPadding(15.0),
       buildTextFormField(
-          setter: (val) => grade = val ?? "",
-          labelText: '계급',
-          helperText: '계급을 입력해주세요'),
+          setter: (val) => email = val ?? "",
+          labelText: '이메일',
+          helperText: '이메일을 입력해주세요'),
       buildVerticalPadding(15.0),
       buildTextFormField(
           setter: (val) => baseName = val ?? "",
@@ -76,22 +76,6 @@ class RegisterTabState extends State<RegisterTab> {
     ]);
   }
 
-  Widget _buildRegisterButton(BuildContext context) {
-    return ElevatedButton(
-      child: const Text('회원가입'),
-      onPressed: () {
-        _formKey.currentState?.save();
-        APIService.register(RegisterReqDTO(
-            id: id,
-            password: passwd,
-            grade: grade,
-            baseName: baseName,
-            role: role));
-        Navigator.pop(context);
-      },
-    );
-  }
-
   Widget _buildRoleDropDown(BuildContext context) {
     return DropdownButtonFormField(
         value: role,
@@ -99,5 +83,31 @@ class RegisterTabState extends State<RegisterTab> {
             .map((e) => DropdownMenuItem(value: e, child: Text(e)))
             .toList(),
         onChanged: (val) => role = val ?? availableRoles[0]);
+  }
+
+  Widget _buildRegisterButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: _register,
+      child: const Text('회원가입'),
+    );
+  }
+
+  void _register() {
+    Future<bool> registerRequest() async {
+      _formKey.currentState?.save();
+      final response = await APIService.register(RegisterReqDTO(
+          login_id: id,
+          password: passwd,
+          email: email,
+          battalion_id: baseName));
+      print(response);
+      return response != null;
+    }
+
+    registerRequest().then((success) {
+      if (success) {
+        Navigator.pop(context);
+      }
+    });
   }
 }
