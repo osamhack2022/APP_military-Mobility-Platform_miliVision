@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/widgets/info/profile.dart';
 import 'package:military_mobility_platform_frontend/widgets/info/info_menu.dart';
-import 'package:military_mobility_platform_frontend/provider/title.dart';
 import 'package:military_mobility_platform_frontend/provider/user_info.dart';
 import 'package:military_mobility_platform_frontend/provider/appbar.dart';
 import 'package:provider/provider.dart';
