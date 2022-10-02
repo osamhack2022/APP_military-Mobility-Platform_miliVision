@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -153,7 +154,7 @@ DATABASES = {
         'NAME': 'milivision',
         'USER': 'root',
         'PASSWORD': 'user1234', # mariaDB 설치 시 입력한 root 비밀번호 입력
-        'HOST': '34.105.35.232',
+        'HOST': '127.0.0.1',
         'PORT': '3306'
     }
 }
@@ -162,7 +163,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("34.105.35.232", 6379)],
+            "hosts": [("127.0.0.1", 6379)],
         },
     },
 }
@@ -209,3 +210,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')

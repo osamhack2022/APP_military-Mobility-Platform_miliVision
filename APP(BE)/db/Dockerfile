@@ -3,7 +3,7 @@ FROM mariadb
 ENV MYSQL_ROOT_PASSWORD user1234
 
 WORKDIR /etc/mysql
-RUN mkdir setDB
+RUN mkdir -p setDB
 WORKDIR /etc/mysql/setDB
 
 COPY ./setDB.sql /etc/mysql/setDB/setDB.sql

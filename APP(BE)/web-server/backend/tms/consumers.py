@@ -11,14 +11,12 @@ from .serializers import NotificationSerializer
 
 @receiver(post_save, sender=Notification)
 def send_update(sender, instance, created, **kwargs):
-    print("New reading in DB")
     serializer = NotificationSerializer(instance)
 
     if created:
-        print("New saving in DB")
         channel_layer=get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            "battalion_1", { #테스트용 group = 1
+            f"battalion_{serializer.data['battalion_receiver']}_0", { #테스트용 group = 1
                 "type": "notify",
                 "data": serializer.data
             }
@@ -26,8 +24,11 @@ def send_update(sender, instance, created, **kwargs):
 
 class NotificationConsumer(WebsocketConsumer):
     def connect(self):
-        self.battalion = self.scope['url_route']['kwargs']['battalion'] #url에서 값 가져오기
-        self.group_name = 'battalion_%s' % self.battalion
+        self.battalion = self.scope['url_route']['kwargs']['battalion']
+        self.user_id = self.scope['url_route']['kwargs']['user_id']
+        self.user = User.objects.get(id=user_id)
+        self.group_name = f'battalion_{self.battalion}_{self.user.permission}'
+        
         print(self.group_name)
 
         async_to_sync(self.channel_layer.group_add)( # group 참여
@@ -36,16 +37,6 @@ class NotificationConsumer(WebsocketConsumer):
         )
         self.accept() # websocket 연결 
 
-        # notification이 있으면 알람 전송
-        notifications = get_notification()
-        if notifications:
-            async_to_sync(self.channel_layer.group_send)(
-                "battalion", {
-                    "type": "notify",
-                    "data": notifications
-                }
-            )
-
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(
             self.group_name,
@@ -53,7 +44,6 @@ class NotificationConsumer(WebsocketConsumer):
         )
     
     def receive(self, text_data):
-        print("receive")
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
 
