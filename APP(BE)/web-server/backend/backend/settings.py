@@ -27,12 +27,13 @@ SECRET_KEY = 'django-insecure-06#c!!o#5e44+y^82!zbx9rvz02-)w3q=m7o=#1-7_q^8ffz*p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["34.105.35.232"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'channels',
     'login',
     'tms',
@@ -40,7 +41,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -154,7 +155,7 @@ DATABASES = {
         'NAME': 'milivision',
         'USER': 'root',
         'PASSWORD': 'user1234', # mariaDB 설치 시 입력한 root 비밀번호 입력
-        'HOST': '127.0.0.1',
+        'HOST': '34.105.35.232',
         'PORT': '3306'
     }
 }
@@ -163,7 +164,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [("34.105.35.232", 6379)],
         },
     },
 }
@@ -211,4 +212,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CORS_ORIGIN_ALLOW_ALL = True 
+CORS_ALLOW_CREDENTIALS = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

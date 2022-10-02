@@ -16,8 +16,8 @@ services:
         context: ./db
         dockerfile: Dockerfile
     container_name: MariaDB
-    expose:
-      - "3306"
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_DATABASE: db
       MYSQL_USER: root
@@ -29,5 +29,5 @@ services:
   redis:
     image: redis:latest
     container_name: Redis
-    expose:
-      - "6379"
+    ports:
+      - "6379:6379"
