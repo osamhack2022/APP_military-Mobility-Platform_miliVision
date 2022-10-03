@@ -27,6 +27,7 @@ class NavigatedHomeState extends State<NavigatedHome> {
         ? Scaffold(
             appBar: navigationProvider.buildCurrentTabAppBar(context),
             body: PageView(
+              physics: const NeverScrollableScrollPhysics(),
               controller: navigationProvider.pageController,
               children: navigationProvider.tabWidgets,
             ),
