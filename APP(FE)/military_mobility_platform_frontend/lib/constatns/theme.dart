@@ -15,7 +15,8 @@ final kAppTheme = ThemeData(
         bodyMedium: GoogleFonts.roboto(color: Colors.black, fontSize: 20.0),
         bodySmall: GoogleFonts.roboto(color: Colors.black, fontSize: 16.0),
         labelLarge: GoogleFonts.roboto(color: Colors.black, fontSize: 27.0),
-        labelMedium: GoogleFonts.roboto(color: Colors.black, fontSize: 12.0),
+        labelMedium:
+            GoogleFonts.roboto(color: const Color(0xFF898989), fontSize: 12.0),
         labelSmall: GoogleFonts.roboto(color: Colors.black, fontSize: 8.0)),
     buttonTheme: const ButtonThemeData(
         buttonColor: Color(0xFF6200EE),

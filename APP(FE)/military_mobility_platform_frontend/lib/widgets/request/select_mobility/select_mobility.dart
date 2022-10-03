@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
-import 'package:provider/provider.dart';
+import 'package:military_mobility_platform_frontend/widgets/request/select_mobility/mobility_list.dart';
 
 class SelectMobilityTab extends StatelessWidget {
+  const SelectMobilityTab({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final mobilityListProvider = Provider.of<MobilityListProvider>(context);
-    return Center(
-        child:
-            Text(mobilityListProvider.mobilities.map((e) => e.id).toString()));
+    return const Padding(
+        padding: EdgeInsets.only(top: 20.0), child: MobilityList());
   }
 }
