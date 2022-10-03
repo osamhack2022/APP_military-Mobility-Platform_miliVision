@@ -104,8 +104,8 @@ class reservation(APIView):
                 "battalion_id",
                 openapi.IN_QUERY,
                 description="battalion_id",
-                type=openapi.TYPE_STRING,
-                default=""
+                type=openapi.TYPE_INTEGER,
+                default=-1
     )
     ]
     @swagger_auto_schema(manual_parameters=get_params, operation_summary='배차 예약 정보 얻기', 
@@ -115,19 +115,20 @@ class reservation(APIView):
                         reservation_id에 값을 넣으면 그 예약 정보 반환
                         battalion_id에 값을 넣으면 대대에 신청된 예약 정보 반환
                         하나에만 값을 넣어야 함
+                        나머지는 -1을 입력
                         ''')
     def get(self, request):
         try:
             booker_id = int(request.GET['booker_id'])
             driver_id = int(request.GET['driver_id'])
             reservation_id = int(request.GET['reservation_id'])
-            battalion_id = str(request.GET['battalion_id'])
+            battalion_id = int(request.GET['battalion_id'])
 
             if booker_id != -1:
                 return Response(get_reservation_by_booker(booker_id), status=status.HTTP_200_OK)
             elif driver_id != -1:
                 return Response(get_reservation_by_driver(driver_id), status=status.HTTP_200_OK)
-            elif battalion_id != "":
+            elif battalion_id != -1:
                 return Response(get_reservation_by_battalion(battalion_id), status=status.HTTP_200_OK)
             elif reservation_id != -1:
                 return Response(get_reservation(reservation_id), status=status.HTTP_200_OK)
@@ -140,7 +141,8 @@ class reservation(APIView):
         serializer = ReservationBookingSerializer(data=request.data)
         if serializer.is_valid():
             reservation = Reservation.objects.select_related('driver').filter(Q(driver__battalion_id=int(str(serializer.validated_data["car"].id)[:4])) & # 이거 왜 int 추가해야 되는 건지 잘 모르겠음 여튼 int 안하면 안됨
-                                                                           Q(reservation_date__date=datetime.date.today() + datetime.timedelta(days=1)) &
+                                                                           (Q(reservation_start__range=[serializer.validated_data["reservation_start"], serializer.validated_data["reservation_end"]]) | 
+                                                                           Q(reservation_end__range=[serializer.validated_data["reservation_start"], serializer.validated_data["reservation_end"]])) &
                                                                            Q(status=1))
             if len(reservation) != 0: #예약이 있을 때 배차가 없는 운전병을 배치    
                 reservation = reservation.values()
@@ -225,7 +227,8 @@ def get_available_car(request):
         serializer = AvailableCarSerializer(data=request.data)
         if serializer.is_valid():
             reservation = Reservation.objects.select_related('car').filter(Q(car__id__startswith=serializer.data["battalion"]) &
-                                                                           Q(reservation_date__date=datetime.date.today() + datetime.timedelta(days=1)) &
+                                                                           (Q(reservation_start__range=[serializer.data["reservation_start"], serializer.data["reservation_end"]]) | 
+                                                                           Q(reservation_end__range=[serializer.data["reservation_start"], serializer.data["reservation_end"]])) &
                                                                            Q(status=1))
             reservation = reservation.values()
             already_reserved = [rv["car_id"] for rv in reservation]
