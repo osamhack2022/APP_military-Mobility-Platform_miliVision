@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AccidentReport extends StatelessWidget {
-  const AccidentReport({super.key});
+class EmergencyEvacuationRequest extends StatelessWidget {
+  const EmergencyEvacuationRequest({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class AccidentReport extends StatelessWidget {
         ),
         onTap: () {
           Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AccidentReportSet())
+            context, MaterialPageRoute(builder: (context) => EmergencyEvacuationRequestSet())
           );
         },
     )
@@ -44,14 +44,14 @@ class AccidentReport extends StatelessWidget {
   }
 }
 
-class AccidentReportSet extends StatefulWidget {
-  const AccidentReportSet({super.key});
+class EmergencyEvacuationRequestSet extends StatefulWidget {
+  const EmergencyEvacuationRequestSet({super.key});
 
   @override
-  State<AccidentReportSet> createState() => _AccidentReportSetState();
+  State<EmergencyEvacuationRequestSet> createState() => _EmergencyEvacuationRequestSetState();
 }
 
-class _AccidentReportSetState extends State<AccidentReportSet> {
+class _EmergencyEvacuationRequestSetState extends State<EmergencyEvacuationRequestSet> {
  
   @override
   Widget build(BuildContext context) {
