@@ -27,7 +27,9 @@ SECRET_KEY = 'django-insecure-06#c!!o#5e44+y^82!zbx9rvz02-)w3q=m7o=#1-7_q^8ffz*p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = ["*"]
+
 
 
 # Application definition
@@ -146,6 +148,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 ASGI_APPLICATION = 'backend.asgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -168,6 +171,13 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+# image save settings
+
+import os
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 
 # Password validation
