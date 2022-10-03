@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class EmergencyEvacuationRequest extends StatelessWidget {
-  const EmergencyEvacuationRequest({super.key});
+class RecoveryTeamRequest extends StatelessWidget {
+  const RecoveryTeamRequest({super.key});
 
   @override
   Widget build(BuildContext context) {
