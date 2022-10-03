@@ -5,10 +5,11 @@ from rest_framework.response import Response
 from rest_framework import permissions, status, filters
 from rest_framework.decorators import authentication_classes, api_view
 from .utils import get_user, get_notification, get_reservation, get_reservation_by_booker, get_reservation_by_driver, get_reservation_by_battalion, get_car 
-from .serializers import NotificationSerializer, ReservationSerializer, CarSerializer, AvailableCarSerializer
+from .serializers import NotificationSerializer, ReservationBookingSerializer, ReservationSerializer, CarSerializer, AvailableCarSerializer 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from .models import Reservation, Notification, Car
+from login.models import User
 from rest_framework_simplejwt.authentication import JWTAuthentication
 import datetime
 
@@ -36,7 +37,6 @@ class notification(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class car(APIView):
-
     get_params = [
         openapi.Parameter(
             "car_id",
@@ -104,30 +104,31 @@ class reservation(APIView):
                 "battalion_id",
                 openapi.IN_QUERY,
                 description="battalion_id",
-                type=openapi.TYPE_STRING,
-                default=""
+                type=openapi.TYPE_INTEGER,
+                default=-1
     )
     ]
     @swagger_auto_schema(manual_parameters=get_params, operation_summary='배차 예약 정보 얻기', 
                         operation_description='''
                         booker_id에 값을 넣으면 사용자가 신청한 예약을 전부 반환
-                        driver_id에 값을 넣으면 사용자가 신청한 예약을 전부 반환
+                        driver_id에 값을 넣으면 해당 운전자 관련된예약을 전부 반환
                         reservation_id에 값을 넣으면 그 예약 정보 반환
                         battalion_id에 값을 넣으면 대대에 신청된 예약 정보 반환
                         하나에만 값을 넣어야 함
+                        나머지는 -1을 입력
                         ''')
     def get(self, request):
         try:
             booker_id = int(request.GET['booker_id'])
             driver_id = int(request.GET['driver_id'])
             reservation_id = int(request.GET['reservation_id'])
-            battalion_id = str(request.GET['battalion_id'])
+            battalion_id = int(request.GET['battalion_id'])
 
             if booker_id != -1:
                 return Response(get_reservation_by_booker(booker_id), status=status.HTTP_200_OK)
             elif driver_id != -1:
                 return Response(get_reservation_by_driver(driver_id), status=status.HTTP_200_OK)
-            elif battalion_id != "":
+            elif battalion_id != -1:
                 return Response(get_reservation_by_battalion(battalion_id), status=status.HTTP_200_OK)
             elif reservation_id != -1:
                 return Response(get_reservation(reservation_id), status=status.HTTP_200_OK)
@@ -135,11 +136,28 @@ class reservation(APIView):
             print(e)
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    @swagger_auto_schema(request_body=ReservationSerializer , operation_summary='배차 예약하기')
+    @swagger_auto_schema(request_body=ReservationBookingSerializer , operation_summary='배차 예약하기')
     def post(self, request):
-        serializer = ReservationSerializer(data=request.data)
+        serializer = ReservationBookingSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            reservation = Reservation.objects.select_related('driver').filter(Q(driver__battalion_id=int(str(serializer.validated_data["car"].id)[:4])) & # 이거 왜 int 추가해야 되는 건지 잘 모르겠음 여튼 int 안하면 안됨
+                                                                           (Q(reservation_start__range=[serializer.validated_data["reservation_start"], serializer.validated_data["reservation_end"]]) | 
+                                                                           Q(reservation_end__range=[serializer.validated_data["reservation_start"], serializer.validated_data["reservation_end"]])) &
+                                                                           Q(status=1))
+            if len(reservation) != 0: #예약이 있을 때 배차가 없는 운전병을 배치    
+                reservation = reservation.values()
+                already_reserved = [rv["driver_id"] for rv in reservation]
+                available_driver = User.objects.filter(
+                    Q(permission=2) &
+                    ~Q(id__in=already_reserved) &
+                    Q(battalion_id=str(serializer.validated_data["car"].id)[:4])
+                )
+                if len(available_driver) == 0: 
+                    return Response("대기중인 운전병이 없습니다.", status=status.HTTP_406_NOT_ACCEPTABLE)
+                serializer.save(driver=available_driver[0])
+            else: #예약이 없을 때는 아무 0번째 운전병을 배치
+                serializer.save(driver=User.objects.filter(Q(permission=2) & 
+                                                        Q(battalion_id=str(serializer.validated_data["car"].id)[:4]))[0])
             battalion_receiver = str(serializer.data["car"])[:4]
             user = get_user(serializer.data["booker"])
             Notification.objects.create(
@@ -149,6 +167,7 @@ class reservation(APIView):
                 reservation=serializer.instance,
                 message=f"{user.login_id}이(가) 배차를 신청했습니다."
             )
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -196,14 +215,20 @@ def approve_reservation(request):
         print(e)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-@swagger_auto_schema(method='post', request_body=AvailableCarSerializer , operation_summary='배차 가능한 차량 검색하기')    
+@swagger_auto_schema(method='post', request_body=AvailableCarSerializer , operation_summary='배차 가능한 차량 검색하기'
+                                                                        , operation_description='''
+                                                                                                battalion_id : 부대 번호(4자리),
+                                                                                                followers_num: 같이 따라오는 인원(운전병, 선탑자 제외),
+                                                                                                stopover: 경유지
+                                                                                                ''')    
 @api_view(['POST'])
 def get_available_car(request):
     try:
         serializer = AvailableCarSerializer(data=request.data)
         if serializer.is_valid():
             reservation = Reservation.objects.select_related('car').filter(Q(car__id__startswith=serializer.data["battalion"]) &
-                                                                           Q(reservation_date__date=datetime.date.today() + datetime.timedelta(days=1)) &
+                                                                           (Q(reservation_start__range=[serializer.data["reservation_start"], serializer.data["reservation_end"]]) | 
+                                                                           Q(reservation_end__range=[serializer.data["reservation_start"], serializer.data["reservation_end"]])) &
                                                                            Q(status=1))
             reservation = reservation.values()
             already_reserved = [rv["car_id"] for rv in reservation]

@@ -1,6 +1,8 @@
 from .models import Reservation, Notification, Car
 from login.models import User
 from .serializers import NotificationSerializer, ReservationSerializer, CarSerializer
+from django.db.models import Q
+from datetime import datetime
 
 def get_user(user_id):
     try:
@@ -24,16 +26,16 @@ def get_reservation(reservation_id):
     return serializer.data
 
 def get_reservation_by_booker(booker_id):
-    reservation = Reservation.objects.filter(booker=booker_id)
+    reservation = Reservation.objects.filter(Q(booker=booker_id) & Q(reservation_start__gte=datetime.now()))
     serializer = ReservationSerializer(reservation, many=True)
     return serializer.data
 
 def get_reservation_by_driver(driver_id):
-    reservation = Reservation.objects.filter(driver=driver_id)
+    reservation = Reservation.objects.filter(Q(driver=driver_id) & Q(reservation_start__gte=datetime.now()))
     serializer = ReservationSerializer(reservation, many=True)
     return serializer.data
 
 def get_reservation_by_battalion(battalion_id):
-    reservation = Reservation.objects.select_related('car').filter(car__id__startswith=battalion_id)
+    reservation = Reservation.objects.select_related('car').filter(Q(car__id__startswith=battalion_id) & Q(reservation_start__gte=datetime.now()))
     serializer = ReservationSerializer(reservation, many=True)
     return serializer.data
