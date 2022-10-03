@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:military_mobility_platform_frontend/constatns/theme.dart';
 
 class SafetyCheckList extends StatelessWidget {
   const SafetyCheckList({super.key});
@@ -37,7 +36,7 @@ class SafetyCheckList extends StatelessWidget {
         ),
         onTap: () {
           Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SafetyCheckListTable())
+            context, MaterialPageRoute(builder: (context) => SafetyCheckListSet())
           );
         },
     )
@@ -84,14 +83,14 @@ class LabeledCheckbox extends StatelessWidget {
   }
 }
 
-class SafetyCheckListTable extends StatefulWidget {
-  const SafetyCheckListTable({super.key});
+class SafetyCheckListSet extends StatefulWidget {
+  const SafetyCheckListSet({super.key});
 
   @override
-  State<SafetyCheckListTable> createState() => _SafetyCheckListTableState();
+  State<SafetyCheckListSet> createState() => _SafetyCheckListSetState();
 }
 
-class _SafetyCheckListTableState extends State<SafetyCheckListTable> {
+class _SafetyCheckListSetState extends State<SafetyCheckListSet> {
   bool _isSelected1 = false;
   bool _isSelected2 = false;
   bool _isSelected3 = false;
