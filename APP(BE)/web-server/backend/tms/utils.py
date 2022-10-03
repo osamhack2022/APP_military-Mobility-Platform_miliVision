@@ -24,12 +24,12 @@ def get_reservation(reservation_id):
     return serializer.data
 
 def get_reservation_by_booker(booker_id):
-    reservation = Reservation.objects.filter(booker=user_id)
+    reservation = Reservation.objects.filter(booker=booker_id)
     serializer = ReservationSerializer(reservation, many=True)
     return serializer.data
 
 def get_reservation_by_driver(driver_id):
-    reservation = Reservation.objects.filter(driver=user_id)
+    reservation = Reservation.objects.filter(driver=driver_id)
     serializer = ReservationSerializer(reservation, many=True)
     return serializer.data
 
