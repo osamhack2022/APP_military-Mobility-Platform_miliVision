@@ -16,7 +16,7 @@ def send_update(sender, instance, created, **kwargs):
     if created:
         channel_layer=get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            f"battalion_{serializer.data['battalion_receiver']}_0", { #테스트용 group = 1
+            f"battalion_{serializer.data['battalion_receiver']}_1", { #테스트용 group = 1
                 "type": "notify",
                 "data": serializer.data
             }

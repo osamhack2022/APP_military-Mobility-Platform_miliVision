@@ -37,7 +37,6 @@ class RegisterAPIView(APIView):
             )
             return res
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
 
 class AuthView(APIView):
     permission_classes = [AllowAny]

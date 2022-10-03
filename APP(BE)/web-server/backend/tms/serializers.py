@@ -7,6 +7,11 @@ class NotificationSerializer(serializers.ModelSerializer):
         fields = ('type_of_notification', 'message', "battalion_receiver", "permission",)
 
 
+class ReservationBookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reservation
+        fields = ('booker', 'car', 'departure', 'destination', 'followers_num', 'stopover', 'is_sharing', 'reservation_date', 'reason')
+
 class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservation
