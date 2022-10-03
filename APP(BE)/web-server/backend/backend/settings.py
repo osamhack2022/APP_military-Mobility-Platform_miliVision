@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'channels',
     'login',
     'tms',
+    'mileage',
     'drf_yasg',
     'rest_framework',
     'rest_framework_simplejwt',

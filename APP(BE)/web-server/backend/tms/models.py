@@ -1,6 +1,7 @@
 from django.db import models
 from login.models import User
 from datetime import datetime
+from login.models import *
 
 # Create your models here.
 class Car(models.Model):
