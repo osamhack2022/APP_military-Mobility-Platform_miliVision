@@ -28,7 +28,7 @@ class VehicleReturn extends StatelessWidget {
             children: [
               Container(
                 margin: EdgeInsets.fromLTRB(0,25,0,20),
-                child: Icon(Icons.checklist, size: 60),
+                child: Icon(Icons.subdirectory_arrow_left, size: 60),
               ),
               Text(subtitle, style: TextStyle(fontSize: 16)),
             ]

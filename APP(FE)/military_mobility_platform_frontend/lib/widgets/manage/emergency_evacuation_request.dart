@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class EmergencyEvacuationRequest extends StatelessWidget {
-  const EmergencyEvacuationRequest({super.key});
+class AccidentReport extends StatelessWidget {
+  const AccidentReport({super.key});
 
   @override
   Widget build(BuildContext context) {
     const subtitle = '응급환자 후송 요청';
-    return InkWell(
+    return Material( child:
+    GestureDetector(
       child: 
         Container(
           width: 168,
@@ -34,8 +35,55 @@ class EmergencyEvacuationRequest extends StatelessWidget {
           )
         ),
         onTap: () {
-          
+          Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AccidentReportSet())
+          );
         },
+    )
+    );
+  }
+}
+
+class AccidentReportSet extends StatefulWidget {
+  const AccidentReportSet({super.key});
+
+  @override
+  State<AccidentReportSet> createState() => _AccidentReportSetState();
+}
+
+class _AccidentReportSetState extends State<AccidentReportSet> {
+ 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            color: Colors.black,
+            iconSize: 15.0,
+            onPressed: () {Navigator.of(context).pop();},
+          ),
+          const Padding(
+              padding: EdgeInsets.only(bottom: 10.0)
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: Text('응급환자 후송 요청', style: TextStyle(fontSize: 22.5, fontWeight: FontWeight.bold)),
+          ),
+          const Padding(
+              padding: EdgeInsets.only(bottom: 10.0)
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: ElevatedButton(
+              onPressed: () => print('clicked'), 
+              child: const Text('응급환자 후송 요청', style: TextStyle(fontSize: 18.0)),
+            ),
+          ),
+        ],
+      )
     );
   }
 }
