@@ -15,4 +15,3 @@ class History(models.Model):
     datetime = models.DateTimeField('drived date', default=datetime.now)
     total_time = models.IntegerField(default=0)
     total_range = models.IntegerField(default=0)
-    
