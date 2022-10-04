@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
+import 'package:military_mobility_platform_frontend/widgets/request/select_mobility/request_button.dart';
 import 'package:provider/provider.dart';
 
 class SelectMobilityTab extends StatelessWidget {
@@ -31,16 +32,7 @@ class SelectMobilityTab extends StatelessWidget {
                         "${mobilities[index].fuelType}|${mobilities[index].color}",
                         style: theme.textTheme.labelMedium),
                   ]),
-              trailing: SizedBox(
-                  width: 120.0,
-                  child: ElevatedButton(
-                      onPressed: () => print('select'),
-                      style: ElevatedButton.styleFrom(
-                          shape: const StadiumBorder()),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [Icon(Icons.add), Text('선택하기')]))),
+              trailing: RequestMobilityButton(mobilities[index]),
               isThreeLine: true,
             ),
         separatorBuilder: (context, index) => const Padding(
