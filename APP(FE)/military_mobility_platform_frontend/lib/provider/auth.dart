@@ -10,17 +10,21 @@ class AuthProvider extends ChangeNotifier {
   TokenDTO? get token => _token;
 
   Future<bool> login({required String id, required String password}) async {
-    final response =
-        await APIService.login(LoginReqDTO(login_id: id, password: password));
-    if (response != null) {
-      _token = response.token;
-      LocalStorage().writeUserToken(_token!);
-      APIService.setUserToken(_token!);
-      notifyListeners();
-      return true;
-    } else {
-      return false;
-    }
+    // final response =
+    //     await APIService.login(LoginReqDTO(login_id: id, password: password));
+    // if (response != null) {
+    //   _token = response.token;
+    //   LocalStorage().writeUserToken(_token!);
+    //   APIService.setUserToken(_token!);
+    //   notifyListeners();
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    _token = TokenDTO(access: id, refresh: password);
+    LocalStorage().writeUserToken(_token!);
+    notifyListeners();
+    return true;
   }
 
   void logout() {

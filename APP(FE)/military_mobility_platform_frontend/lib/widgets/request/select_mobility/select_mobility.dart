@@ -11,6 +11,7 @@ class SelectMobilityTab extends StatelessWidget {
     final mobilities = mobilityListProvider.mobilities;
     final theme = Theme.of(context);
     return ListView.separated(
+        itemCount: mobilities.length,
         itemBuilder: (context, index) => ListTile(
               leading: const Image(
                 image: AssetImage('assets/images/blank.jpg'),
@@ -44,7 +45,6 @@ class SelectMobilityTab extends StatelessWidget {
             ),
         separatorBuilder: (context, index) => const Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0),
-            child: Divider(thickness: 1.0)),
-        itemCount: mobilities.length);
+            child: Divider(thickness: 1.0)));
   }
 }

@@ -18,6 +18,11 @@ final kAppTheme = ThemeData(
         labelMedium:
             GoogleFonts.roboto(color: const Color(0xFF898989), fontSize: 12.0),
         labelSmall: GoogleFonts.roboto(color: Colors.black, fontSize: 8.0)),
+    dialogTheme: DialogTheme(
+        titleTextStyle: GoogleFonts.roboto(
+            color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.bold),
+        contentTextStyle:
+            GoogleFonts.roboto(color: Colors.black, fontSize: 16.0)),
     buttonTheme: const ButtonThemeData(
         buttonColor: Color(0xFF6200EE),
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 18)),

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/constatns/locations.dart';
-import 'package:military_mobility_platform_frontend/model/mobility_request.dart';
+import 'package:military_mobility_platform_frontend/model/mobility.dart';
 import 'package:military_mobility_platform_frontend/service/api.dart';
 
 class MobilityRequestProvider extends ChangeNotifier {

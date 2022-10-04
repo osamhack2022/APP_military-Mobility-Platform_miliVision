@@ -20,6 +20,8 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => NavigationProvider()),
           ChangeNotifierProvider(create: (context) => AuthProvider()),
           ChangeNotifierProvider(create: (context) => MobilityListProvider()),
+          ChangeNotifierProvider(
+              create: (context) => RequestedMobilityListProvider()),
         ],
         child: const NavigatedHome(),
       ),
