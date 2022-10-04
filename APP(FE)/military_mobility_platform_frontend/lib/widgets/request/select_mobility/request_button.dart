@@ -26,6 +26,7 @@ class RequestMobilityButton extends StatelessWidget {
 
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (dialogContext) => AlertDialog(
               title: const Text('배차 신청이 완료되었습니다.'),
               content: const Text(
