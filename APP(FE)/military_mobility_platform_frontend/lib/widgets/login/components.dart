@@ -6,14 +6,12 @@ Widget buildTextFormField(
     String? helperText,
     TextInputType type = TextInputType.text}) {
   return SizedBox(
-      height: 100.0,
+      height: 80.0,
       child: TextFormField(
         keyboardType: type,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(8),
           labelText: labelText,
           helperText: helperText,
-          border: const OutlineInputBorder(),
         ),
         onSaved: setter,
       ));
