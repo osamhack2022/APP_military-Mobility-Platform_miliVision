@@ -11,23 +11,23 @@ class OperationInfoProvider extends ChangeNotifier {
   String get operationPurpose => _operationPurpose;
   String get operationNote => _operationNote;
 
-  void set DriverInfo(String driverInfo) {
-    _driverInfo = driverInfo;
+  void setDriverInfo({String? driverInfo}) {
+    _driverInfo = driverInfo ?? _driverInfo;
     notifyListeners();
   }
 
-  void set CommanderInfo(String commanderInfo) {
-    _commanderInfo = commanderInfo;
+  void setCommanderInfo({String? commanderInfo}) {
+    _commanderInfo = commanderInfo ?? _commanderInfo;
     notifyListeners();
   }
 
-  void set OperationPurpose(String operationPurpose) {
-    _operationPurpose = operationPurpose;
+  void setOperationPurpose({String? operationPurpose}) {
+    _operationPurpose = operationPurpose ?? _operationPurpose;
     notifyListeners();
   }
 
-  void set OperationNote(String operationNote) {
-    _operationNote = operationNote;
+  void setOperationNote({String? operationNote}) {
+    _operationNote = operationNote ?? _operationNote;
     notifyListeners();
   }
 }
