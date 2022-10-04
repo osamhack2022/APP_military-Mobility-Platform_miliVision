@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:military_mobility_platform_frontend/provider/operation_info.dart';
 
 class OperationPlan extends StatelessWidget {
   const OperationPlan({super.key});
@@ -6,6 +7,12 @@ class OperationPlan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const subtitle = '운행 계획 작성';
+    final operationInfoProvider = Provider.of<OperationInfoProvider>(context);
+    final driverInfo = operationInfoProvider.driverInfo;
+    final commanderInfo = operationInfoProvider.commanderInfo;
+    final operationPurpose = operationInfoProvider.operationPurpose;
+    final operationNote = operationInfoProvider.operationNote;
+
     return Material( child:
     GestureDetector(
       child: 
@@ -52,7 +59,7 @@ class OperationPlanSet extends StatefulWidget {
 }
 
 class _OperationPlanSetState extends State<OperationPlanSet> {
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +82,29 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
           const Padding(
               padding: EdgeInsets.only(bottom: 10.0)
           ),
+          Column( children: [
+            Text('운전자 정보를 등록해주세요.(*)'),
+            TextField(
+              decoration: const InputDecoration(hintText: "일병 OOO"),
+
+            ),
+            Text('직접 운전 간부의 경우에는 본인의 성함을 기입해주세요.'),
+          ]),
+          Column( children: [
+            Text('선탑자 정보를 등록해주세요.(*)'),
+            Text('일병 ㅇㅇㅇ'),
+            Text('직접 운전 간부의 경우에는 본인의 성함을 기입해주세요.'),
+          ]),
+          Column( children: [
+            Text('운행 목적을 입력해주세요.(*)'),
+            Text('일병 ㅇㅇㅇ'),
+            Text('직접 운전 간부의 경우에는 본인의 성함을 기입해주세요.'),
+          ]),
+          Column( children: [
+            Text('비고기재란.(*)'),
+            Text('일병 ㅇㅇㅇ'),
+            Text('직접 운전 간부의 경우에는 본인의 성함을 기입해주세요.'),
+          ]),
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
