@@ -65,7 +65,7 @@ class AuthView(APIView):
             return res
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)        
-        
+
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
