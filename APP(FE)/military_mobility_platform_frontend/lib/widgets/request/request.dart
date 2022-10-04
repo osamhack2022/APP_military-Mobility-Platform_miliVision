@@ -56,9 +56,15 @@ class RequestButton extends StatelessWidget {
             .request();
     if (dto != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Provider.of<MobilityListProvider>(context, listen: false).setup(dto);
-        Provider.of<NavigationProvider>(context, listen: false)
-            .animateToTabWithName('select mobility');
+        final mobilityListProvider =
+            Provider.of<MobilityListProvider>(context, listen: false);
+        final navigationProvider =
+            Provider.of<NavigationProvider>(context, listen: false);
+        mobilityListProvider.setup(dto);
+        final mobilities = mobilityListProvider.mobilities.length;
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('요청하신 조건에 총 $mobilities대의 차량이 선택 가능합니다.')));
+        navigationProvider.animateToTabWithName('select mobility');
       });
     }
   }
