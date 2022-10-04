@@ -78,7 +78,7 @@ class _EmergencyEvacuationRequestSetState extends State<EmergencyEvacuationReque
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () => print('clicked'), 
+              onPressed: () => Navigator.of(context).pop(), 
               child: const Text('응급환자 후송 요청', style: TextStyle(fontSize: 18.0)),
             ),
           ),
