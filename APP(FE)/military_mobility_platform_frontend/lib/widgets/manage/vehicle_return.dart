@@ -78,7 +78,7 @@ class _VehicleReturnSetState extends State<VehicleReturnSet> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () => print('clicked'), 
+              onPressed: () => Navigator.of(context).pop(), 
               child: const Text('차량 반납하기', style: TextStyle(fontSize: 18.0)),
             ),
           ),

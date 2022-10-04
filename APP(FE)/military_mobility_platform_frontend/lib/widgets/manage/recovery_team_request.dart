@@ -85,7 +85,7 @@ class _VehicleLocationCheckState extends State<VehicleLocationCheck> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () => print('clicked'), 
+              onPressed: () => Navigator.of(context).pop(), 
               child: const Text('다음', style: TextStyle(fontSize: 18.0)),
             ),
           ),

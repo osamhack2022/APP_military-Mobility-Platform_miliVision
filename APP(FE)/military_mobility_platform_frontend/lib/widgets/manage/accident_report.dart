@@ -75,10 +75,39 @@ class _AccidentReportSetState extends State<AccidentReportSet> {
           const Padding(
               padding: EdgeInsets.only(bottom: 10.0)
           ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: Text('사고 유형을 선택해주세요.', style: TextStyle(fontSize: 18.0,)),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: Text('---사고 유형을 선택해주세요.---', style: TextStyle(fontSize: 15.0,)),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: Text('사고 위치를 입력해주세요.', style: TextStyle(fontSize: 18.0,)),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: Column(
+              children: [
+                TextField(
+                  decoration:
+                    const InputDecoration(hintText: "서울특별시 동작구 OOO번길 OO", 
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                    )
+                ),
+                Text('기타 운행계획의 특이사항을 입력해주세요.', style: TextStyle(fontSize: 10.0)),
+              ]
+            )
+          ),
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () => print('clicked'), 
+              onPressed: () => Navigator.of(context).pop(), 
               child: const Text('사고 접수하기', style: TextStyle(fontSize: 18.0)),
             ),
           ),
