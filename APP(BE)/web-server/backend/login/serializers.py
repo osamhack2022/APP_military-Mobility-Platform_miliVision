@@ -22,10 +22,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         email = validated_data.get('email')
         battalion_id = validated_data.get('battalion_id')
         password = validated_data.get('password')
+        permission = validated_data.get('permission')
         user = User(
             login_id=login_id,
             email=email,
             battalion_id=battalion_id,
+            permission=permission,
             is_active=True
         )
         user.set_password(password)

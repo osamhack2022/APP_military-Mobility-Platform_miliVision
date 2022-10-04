@@ -40,7 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
-    permission=models.PositiveIntegerField(default=0)
+    permission=models.PositiveIntegerField(default=0) # 0 사용자, 1 수송 관리자, 2 운전병 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

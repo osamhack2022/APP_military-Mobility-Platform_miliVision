@@ -29,5 +29,11 @@ services:
   redis:
     image: redis:latest
     container_name: Redis
+    volumes:
+      - ./db/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_REPLICATION_MODE=master
+      - ALLOW_EMPTY_PASSWORD=yes
     ports:
       - "6379:6379"
+    command: redis-server /usr/local/etc/redis/redis.conf
