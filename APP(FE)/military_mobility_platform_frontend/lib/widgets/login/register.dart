@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:military_mobility_platform_frontend/model/user.dart';
-import 'package:military_mobility_platform_frontend/service/api.dart';
+import 'package:military_mobility_platform_frontend/provider/auth.dart';
+import 'package:military_mobility_platform_frontend/service/toast.dart';
 import 'package:military_mobility_platform_frontend/widgets/login/components.dart';
+import 'package:provider/provider.dart';
 
 class RegisterTab extends StatefulWidget {
   const RegisterTab({super.key});
@@ -59,7 +60,8 @@ class RegisterTabState extends State<RegisterTab> {
       buildTextFormField(
           setter: (val) => email = val ?? "",
           labelText: '이메일',
-          helperText: '이메일을 입력해주세요'),
+          helperText: '이메일을 입력해주세요',
+          type: TextInputType.emailAddress),
       buildVerticalPadding(15.0),
       buildTextFormField(
           setter: (val) => baseName = val ?? "",
@@ -87,20 +89,38 @@ class RegisterTabState extends State<RegisterTab> {
 
   Widget _buildRegisterButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => _register().then((success) {
-        if (success) {
-          Navigator.pop(context);
-        }
-      }),
+      onPressed: () => _register(context),
       child: const Text('회원가입'),
     );
   }
 
-  Future<bool> _register() async {
+  void _register(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     _formKey.currentState?.save();
-    final response = await APIService.register(RegisterReqDTO(
-        login_id: id, password: passwd, email: email, battalion_id: baseName));
-    print(response);
-    return response != null;
+    authProvider
+        .register(id: id, password: passwd, email: email, battalionID: baseName)
+        .then((success) {
+      if (success) {
+        final theme = Theme.of(context);
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text('관리자의 승인 이후에 로그인할 수 있습니다.',
+                      style: theme.textTheme.titleMedium),
+                  content: Text('승인에는 2~3일정도 소요되며 승인 시 알림이 전송됩니다.',
+                      style: theme.textTheme.bodySmall),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                        child: const Text('닫기'))
+                  ],
+                ));
+      } else {
+        Toast.showFailToast('회원가입에 실패했습니다.');
+      }
+    });
   }
 }

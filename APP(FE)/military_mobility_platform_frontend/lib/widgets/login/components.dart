@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 Widget buildTextFormField(
-    {void Function(String?)? setter, String? labelText, String? helperText}) {
+    {void Function(String?)? setter,
+    String? labelText,
+    String? helperText,
+    TextInputType type = TextInputType.text}) {
   return SizedBox(
       height: 100.0,
       child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: type,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(8),
           labelText: labelText,
