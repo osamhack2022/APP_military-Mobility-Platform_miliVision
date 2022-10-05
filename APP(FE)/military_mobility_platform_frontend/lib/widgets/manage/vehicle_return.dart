@@ -35,8 +35,24 @@ class VehicleReturn extends StatelessWidget {
           )
         ),
         onTap: () {
-          Navigator.push(
-            context, MaterialPageRoute(builder: (context) => VehicleReturnSet())
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                  title: Text('차량반납 요청이 완료되었습니다.'),
+                  content: Column(
+                    children: [
+                      Text('수송업무 담당자 확인 후 PUSH 알림으로 반납완료 처리 예정입니다.'),
+                    ],
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                        child: Text('닫기'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        }),
+                  ]);
+            },
           );
         },
     )

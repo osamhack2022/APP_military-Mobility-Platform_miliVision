@@ -82,12 +82,15 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
           Column( 
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('운전자 정보를 등록해주세요.(*)'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Text('운전자 정보를 등록해주세요.(*)'),
+              ),              
               TextField(
                 decoration: 
                   const InputDecoration(hintText: "일병 OOO", 
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
                       borderSide: BorderSide(color: Colors.black),
                     ),
                   )
@@ -98,12 +101,15 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
           Column( 
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('선탑자 정보를 등록해주세요.(*)'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Text('선탑자 정보를 등록해주세요.(*)'),
+              ),        
               TextField(
                 decoration:
                   const InputDecoration(hintText: "중사 OOO", 
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                         borderSide: BorderSide(color: Colors.black),
                       ),
                   )
@@ -114,12 +120,15 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
           Column( 
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('운행 목적을 입력해주세요.(*)'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Text('운행 목적을 입력해주세요.(*)'),
+              ),  
               TextField(
                 decoration:
                   const InputDecoration(hintText: "ex) 환자 후송, 출장, 회의 참석 등", 
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                         borderSide: BorderSide(color: Colors.black),
                       ),
                   )
@@ -129,12 +138,15 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
           Column( 
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('비고기재란.(*)'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12.0),
+                child: Text('비고기재란.(*)'),
+              ),  
               TextField(
                 decoration:
                   const InputDecoration(hintText: "ex) 이동 간 동승자 경유지에서 탑승 예정", 
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                         borderSide: BorderSide(color: Colors.black),
                       ),
                   )
