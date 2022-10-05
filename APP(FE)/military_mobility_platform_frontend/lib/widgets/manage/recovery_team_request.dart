@@ -135,13 +135,28 @@ class _RecoveryTeamRequestContentState extends State<RecoveryTeamRequestContent>
             padding: EdgeInsets.only(left: 10.0),
             child: Text('긴급출동 요청내용을 입력해주세요', style: TextStyle(fontSize: 18.0,)),
           ),
+          
           Padding(
             padding: EdgeInsets.only(left: 10.0),
             child: Container( 
               height: 220,
               width: 380,
-              decoration: BoxDecoration(border: Border.all(),), 
-              child: Text('요청내용 입력칸'),
+              decoration: BoxDecoration(border: Border.all(), borderRadius: BorderRadius.circular(10),),  
+              child: Row(
+                children: [       
+                  Padding(
+                    padding: EdgeInsets.only(left: 10.0),
+                  ),
+                  SizedBox(
+                    width: 300,
+                    child:
+                      TextField(
+                        decoration: 
+                          const InputDecoration(hintText: "요청 내용 작성",),
+                      ),
+                  ),
+                ]
+              ),
             ),
           ),
           Padding(
