@@ -1,0 +1,54 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title> Room</title>
+</head>
+<body>
+    <h2>배차 예약 알림</h2>
+    <!-- <textarea id="log" cols="100" rows="20"></textarea><br> -->
+    <ul id="log">
+        {% for notification in notifications %}
+    </ul>
+    <script>
+        const battalion = JSON.parse('{{ user.battalion_id|escapejs }}');
+        const user_id = JSON.parse('{{ user.id|escapejs }}');
+        console.log(battalion);
+        const Socket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/notification/'
+            + battalion
+            + '/'
+            + user_id
+            + '/'
+        );
+
+        Socket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            var Btn = document.createElement( 'button' );
+            var BtnText = document.createTextNode( '내용 보기 및 승인' );
+            Btn.setAttribute('id',data.data.reservation);
+            Btn.appendChild(BtnText);
+            Btn.onclick = function(event) {
+                window.location.href = 'http://' + window.location.host + "/admin/tms/reservation/" + this.id + "/change/";
+            }
+
+            const li = document.createElement("li");
+            li.setAttribute('id',data.data.message);
+            const textNode = document.createTextNode(data.data.message);
+            li.appendChild(textNode);
+            var log = document.getElementById('log') 
+            log.insertBefore(li, log.firstChild).appendChild(Btn);
+        };
+
+        Socket.onclose = function(e) {
+            console.error('socket closed unexpectedly');
+        };
+    </script>
+
+</body>
+</html>
+{% endblock %}
