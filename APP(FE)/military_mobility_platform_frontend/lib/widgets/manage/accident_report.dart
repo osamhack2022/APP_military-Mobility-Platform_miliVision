@@ -39,7 +39,7 @@ class AccidentReport extends StatelessWidget {
             context, MaterialPageRoute(builder: (context) => AccidentReportSet())
           );
         },
-    )
+      )
     );
   }
 }
@@ -52,7 +52,16 @@ class AccidentReportSet extends StatefulWidget {
 }
 
 class _AccidentReportSetState extends State<AccidentReportSet> {
- 
+  String dropdownvalue = '차 대 사람';
+
+  var items = [
+    '차 대 사람',
+    '차 대 차',
+    '차 대 이륜차',
+    '차 대 자전거',
+    '고속도로',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,12 +88,35 @@ class _AccidentReportSetState extends State<AccidentReportSet> {
             padding: EdgeInsets.only(left: 10.0),
             child: Text('사고 유형을 선택해주세요.', style: TextStyle(fontSize: 18.0,)),
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10.0),
-            child: Text('---사고 유형을 선택해주세요.---', style: TextStyle(fontSize: 15.0,)),
+          Padding(
+            padding: EdgeInsets.only(left: 140.0),
+            child: 
+              DropdownButton(
+               
+              // Initial Value
+              value: dropdownvalue,
+               
+              // Down Arrow Icon
+              icon: const Icon(Icons.keyboard_arrow_down),   
+               
+              // Array list of items
+              items: items.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              // After selecting the desired option,it will
+              // change button value to selected value
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownvalue = newValue!;
+                });
+              },
+            ), 
           ),
           const Padding(
-            padding: EdgeInsets.only(left: 10.0),
+            padding: EdgeInsets.only(left: 10.0, top: 100.0),
             child: Text('사고 위치를 입력해주세요.', style: TextStyle(fontSize: 18.0,)),
           ),
           Padding(
@@ -107,10 +139,66 @@ class _AccidentReportSetState extends State<AccidentReportSet> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(), 
-              child: const Text('사고 접수하기', style: TextStyle(fontSize: 18.0)),
+              onPressed: () {
+                Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => AccidentReportSetImage())
+                );
+              }, 
+              child: const Text('다음', style: TextStyle(fontSize: 18.0)),
+            ),
+          )
+        ],
+      )
+    );
+  }
+}
+
+class AccidentReportSetImage extends StatefulWidget {
+  const AccidentReportSetImage({super.key});
+
+  @override
+  State<AccidentReportSetImage> createState() => _AccidentReportSetImageState();
+}
+
+class _AccidentReportSetImageState extends State<AccidentReportSetImage> {
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            color: Colors.black,
+            iconSize: 15.0,
+            onPressed: () {Navigator.of(context).pop();},
+          ),
+          const Padding(
+              padding: EdgeInsets.only(bottom: 10.0)
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: Text('사고현장 사진 업로드', style: TextStyle(fontSize: 22.5, fontWeight: FontWeight.bold)),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: Container( 
+              height: 400,
+              width: 380,
+              decoration: BoxDecoration(border: Border.all(),), 
             ),
           ),
+          const Padding(
+              padding: EdgeInsets.only(bottom: 20.0)
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(), 
+              child: const Text('사고현장 사진 업로드', style: TextStyle(fontSize: 18.0)),
+            ),
+          )
         ],
       )
     );
