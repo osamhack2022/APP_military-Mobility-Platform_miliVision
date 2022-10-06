@@ -41,7 +41,14 @@ class RegisterAPIView(APIView):
 class AuthView(APIView):
     permission_classes = [AllowAny]
 
-    @swagger_auto_schema(request_body=UserSerializer)
+    @swagger_auto_schema(request_body=openapi.Schema(
+          'user login',
+          type=openapi.TYPE_OBJECT,
+          properties={
+            'login_id': openapi.Parameter('login_id', openapi.IN_BODY, type=openapi.TYPE_STRING),
+            'password': openapi.Parameter('password', openapi.IN_BODY, type=openapi.TYPE_STRING)
+        },
+    ))
     def post(self, request):
         user = authenticate(
             login_id=request.data.get("login_id"), password=request.data.get("password")
@@ -65,7 +72,7 @@ class AuthView(APIView):
             return res
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)        
-        
+
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
