@@ -2,10 +2,10 @@ from rest_framework import serializers
 from .models import Notification, Reservation, Car
 import datetime
 
-class NotificationSerializer(serializers.ModelSerializer):
+class NotificationSerializer(serializers.ModelSerializer):    
     class Meta:
         model = Notification
-        fields = ('type_of_notification', 'message', "battalion_receiver", "permission",)
+        fields = ('type_of_notification', 'message', "battalion_receiver", "permission", "reservation")
 
 
 class ReservationBookingSerializer(serializers.ModelSerializer):
@@ -36,5 +36,5 @@ class AvailableCarSerializer(serializers.Serializer):
     destination = serializers.CharField(max_length=264,default="")
     followers_num = serializers.IntegerField(default=0)
     stopover = serializers.CharField(max_length=264,default="")
-    reservation_start = serializers.DateTimeField(default_timezone=datetime.timedelta(hours=9))
-    reservation_end = serializers.DateTimeField(default_timezone=datetime.timedelta(hours=9))
+    reservation_start = serializers.DateTimeField()
+    reservation_end = serializers.DateTimeField()

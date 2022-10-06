@@ -3,7 +3,7 @@ from django.db.models import Q
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status, filters
-from rest_framework.decorators import authentication_classes, api_view
+from rest_framework.decorators import authentication_classes, api_view, permission_classes
 from .utils import get_user, get_notification, get_reservation, get_reservation_by_booker, get_reservation_by_driver, get_reservation_by_battalion, get_car 
 from .serializers import NotificationSerializer, ReservationBookingSerializer, ReservationSerializer, CarSerializer, AvailableCarSerializer 
 from drf_yasg.utils import swagger_auto_schema
@@ -204,6 +204,7 @@ class reservation(APIView):
                         거절이면 status에 -1을 넣어서 사용한다.
                         ''')
 @api_view(['POST'])
+@permission_classes((permissions.AllowAny)) #admin에서 접근할 예정이라 authentication 제거
 def approve_reservation(request):
     try:
         reservation_id = request.data['reservation_id']

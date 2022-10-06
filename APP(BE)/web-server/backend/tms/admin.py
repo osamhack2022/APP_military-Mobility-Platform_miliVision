@@ -2,6 +2,7 @@ from django.contrib import admin
 from django import forms
 from .models import Car, Notification, Reservation
 from django.template.response import TemplateResponse
+from django.http import Http404
 from django.urls import path
 
 
@@ -76,9 +77,13 @@ class ReservationAdmin(admin.ModelAdmin):
         return post_urls + urls
     
     def reservation_status_view(self, request):
+        if request.user == None:
+            raise Http404("User does not exist")
+
         context = dict(
             self.admin_site.each_context(request),
-            reservations=Reservation.objects.all()
+            notifications=Notification.objects.filter(battalion_receiver=request.user.battalion_id),
+            user=request.user
         )
-        return TemplateResponse(request, "admin/reservation_status.html", context)
+        return TemplateResponse(request, "admin/reservation_notification.html", context)
 admin.site.register(Reservation, ReservationAdmin)

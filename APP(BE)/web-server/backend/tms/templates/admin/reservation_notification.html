@@ -1,0 +1,82 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title> 알림 서비스</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        const battalion = JSON.parse('{{ user.battalion_id|escapejs }}');
+        const user_id = JSON.parse('{{ user.id|escapejs }}');
+        console.log(battalion);
+        toastr.options = { "closeButton": true, "debug": false, "newestOnTop": true,
+                "progressBar": true, 'positionClass':'toast-top-full-width', "preventDuplicates": true,
+                "onclick": null, "showDuration": "300", "hideDuration": "1000", "timeOut": "5000",
+                "extendedTimeOut": "3000", "showEasing": "swing", "hideEasing": "linear",
+                "showMethod": "fadeIn", "hideMethod": "fadeOut" };
+        const Socket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/notification/'
+            + battalion
+            + '/'
+            + user_id
+            + '/'
+        );
+        const button_onclick = function (id) {
+                window.location.href = 'http://' + window.location.host + "/admin/tms/reservation/" + id + "/change/";
+            }
+        Socket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            var Btn = document.createElement( 'button' );
+            var BtnText = document.createTextNode( '내용 보기 및 승인' );
+            Btn.setAttribute('id',data.data.reservation);
+            Btn.appendChild(BtnText);
+            Btn.onclick = function(event){
+                window.location.href = 'http://' + window.location.host + "/admin/tms/reservation/" + this.id + "/change/";
+            };
+            var tr = document.createElement("tr");
+            var td = document.createElement("td");
+            var textNode = document.createTextNode(data.data.message);
+            td.appendChild(textNode);
+            var td = document.createElement("td");
+            var textNode = document.createTextNode(data.data.type_of_notification);
+            td.appendChild(textNode);
+            var td = document.createElement("td");
+            td.appendChild(Btn);
+
+            var log = document.getElementById('log') 
+            log.insertBefore(tr, log.firstChild).appendChild(Btn);
+            toastr.success(data.data.message);
+        };
+
+        Socket.onclose = function(e) {
+            console.error('socket closed unexpectedly');
+        };
+    </script>
+</head>
+<body>
+    <h2>배차 예약 알림</h2>
+    <!-- <textarea id="log" cols="100" rows="20"></textarea><br> -->
+    <div>
+        <table border="1" id="log">
+            <tr>
+                <th scope="col">message</th>
+                <th scope="col">type_of_notification</th>
+                <th scope="col">link</th>
+            </tr>
+            {% for notification in notifications %}
+            <tr>
+                <td>{{notification.message}}</td>
+                <td>{{notification.type_of_notification}}</td>
+                <td><button type="button" id="{{notification.reservation.id}}" onclick="button_onclick(this.id);">내용 보기 및 승인</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+</body>
+</html>
+{% endblock %}
