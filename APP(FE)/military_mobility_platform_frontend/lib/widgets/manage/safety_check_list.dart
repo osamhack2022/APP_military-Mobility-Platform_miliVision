@@ -194,7 +194,7 @@ class _SafetyCheckListSetState extends State<SafetyCheckListSet> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () => print('clicked'), 
+              onPressed: () => Navigator.of(context).pop(), 
               child: const Text('안전 점검표 제출하기', style: TextStyle(fontSize: 18.0)),
             ),
           ),

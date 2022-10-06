@@ -23,14 +23,14 @@ class Profile extends StatelessWidget {
                         height: 50.0,
                         fit: BoxFit.cover,
                         )
-                    :Image.file(userImage),
+                    :Image.file(Provider.of<UserInfoProvider>(context).userImage),
                 const Padding(
                 padding: EdgeInsets.only(left: 10.0)),
                 Column(
                     crossAxisAlignment: CrossAxisAlignment.start, 
                     children: [
-                        Text(userName, style: TextStyle(fontSize: 20.0)),
-                        Text(regiment, style: TextStyle(fontSize: 14.0)),
+                        Text(Provider.of<UserInfoProvider>(context).userName, style: TextStyle(fontSize: 20.0)),
+                        Text(Provider.of<UserInfoProvider>(context).regiment, style: TextStyle(fontSize: 14.0)),
                     ]
                 )
             ]
