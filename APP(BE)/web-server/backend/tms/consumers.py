@@ -2,12 +2,20 @@ from channels.generic.websocket import WebsocketConsumer,AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync,sync_to_async
+<<<<<<< HEAD
 from .models import Notification, Reservation
+=======
+from .models import Notification
+>>>>>>> 309cf2aa1cb5a38b25207774435faefb9e15b586
 from login.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .utils import get_notification
+<<<<<<< HEAD
 from .serializers import NotificationSerializer, ReservationSerializer
+=======
+from .serializers import NotificationSerializer
+>>>>>>> 309cf2aa1cb5a38b25207774435faefb9e15b586
 import json
 
 
