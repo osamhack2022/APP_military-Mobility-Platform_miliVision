@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:military_mobility_platform_frontend/provider/appbar.dart';
 import 'package:military_mobility_platform_frontend/widgets/manage/safety_check_list.dart';
 import 'package:military_mobility_platform_frontend/widgets/manage/operation_plan.dart';
 import 'package:military_mobility_platform_frontend/widgets/manage/accident_report.dart';
 import 'package:military_mobility_platform_frontend/widgets/manage/recovery_team_request.dart';
 import 'package:military_mobility_platform_frontend/widgets/manage/emergency_evacuation_request.dart';
 import 'package:military_mobility_platform_frontend/widgets/manage/vehicle_return.dart';
+import 'package:military_mobility_platform_frontend/provider/appbar.dart';
+import 'package:military_mobility_platform_frontend/provider/operation_info.dart';
 import 'package:provider/provider.dart';
 
 class ManageTab extends StatelessWidget {

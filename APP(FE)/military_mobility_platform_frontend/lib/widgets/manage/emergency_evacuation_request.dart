@@ -55,34 +55,58 @@ class _EmergencyEvacuationRequestSetState extends State<EmergencyEvacuationReque
  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            color: Colors.black,
-            iconSize: 15.0,
-            onPressed: () {Navigator.of(context).pop();},
-          ),
-          const Padding(
-              padding: EdgeInsets.only(bottom: 10.0)
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10.0),
-            child: Text('응급환자 후송 요청', style: TextStyle(fontSize: 22.5, fontWeight: FontWeight.bold)),
-          ),
-          const Padding(
-              padding: EdgeInsets.only(bottom: 10.0)
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: ElevatedButton(
-              onPressed: () => print('clicked'), 
-              child: const Text('응급환자 후송 요청', style: TextStyle(fontSize: 18.0)),
+    return Center(
+      child: Scaffold(
+        body: Column(
+          children: [
+            /*IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              color: Colors.black,
+              iconSize: 15.0,
+              onPressed: () {Navigator.of(context).pop();},
+            ),*/
+            const Padding(
+                padding: EdgeInsets.only(bottom: 100.0)
             ),
-          ),
-        ],
+            Image.network(
+                        'https://www.4pns.com/__FileSave/Board/Work/216/1888022460_ZQky0gOb_EC9D98EBACB4EC82ACEBA0B9EBB680.gif',
+                        width: 300.0,
+                        height: 300.0,
+                        fit: BoxFit.cover,
+                        ),
+            //iamge
+            
+            const Padding(
+                padding: EdgeInsets.only(bottom: 10.0)
+            ),
+            const Padding(
+                padding: EdgeInsets.only(bottom: 30.0),
+                child: Text('Emergency Center', style: TextStyle(fontSize: 30.0))
+            ),
+            const Padding(
+                padding: EdgeInsets.only(bottom: 30.0),
+                child: Text('본 서비스를 이용하기 위해서는 사용자 코드를 입력하세요.', style: TextStyle(fontSize: 13.0))
+            ),
+            SizedBox(
+              width: 300,
+              child:
+                TextField(
+                  decoration: 
+                    const InputDecoration(hintText: "사용자 코드 입력",),
+                ),
+            ),
+            const Padding(
+                padding: EdgeInsets.only(bottom: 30.0),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(), 
+                child: const Text('로그인', style: TextStyle(fontSize: 18.0)),
+              ),
+            ),
+          ],
+        )
       )
     );
   }
