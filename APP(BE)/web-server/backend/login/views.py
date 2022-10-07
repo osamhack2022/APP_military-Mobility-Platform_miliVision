@@ -15,7 +15,11 @@ from drf_yasg import openapi
 class RegisterAPIView(APIView):
     permission_classes = [AllowAny]
 
-    @swagger_auto_schema(request_body=RegisterSerializer)
+    @swagger_auto_schema(request_body=RegisterSerializer, operation_description='''
+                                                                                is_staff: admin페이지의 접근 권한 여부
+                                                                                battalion_id: 부대코드(4자)
+                                                                                permission: 0 일반사용자, 1 수송 관리자, 2 운전병
+                                                                                ''')
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
