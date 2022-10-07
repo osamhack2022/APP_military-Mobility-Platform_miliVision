@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:military_mobility_platform_frontend/model/mobility.dart';
 import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
 import 'package:military_mobility_platform_frontend/provider/navigation.dart';
+import 'package:military_mobility_platform_frontend/service/mobility_assets.dart';
 import 'package:military_mobility_platform_frontend/widgets/list/cancle_dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,9 @@ class RequestedMobilityCard extends StatelessWidget {
         elevation: 3.0,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           _buildRequestStatusSection(context),
-          const Image(image: AssetImage('assets/images/blank.jpg')),
+          Image(
+              image: MobilityAssets.getMobilityImage(
+                  requestedMobility.mobility.type)),
           _buildInfoSection(context),
           _buildButtonSection(context),
         ]));

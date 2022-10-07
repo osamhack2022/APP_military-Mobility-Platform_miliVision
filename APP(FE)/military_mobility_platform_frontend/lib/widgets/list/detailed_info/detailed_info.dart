@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/model/mobility.dart';
 import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
+import 'package:military_mobility_platform_frontend/service/mobility_assets.dart';
 import 'package:military_mobility_platform_frontend/widgets/list/detailed_info/detailed_info_subtab.dart';
 import 'package:provider/provider.dart';
 
@@ -26,8 +27,8 @@ class DetailedInfoTab extends StatelessWidget {
   Widget _buildInfoSection(BuildContext context, MobilityDTO mobility) {
     final textTheme = Theme.of(context).textTheme;
     return Row(children: [
-      const Image(
-          image: AssetImage('assets/images/blank.jpg'),
+      Image(
+          image: MobilityAssets.getMobilityImage(mobility.type),
           height: 110.0,
           fit: BoxFit.fitHeight),
       const Padding(padding: EdgeInsets.only(left: 24.0)),

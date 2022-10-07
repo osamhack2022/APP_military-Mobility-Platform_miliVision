@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
+import 'package:military_mobility_platform_frontend/service/mobility_assets.dart';
 import 'package:military_mobility_platform_frontend/widgets/request/select_mobility/request_button.dart';
 import 'package:provider/provider.dart';
 
@@ -14,11 +15,10 @@ class SelectMobilityTab extends StatelessWidget {
     return ListView.separated(
         itemCount: mobilities.length,
         itemBuilder: (context, index) => ListTile(
-              leading: const Image(
-                image: AssetImage('assets/images/blank.jpg'),
-                height: 70.0,
-                width: 70.0,
-                fit: BoxFit.fitWidth,
+              leading: Image(
+                image: MobilityAssets.getMobilityImage(mobilities[index].type),
+                height: 100.0,
+                fit: BoxFit.fitHeight,
               ),
               title: Text(mobilities[index].id),
               subtitle: Column(
