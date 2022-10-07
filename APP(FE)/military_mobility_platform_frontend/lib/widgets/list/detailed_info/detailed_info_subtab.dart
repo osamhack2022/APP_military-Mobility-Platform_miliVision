@@ -46,8 +46,12 @@ class DetailedInfoSubTabState extends State<DetailedInfoSubTab>
       ),
       Expanded(
           child: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: _tabController,
-        children: const [MobilityManual(), MobilityCommunity()],
+        children: [
+          MobilityManual(widget.requestedMobility.mobility),
+          const MobilityCommunity()
+        ],
       ))
     ]));
   }
