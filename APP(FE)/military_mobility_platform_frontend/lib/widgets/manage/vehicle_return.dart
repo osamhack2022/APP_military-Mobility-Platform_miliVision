@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:fluttertoast/fluttertoast/dart';
 
 class VehicleReturn extends StatelessWidget {
   const VehicleReturn({super.key});
@@ -35,6 +36,8 @@ class VehicleReturn extends StatelessWidget {
           )
         ),
         onTap: () {
+          //showToast();
+          
           showDialog(
             context: context,
             builder: (context) {
@@ -65,10 +68,22 @@ class VehicleReturn extends StatelessWidget {
             },
           );
         },
-    )
+      )
     );
   }
 }
+/*
+void showToast(){
+  Fluttertoast.showToast(
+    msg: '차량 반납 완료',
+    gravity: ToastGravity.TOP,
+    backgroundColor: Color(0xffffffff),
+    fontSize: 20,
+    textColor: Colors.black,
+    toastLength: Toast.LENGTH_SHORT,
+  );
+}
+*/
 
 class VehicleReturnSet extends StatefulWidget {
   const VehicleReturnSet({super.key});
