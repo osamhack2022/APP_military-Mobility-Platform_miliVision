@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
 import 'package:military_mobility_platform_frontend/provider/mobility_request.dart';
-import 'package:military_mobility_platform_frontend/provider/appbar.dart';
-import 'package:military_mobility_platform_frontend/widgets/request/detailed_option_section.dart';
+import 'package:military_mobility_platform_frontend/provider/navigation.dart';
+import 'package:military_mobility_platform_frontend/widgets/request/time_section.dart';
 import 'package:military_mobility_platform_frontend/widgets/request/location_section.dart';
 import 'package:military_mobility_platform_frontend/widgets/request/passengers_section.dart';
 import 'package:provider/provider.dart';
@@ -11,9 +12,6 @@ class RequestTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AppBarProvider>(context, listen: false).setTitle('배차신청');
-    });
     return ChangeNotifierProvider(
         create: (context) => MobilityRequestProvider(),
         child: Container(
@@ -26,9 +24,9 @@ class RequestTab extends StatelessWidget {
               _buildDivider(context),
               const PassengersSection(),
               _buildDivider(context),
-              const DetailedOptionSection(),
-              _buildDivider(context),
-              _buildRequestButton(context),
+              const TimeSection(),
+              const Padding(padding: EdgeInsets.only(top: 10.0)),
+              const RequestButton(),
             ],
           ),
         ));
@@ -41,9 +39,34 @@ class RequestTab extends StatelessWidget {
           thickness: 1.0,
         ));
   }
+}
 
-  Widget _buildRequestButton(BuildContext context) {
+class RequestButton extends StatelessWidget {
+  const RequestButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () => print('clicked'), child: const Text('배차 가능 차량 검색'));
+        onPressed: () => _request(context), child: const Text('배차 가능 차량 검색'));
+  }
+
+  void _request(BuildContext context) async {
+    final dto =
+        await Provider.of<MobilityRequestProvider>(context, listen: false)
+            .request();
+    if (dto != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final mobilityListProvider =
+            Provider.of<MobilityListProvider>(context, listen: false);
+        final navigationProvider =
+            Provider.of<NavigationProvider>(context, listen: false);
+        mobilityListProvider.setup(dto);
+        final mobilities = mobilityListProvider.mobilities.length;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            duration: const Duration(seconds: 2),
+            content: Text('요청하신 조건에 총 $mobilities대의 차량이 선택 가능합니다.')));
+        navigationProvider.animateToTabWithName('select mobility');
+      });
+    }
   }
 }

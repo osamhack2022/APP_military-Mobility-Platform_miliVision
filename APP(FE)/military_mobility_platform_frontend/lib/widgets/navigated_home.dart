@@ -25,8 +25,9 @@ class NavigatedHomeState extends State<NavigatedHome> {
 
     return authProvider.isLoggedIn
         ? Scaffold(
-            appBar: navigationProvider.currentTabAppBar,
+            appBar: navigationProvider.buildCurrentTabAppBar(context),
             body: PageView(
+              physics: const NeverScrollableScrollPhysics(),
               controller: navigationProvider.pageController,
               children: navigationProvider.tabWidgets,
             ),

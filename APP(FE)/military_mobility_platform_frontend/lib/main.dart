@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:military_mobility_platform_frontend/service/localstorage.dart';
 import 'package:military_mobility_platform_frontend/widgets/app.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 Future<void> main() async {
   FlutterError.onError = (details) {
@@ -14,6 +15,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setPreferredOrientations();
   await LocalStorage().fetch();
+  await initializeDateFormatting('ko_KR', null);
   return runZonedGuarded(() async {
     runApp(const App());
   }, (error, stack) {

@@ -14,55 +14,38 @@ class ManageTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AppBarProvider>(context, listen: false).setTitle('차량관리');
-    });
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SafetyCheckList(),
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0)
-              ),
-              OperationPlan(),
-            ]
-          ),
-          const Padding(
-              padding: EdgeInsets.only(bottom: 15.0)
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              AccidentReport(),
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0)
-              ),
-              RecoveryTeamRequest(),
-            ]
-          ),
-          const Padding(
-              padding: EdgeInsets.only(bottom: 15.0)
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              EmergencyEvacuationRequest(),
-              const Padding(
-                padding: EdgeInsets.only(left: 10.0)
-              ),
-              VehicleReturn(),
-            ]
-          ),
-        ]
-      ),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SafetyCheckList(),
+                  const Padding(padding: EdgeInsets.only(left: 10.0)),
+                  OperationPlan(),
+                ]),
+            const Padding(padding: EdgeInsets.only(bottom: 15.0)),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  AccidentReport(),
+                  const Padding(padding: EdgeInsets.only(left: 10.0)),
+                  RecoveryTeamRequest(),
+                ]),
+            const Padding(padding: EdgeInsets.only(bottom: 15.0)),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  EmergencyEvacuationRequest(),
+                  const Padding(padding: EdgeInsets.only(left: 10.0)),
+                  VehicleReturn(),
+                ]),
+          ]),
     );
   }
 }
