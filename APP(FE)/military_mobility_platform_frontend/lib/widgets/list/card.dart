@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:military_mobility_platform_frontend/model/mobility.dart';
+import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
+import 'package:military_mobility_platform_frontend/provider/navigation.dart';
 import 'package:military_mobility_platform_frontend/widgets/list/cancle_dialog.dart';
+import 'package:provider/provider.dart';
 
 class RequestedMobilityCard extends StatelessWidget {
   final RequestedMobilityDTO requestedMobility;
-  const RequestedMobilityCard(this.requestedMobility, {super.key});
+  final int index;
+  const RequestedMobilityCard(this.requestedMobility, this.index, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -63,15 +67,15 @@ class RequestedMobilityCard extends StatelessWidget {
   }
 
   Widget _buildInfoSection(BuildContext context) {
-    final style =
-        GoogleFonts.roboto(color: const Color(0xFF898989), fontSize: 16);
+    final textTheme = Theme.of(context).textTheme;
     final mobility = requestedMobility.mobility;
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(mobility.id, style: style),
-          Text(mobility.type, style: style),
-          Text('${mobility.fuelType}|${mobility.color}', style: style),
+          Text(mobility.id, style: textTheme.labelMedium),
+          Text(mobility.type, style: textTheme.labelMedium),
+          Text('${mobility.fuelType}|${mobility.color}',
+              style: textTheme.labelMedium),
         ]));
   }
 
@@ -89,7 +93,14 @@ class RequestedMobilityCard extends StatelessWidget {
                         CancelRequestDialog(requestedMobility)),
                 child: const Text('신청취소')),
             TextButton(
-                onPressed: () => print('상세정보'), child: const Text('상세정보')),
+                onPressed: () {
+                  Provider.of<RequestedMobilityListProvider>(context,
+                          listen: false)
+                      .select(index);
+                  Provider.of<NavigationProvider>(context, listen: false)
+                      .animateToTabWithName('detailed info');
+                },
+                child: const Text('상세정보')),
           ]),
           SizedBox(
               width: 90.0,

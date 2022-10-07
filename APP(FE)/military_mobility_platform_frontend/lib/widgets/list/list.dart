@@ -12,6 +12,6 @@ class ListTab extends StatelessWidget {
         Provider.of<RequestedMobilityListProvider>(context, listen: false);
     requestedMobilityListProvider.request();
     return const Padding(
-        padding: EdgeInsets.only(top: 17.0), child: RequestedMobilityList());
+        padding: EdgeInsets.only(top: 17.0), child: RequestedMobilityListView());
   }
 }

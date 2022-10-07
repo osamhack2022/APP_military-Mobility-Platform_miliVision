@@ -16,8 +16,11 @@ class MobilityListProvider extends ChangeNotifier {
 
 class RequestedMobilityListProvider extends ChangeNotifier {
   List<RequestedMobilityDTO> _mobilities = [];
+  int? _selectedIdx;
 
   List<RequestedMobilityDTO> get mobilities => _mobilities;
+  RequestedMobilityDTO? get selectedMobility =>
+      _selectedIdx != null ? _mobilities[_selectedIdx!] : null;
 
   void request() async {
     final res = await APIService.requestedMobilitiesList();
@@ -27,6 +30,16 @@ class RequestedMobilityListProvider extends ChangeNotifier {
     } else {
       _mobilities = res.mobilities;
     }
+    notifyListeners();
+  }
+
+  void select(int index) {
+    _selectedIdx = index;
+    notifyListeners();
+  }
+
+  void deselect() {
+    _selectedIdx = null;
     notifyListeners();
   }
 }
