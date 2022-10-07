@@ -13,10 +13,21 @@ final kAppTheme = ThemeData(
             color: Colors.white, fontSize: 8.0, fontWeight: FontWeight.bold),
         bodyLarge: GoogleFonts.roboto(color: Colors.black, fontSize: 40.0),
         bodyMedium: GoogleFonts.roboto(color: Colors.black, fontSize: 20.0),
-        bodySmall: GoogleFonts.roboto(color: Colors.black, fontSize: 10.0),
+        bodySmall: GoogleFonts.roboto(color: Colors.black, fontSize: 16.0),
         labelLarge: GoogleFonts.roboto(color: Colors.black, fontSize: 27.0),
-        labelMedium: GoogleFonts.roboto(color: Colors.black, fontSize: 12.0),
+        labelMedium:
+            GoogleFonts.roboto(color: const Color(0xFF898989), fontSize: 16.0),
         labelSmall: GoogleFonts.roboto(color: Colors.black, fontSize: 8.0)),
+    inputDecorationTheme: InputDecorationTheme(
+        labelStyle: GoogleFonts.roboto(fontSize: 16.0),
+        helperStyle: GoogleFonts.roboto(fontSize: 12.0),
+        contentPadding: const EdgeInsets.all(8),
+        border: const OutlineInputBorder()),
+    dialogTheme: DialogTheme(
+        titleTextStyle: GoogleFonts.roboto(
+            color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.bold),
+        contentTextStyle:
+            GoogleFonts.roboto(color: Colors.black, fontSize: 16.0)),
     buttonTheme: const ButtonThemeData(
         buttonColor: Color(0xFF6200EE),
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 18)),

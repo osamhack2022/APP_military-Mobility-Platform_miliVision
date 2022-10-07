@@ -23,10 +23,14 @@ class NavigationProvider extends ChangeNotifier {
           ))
       .toList();
 
-  AppBar? get currentTabAppBar => AppBar(
-      leading: currentTab.appbar.leading ?? kDefaultAppBarLeading,
+  AppBar buildCurrentTabAppBar(BuildContext context) => AppBar(
+      leading: currentTab.appbar.leading != null
+          ? currentTab.appbar.leading!(context)
+          : kDefaultAppBarLeading,
       title: Text(currentTab.appbar.title),
-      actions: currentTab.appbar.actions ?? kDefaultAppBarActions);
+      actions: currentTab.appbar.actions != null
+          ? currentTab.appbar.actions!(context)
+          : kDefaultAppBarActions);
 
   void animateToTabWithNavBarIdx(int idx, {Duration? duration, Curve? curve}) {
     final navBarItemTabs = this.navBarItemTabs;

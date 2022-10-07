@@ -8,8 +8,8 @@ class NavBarItemVO {
 
 class AppBarVO {
   final String title;
-  final Widget? leading;
-  final List<Widget>? actions;
+  final Widget Function(BuildContext)? leading;
+  final List<Widget> Function(BuildContext)? actions;
   const AppBarVO({required this.title, this.leading, this.actions});
 }
 

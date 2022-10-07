@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:military_mobility_platform_frontend/constatns/locations.dart';
 import 'package:military_mobility_platform_frontend/provider/mobility_request.dart';
-import 'package:military_mobility_platform_frontend/services/hangul.dart';
+import 'package:military_mobility_platform_frontend/service/hangul.dart';
 import 'package:provider/provider.dart';
 
 class LocationSection extends StatelessWidget {

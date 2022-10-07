@@ -159,7 +159,7 @@ DATABASES = {
         'NAME': 'milivision',
         'USER': 'root',
         'PASSWORD': 'user1234', # mariaDB 설치 시 입력한 root 비밀번호 입력
-        'HOST': '34.105.35.232',
+        'HOST': '20.214.203.20',
         'PORT': '3306'
     }
 }
@@ -168,7 +168,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("34.105.35.232", 6379)],
+            "hosts": [("20.214.203.20", 6379)],
         },
     },
 }

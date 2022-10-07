@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:military_mobility_platform_frontend/provider/appbar.dart';
+import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
+import 'package:military_mobility_platform_frontend/widgets/list/listview.dart';
 import 'package:provider/provider.dart';
 
 class ListTab extends StatelessWidget {
@@ -7,9 +8,10 @@ class ListTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AppBarProvider>(context, listen: false).setTitle('배차확인');
-    });
-    return const Center(child: Text('list'));
+    final requestedMobilityListProvider =
+        Provider.of<RequestedMobilityListProvider>(context, listen: false);
+    requestedMobilityListProvider.request();
+    return const Padding(
+        padding: EdgeInsets.only(top: 17.0), child: RequestedMobilityListView());
   }
 }
