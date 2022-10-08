@@ -4,6 +4,10 @@
         android:label="military_mobility_platform_frontend"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyBzrJUX_yK8Ftu7n8BZrVjKB46pXJy2lfs"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
