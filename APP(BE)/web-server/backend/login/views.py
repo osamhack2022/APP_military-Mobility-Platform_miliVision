@@ -5,10 +5,17 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializers import RegisterSerializer, UserSerializer
+from .models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import AccessToken
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+
+def get_user_from_access_token(access_token_str):
+    access_token_obj = AccessToken(access_token_str)
+    user_id=access_token_obj['user_id']
+    return User.objects.get(login_id=user_id)
 
 
 # Create your views here.
