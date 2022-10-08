@@ -25,8 +25,8 @@ def get_reservation(reservation_id):
     serializer = ReservationSerializer(reservation)
     return serializer.data
 
-def get_reservation_by_booker(booker_id):
-    reservation = Reservation.objects.filter(Q(booker=booker_id) & Q(reservation_start__gte=datetime.now()))
+def get_reservation_by_booker(booker):
+    reservation = Reservation.objects.filter(Q(booker=booker) & Q(reservation_start__gte=datetime.now()))
     serializer = ReservationSerializer(reservation, many=True)
     return serializer.data
 
