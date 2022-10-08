@@ -5,7 +5,7 @@ import datetime
 class NotificationSerializer(serializers.ModelSerializer):    
     class Meta:
         model = Notification
-        fields = ('type_of_notification', 'message', "battalion_receiver", "permission", "reservation")
+        fields = ('type_of_notification', 'message', "battalion_receiver", "user_sender", "permission", "reservation")
 
 
 class ReservationBookingSerializer(serializers.ModelSerializer):

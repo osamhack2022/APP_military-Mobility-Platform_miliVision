@@ -7,14 +7,10 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["password",
-                    "last_login",
                     "login_id",
                     "email",
                     "battalion_id",
-                    "is_active",
-                    "is_superuser",
                     "is_staff",
-                    "is_admin",
                     "permission"] #나중에 이걸 바꿔서 회원가입할 때 쓸 값을 추가해야 함
 
     def create(self, validated_data):
