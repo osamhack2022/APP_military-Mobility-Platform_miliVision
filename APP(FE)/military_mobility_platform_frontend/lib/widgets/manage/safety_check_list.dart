@@ -1,4 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:military_mobility_platform_frontend/widgets/manage/manage.dart';
+import 'package:military_mobility_platform_frontend/service/toast.dart';
 
 class SafetyCheckList extends StatelessWidget {
   const SafetyCheckList({super.key});
@@ -91,13 +94,7 @@ class SafetyCheckListSet extends StatefulWidget {
 }
 
 class _SafetyCheckListSetState extends State<SafetyCheckListSet> {
-  bool _isSelected1 = false;
-  bool _isSelected2 = false;
-  bool _isSelected3 = false;
-  bool _isSelected4 = false;
-  bool _isSelected5 = false;
-  bool _isSelected6 = false;
-  bool _isSelected7 = false;
+  List<bool> _isSelected = [false, false, false, false, false, false, false,];
 
   @override
   Widget build(BuildContext context) {
@@ -124,77 +121,90 @@ class _SafetyCheckListSetState extends State<SafetyCheckListSet> {
           LabeledCheckbox(
             label: '어느 한쪽 타이어의 공기압력이 현저히 줄어들지 않았는가?',
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-            value: _isSelected1,
+            value: _isSelected[0],
             onChanged: (bool newValue) {
               setState(() {
-                _isSelected1 = newValue;
+                _isSelected[0] = newValue;
               });
             },
           ),
           LabeledCheckbox(
             label: '타이어가 지면에 닿는 트레드 부분이 과마모되지 않았는가?',
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-            value: _isSelected2,
+            value: _isSelected[1],
             onChanged: (bool newValue) {
               setState(() {
-                _isSelected2 = newValue;
+                _isSelected[1] = newValue;
               });
             },
           ),
           LabeledCheckbox(
             label: '각 타이어 측면이 갈라지거나 찢기지 않았는가?',
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-            value: _isSelected3,
+            value: _isSelected[2],
             onChanged: (bool newValue) {
               setState(() {
-                _isSelected3 = newValue;
+                _isSelected[2] = newValue;
               });
             },
           ),
           LabeledCheckbox(
             label: '클러치나 브레이크 페달의 유격 및 브레이크 액의 수준은 양호한가?',
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-            value: _isSelected4,
+            value: _isSelected[3],
             onChanged: (bool newValue) {
               setState(() {
-                _isSelected4 = newValue;
+                _isSelected[3] = newValue;
               });
             },
           ),
           LabeledCheckbox(
             label: '각종오일(엔진오일, 파워핸들 오일, 자동변속기 오일 등)의 양은 적정한가?',
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-            value: _isSelected5,
+            value: _isSelected[4],
             onChanged: (bool newValue) {
               setState(() {
-                _isSelected5 = newValue;
+                _isSelected[4]= newValue;
               });
             },
           ),
           LabeledCheckbox(
             label: '각종 안전장구류(삼각대, 스노우체인 등)은 보유하고 있는가?',
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-            value: _isSelected6,
+            value: _isSelected[5],
             onChanged: (bool newValue) {
               setState(() {
-                _isSelected6 = newValue;
+                _isSelected[5] = newValue;
               });
             },
           ),
           LabeledCheckbox(
             label: '장시간 운행 시 적정한 휴식을 취하며 적당한 스트레칭을 하는가?',
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-            value: _isSelected7,
+            value: _isSelected[6],
             onChanged: (bool newValue) {
               setState(() {
-                _isSelected7 = newValue;
+                _isSelected[6] = newValue;
               });
             },
           ),
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(), 
+              onPressed: () {
+                int check = 0;
+                for(int i=0; i < _isSelected.length; i++){
+                  if(_isSelected[i] == false) {
+                    Toast.showFailToast('모든 항목을 체크해주십이오.');
+                    check++;
+                    break;
+                  }
+                }
+                if(check == 0) {
+                  Toast.showSuccessToast('안전 점검표가 제출되었습니다.');
+                  Navigator.of(context).pop();
+                }
+              }, 
               child: const Text('안전 점검표 제출하기', style: TextStyle(fontSize: 18.0)),
             ),
           ),
