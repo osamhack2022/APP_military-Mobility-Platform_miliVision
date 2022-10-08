@@ -103,7 +103,7 @@ class car(APIView):
     def delete(self, request):
         try: 
             car_id = request.GET['car_id']
-            Car.objects.get(id=reservation_id).delete()
+            Car.objects.get(id=car_id).delete()
             return Response(status=status.HTTP_200_OK)
         except Exception as e:
             print(e)
@@ -233,7 +233,6 @@ def approve_reservation(request):
 @swagger_auto_schema(method='post', request_body=AvailableCarSerializer , operation_summary='배차 가능한 차량 검색하기'
                                                                         , operation_description='''
                                                                                                 ----request----
-                                                                                                    battalion_id : 부대 번호(4자리)
                                                                                                     followers_num: 같이 따라오는 인원(운전병, 선탑자 제외),
                                                                                                     reservation_start: 예약 시작일
                                                                                                     reservation_end: 예약 종료일
@@ -259,8 +258,8 @@ def get_available_car(request):
                 Q(can_ride__gte=(serializer.data["followers_num"])) &
                 ~Q(id__in=already_reserved)
             )
-            ret_seriallizer = CarSerializer(available_car, many=True)
-            return Response(ret_seriallizer.data, status=status.HTTP_200_OK)
+            ret_serializer = CarSerializer(available_car, many=True)
+            return Response(ret_serializer.data, status=status.HTTP_200_OK)
         return Response("serilalizer isn't valid",status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         return Response(status=status.HTTP_400_BAD_REQUEST)
