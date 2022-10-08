@@ -28,7 +28,19 @@ class notification(APIView):
     def get(self, request):
         return Response(get_notification())
     
-    @swagger_auto_schema(request_body=NotificationSerializer, operation_summary='알림 보내기')
+    @swagger_auto_schema(request_body=NotificationSerializer, operation_summary='알림 보내기', operation_description='''
+                                                                                                            request:
+                                                                                                                type_of_notification: 알림 종류 예)배차예약, 응급 구조 신청
+                                                                                                                message: 보내고자 하는 내용
+                                                                                                                battalion_receiver: 전파하고자 하는 부대의 코드(4자)
+                                                                                                                user_sender: 보내는 사람의 user_id (현 사용자)
+                                                                                                                permission: 관리자 2, 대대원 전체 1, 모든 앱 사용자 0
+                                                                                                                reservation: 배차 예약과 관련된 알림이라면 reservation_id를 추가
+                                                                                                            response:
+                                                                                                                type: object
+                                                                                                                model: Notification
+                                                                                                            
+                                                                                                            ''')
     def post(self, request):    
         serializer = NotificationSerializer(data=request.data)
         if serializer.is_valid():
@@ -45,12 +57,28 @@ class car(APIView):
             type=openapi.TYPE_STRING,
             default=""
     )]
-    @swagger_auto_schema(manual_parameters=get_params, operation_summary='차량 정보 얻기')
+    @swagger_auto_schema(manual_parameters=get_params, operation_summary='차량 정보 얻기', operation_description='''
+                                                                                                            request:
+                                                                                                                car_id: 4자 부대코드 + 차량번호
+                                                                                                            response:
+                                                                                                                type: object
+                                                                                                                model: Car
+                                                                                                            ''')
     def get(self, request):
         car_id = request.GET['car_id']
         return Response(get_car(car_id))
     
-    @swagger_auto_schema(request_body=CarSerializer, operation_summary='차량 추가하기', operation_description="차량의 id는 부대번호+차량번호로 생성하면 됨")
+    @swagger_auto_schema(request_body=CarSerializer, operation_summary='차량 추가하기', operation_description='''
+                                                                                                            request:
+                                                                                                                id: 4자 부대코드 + 차량 번호
+                                                                                                                car_model: 차량 모델
+                                                                                                                can_ride: 탑승 가능한 총 인원
+                                                                                                                propulsion_type: 연료 종류
+                                                                                                                color: 차량 색상
+                                                                                                            response:
+                                                                                                                type: object
+                                                                                                                model: Car
+                                                                                                            ''')
     def post(self, request):    
         serializer = CarSerializer(data=request.data)
         if serializer.is_valid():
@@ -65,7 +93,12 @@ class car(APIView):
             description="car_id",
             type=openapi.TYPE_STRING,
             default=""
-    )], operation_summary='차량 정보 삭제하기')
+    )], operation_summary='차량 정보 삭제하기',
+    operation_description='''
+                        car_id: 삭제하고자 하는 차량의 ID(4자 부대코드 + 차량 번호)
+                        response:
+                            type: only status
+                        ''')
     def delete(self, request):
         try: 
             car_id = request.GET['car_id']
@@ -110,12 +143,33 @@ class reservation(APIView):
     ]
     @swagger_auto_schema(manual_parameters=get_params, operation_summary='배차 예약 정보 얻기', 
                         operation_description='''
-                        booker_id에 값을 넣으면 사용자가 신청한 예약을 전부 반환
-                        driver_id에 값을 넣으면 해당 운전자 관련된예약을 전부 반환
-                        reservation_id에 값을 넣으면 그 예약 정보 반환
-                        battalion_id에 값을 넣으면 대대에 신청된 예약 정보 반환
                         하나에만 값을 넣어야 함
                         나머지는 -1을 입력
+
+                        request:
+                            booker_id: 신청한 user의 user_id
+                        response:
+                            type: list
+                            model: Reservation
+                        
+                        request:
+                            driver_id: 운전자 User의 user_id
+                        response:
+                            type: list
+                            model: Reservation
+                    
+                        request:
+                            reservation_id: 예약한 reservation의 id
+                        response:
+                            type: object
+                            model: Reservation
+
+                        request:                   
+                            battalion_id: 부대코드
+                        response:
+                            type: list
+                            model Reservation
+
                         ''')
     def get(self, request):
         try:
@@ -136,7 +190,23 @@ class reservation(APIView):
             print(e)
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    @swagger_auto_schema(request_body=ReservationBookingSerializer , operation_summary='배차 예약하기')
+    @swagger_auto_schema(request_body=ReservationBookingSerializer , operation_summary='배차 예약하기'
+                                                                    ,operation_description='''
+                                                                                        request:
+                                                                                            booker: 예약자의 user_id(현재 사용자)
+                                                                                            car: 예약하고자 하는 차량의 ID(4자 부대코드 + 차량 번호)
+                                                                                            departure: 출발지
+                                                                                            destination: 도착지
+                                                                                            followers_num: 같이 따라오는 인원(운전병, 선탑자 제외),
+                                                                                            stopover: 경유지
+                                                                                            is_sharing: 공유 여부
+                                                                                            reservation_start: 예약 시작일
+                                                                                            reservation_end: 예약 종료일
+                                                                                            reason: 배차 예약 이유(간략하게)
+                                                                                        response:
+                                                                                            type: object
+                                                                                            model: Reservation
+                                                                                        ''')
     def post(self, request):
         serializer = ReservationBookingSerializer(data=request.data)
         if serializer.is_valid():
@@ -179,7 +249,13 @@ class reservation(APIView):
             description="reservation_id",
             type=openapi.TYPE_INTEGER,
             default=""
-    )], operation_summary='배차 예약 정보 삭제하기')
+    )], operation_summary='배차 예약 정보 삭제하기'
+    ,operation_description='''
+                        request:
+                            reservation_id: 예약 정보를 삭제할 예약의 ID
+                        response:
+                            type: only status
+                        ''')
     def delete(self, request):
         try: 
             reservation_id = request.GET['reservation_id']
@@ -200,8 +276,12 @@ class reservation(APIView):
         },
     ), operation_summary='배차 예약 승인하기'
     ,operation_description='''
-                        승인이면 status에 1을 넣고
-                        거절이면 status에 -1을 넣어서 사용한다.
+                        request:
+                            reservation_id: 승인할 예약의 id
+                            승인이면 status에 1을 넣고
+                            거절이면 status에 -1을 넣는다.
+                        response:
+                            type: only status
                         ''')
 @api_view(['POST'])
 @permission_classes((permissions.AllowAny)) #admin에서 접근할 예정이라 authentication 제거
@@ -218,9 +298,17 @@ def approve_reservation(request):
 
 @swagger_auto_schema(method='post', request_body=AvailableCarSerializer , operation_summary='배차 가능한 차량 검색하기'
                                                                         , operation_description='''
-                                                                                                battalion_id : 부대 번호(4자리),
-                                                                                                followers_num: 같이 따라오는 인원(운전병, 선탑자 제외),
-                                                                                                stopover: 경유지
+                                                                                                request:
+                                                                                                    battalion_id : 부대 번호(4자리)
+                                                                                                    departure: 출발지
+                                                                                                    destination: 도착지
+                                                                                                    followers_num: 같이 따라오는 인원(운전병, 선탑자 제외),
+                                                                                                    stopover: 경유지
+                                                                                                    reservation_start: 예약 시작일
+                                                                                                    reservation_end: 예약 종료일
+                                                                                                response:
+                                                                                                    type: list
+                                                                                                    model: Car
                                                                                                 ''')    
 @api_view(['POST'])
 def get_available_car(request):
@@ -254,8 +342,12 @@ def get_available_car(request):
         },
     ), operation_summary='안전점검표 확인 여부'
     ,operation_description='''
-                        안전점검표가 전부 체크되었으면 safety_checklist에 True를 넣고,
-                        아니라면 False를 넣는다.
+                        request:
+                            reservation_id: 점검표를 추가할 예약의 ID
+                            안전점검표가 전부 체크되었으면 safety_checklist에 True를 넣고,
+                            아니라면 False를 넣는다.
+                        response:
+                            type: only status
                         ''')
 @api_view(['POST'])
 def safety_checklist(request):
@@ -276,8 +368,14 @@ def safety_checklist(request):
             'reservation_id': openapi.Parameter('reservation_id', openapi.IN_BODY, type=openapi.TYPE_INTEGER),
             'operation_plan': openapi.Parameter('operation_plan', openapi.IN_BODY, type=openapi.TYPE_STRING)
         },
-    ), operation_summary='운행 계획표 작성'
-)
+    ), operation_summary='운행 계획 작성'
+    ,operation_description='''
+                        request:
+                            reservation_id: 운행 계획를 추가할 예약의 ID
+                            operation_plan: 계획 내용 
+                        response:
+                            type: only status
+                        ''')
 @api_view(['POST'])
 def add_operation_plan(request):
     try:
@@ -301,6 +399,10 @@ get_params = [
     ]
 @swagger_auto_schema(method='get', manual_parameters=get_params, operation_summary='차량 반납', 
                     operation_description='''
+                    request:
+                        reservation_id: 반납할 차량의 ID(4자 부대코드 + 차량 번호)
+                    response:
+                        type: only status
                     ''')
 @api_view(['GET'])
 def finish_using(request):

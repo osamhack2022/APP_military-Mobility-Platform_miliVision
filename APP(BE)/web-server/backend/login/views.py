@@ -15,7 +15,15 @@ from drf_yasg import openapi
 class RegisterAPIView(APIView):
     permission_classes = [AllowAny]
 
-    @swagger_auto_schema(request_body=RegisterSerializer)
+    @swagger_auto_schema(request_body=RegisterSerializer, operation_description='''
+                                                                                request:
+                                                                                    is_staff: admin페이지의 접근 권한 여부
+                                                                                    battalion_id: 부대코드(4자)
+                                                                                    permission: 0 일반사용자, 1 수송 관리자, 2 운전병
+                                                                                response:
+                                                                                    user: 생성된 유저 정보
+                                                                                    token: authentication token
+                                                                                ''')
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
@@ -48,6 +56,14 @@ class AuthView(APIView):
             'login_id': openapi.Parameter('login_id', openapi.IN_BODY, type=openapi.TYPE_STRING),
             'password': openapi.Parameter('password', openapi.IN_BODY, type=openapi.TYPE_STRING)
         },
+        operation_description='''
+            request:
+                login_id: 로그인 id
+                password: 비밀번호
+            response:
+                user: 생성된 유저 정보
+                token: authentication token
+            '''
     ))
     def post(self, request):
         user = authenticate(
@@ -82,7 +98,13 @@ class LogoutView(APIView):
           properties={
               'refresh_token': openapi.Parameter('refresh_token', openapi.IN_BODY, type=openapi.TYPE_STRING)
         },
-    ),)
+    ),
+    operation_description='''
+        request:
+            refresh_token
+        response:
+            type: only status
+        ''')
     def post(self, request):
         try:
             refresh_token = request.data["refresh_token"]
