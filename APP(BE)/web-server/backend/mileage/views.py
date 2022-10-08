@@ -6,6 +6,7 @@ from drf_yasg.utils import swagger_auto_schema
 from .utils import *
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from login.views import get_user_from_access_token
 
 # Create your views here.
 
@@ -30,7 +31,9 @@ class history(APIView):
     @swagger_auto_schema(manual_parameters=get_params, operation_summary='운행 기록 얻기')
     def get(self, request):
         try:
-            user_id = int(request.GET['user_id'])
+            token = request.META['HTTP_AUTHORIZATION'][7:]
+            user = get_user_from_access_token(token)
+            user_id = user.id
             car_id = int(request.GET['car_id'])
     
             if user_id != -1:
