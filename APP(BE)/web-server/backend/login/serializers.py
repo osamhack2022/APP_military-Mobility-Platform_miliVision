@@ -22,10 +22,14 @@ class RegisterSerializer(serializers.ModelSerializer):
         email = validated_data.get('email')
         battalion_id = validated_data.get('battalion_id')
         password = validated_data.get('password')
+        permission = validated_data.get('permission')
+        is_staff = validated_data.get('is_staff')
         user = User(
             login_id=login_id,
             email=email,
             battalion_id=battalion_id,
+            permission=permission,
+            is_staff=is_staff,
             is_active=True
         )
         user.set_password(password)
@@ -35,4 +39,4 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['login_id', 'password']
+        fields = ['id', 'battalion_id', 'login_id', 'password']

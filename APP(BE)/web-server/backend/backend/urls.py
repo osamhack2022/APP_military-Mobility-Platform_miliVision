@@ -43,4 +43,5 @@ urlpatterns = [
     path('tms/', include('tms.urls')),
     path('user/', include('login.urls')),
     path('admin/', admin.site.urls),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) 
+    path('mileage/', include('mileage.urls')),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,6 +1,7 @@
 from django.db import models
 from login.models import User
 from datetime import datetime
+from login.models import *
 
 # Create your models here.
 class Car(models.Model):
@@ -22,7 +23,8 @@ class Reservation(models.Model):
     followers_num=models.PositiveIntegerField(default=0)
     stopover=models.CharField(max_length=264,default="")
     is_sharing=models.BooleanField(default=False)
-    reservation_date=models.DateTimeField('reservation date', default=datetime.now)
+    reservation_start=models.DateTimeField('reservation start', default=datetime.now)
+    reservation_end=models.DateTimeField('reservation end', default=datetime.now)
     status=models.IntegerField(default=0)
     reason=models.CharField(max_length=264,null=True,blank=True,default="")
     safety_checklist=models.BooleanField(default=False)
