@@ -19,13 +19,14 @@ class history(APIView):
             type=openapi.TYPE_INTEGER,
             default=-1,
         ),
-        openapi.Parameter(
-            "car_id",
-            openapi.IN_QUERY,
-            description="car_id",
-            type=openapi.TYPE_INTEGER,
-            default=-1,
-        ),
+        # 차를 기준으로 검색하는 기능은 필요없을 것으로 판단
+        # openapi.Parameter(
+        #     "car_id",
+        #     openapi.IN_QUERY,
+        #     description="car_id",
+        #     type=openapi.TYPE_INTEGER,
+        #     default=-1,
+        # ),
     ]
     
     @swagger_auto_schema(manual_parameters=get_params, operation_summary='운행 기록 얻기')
@@ -34,12 +35,13 @@ class history(APIView):
             token = request.META['HTTP_AUTHORIZATION'][7:]
             user = get_user_from_access_token(token)
             user_id = user.id
-            car_id = int(request.GET['car_id'])
+            # car_id = int(request.GET['car_id'])
     
             if user_id != -1:
                 return Response(get_history_by_user(user_id), status=status.HTTP_200_OK)
-            elif car_id != -1:
-                return Response(get_history_by_car(car_id), status=status.HTTP_200_OK)
+            # 차를 기준으로 검색하는 기능은 필요 없을 것으로 판단
+            # elif car_id != -1:
+            #     return Response(get_history_by_car(car_id), status=status.HTTP_200_OK)
             
         except Exception as e:
             print(e)
