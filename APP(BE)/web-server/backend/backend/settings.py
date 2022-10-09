@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'login',
     'tms',
     'mileage',
+    'incident',
     'drf_yasg',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -225,3 +226,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_ALLOW_ALL = True 
 CORS_ALLOW_CREDENTIALS = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
