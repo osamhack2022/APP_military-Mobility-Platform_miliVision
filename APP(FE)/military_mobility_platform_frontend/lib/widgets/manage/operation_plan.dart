@@ -244,7 +244,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                   Toast.showSuccessToast('운전 계획이 작성되었습니다.');
                   Navigator.of(context).pop();
                 }
-              }*/,  
+              }*/ 
               child: const Text('운행 계획 작성하기', style: TextStyle(fontSize: 18.0)),
             ),
           ),
