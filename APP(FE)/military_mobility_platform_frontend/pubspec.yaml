@@ -47,6 +47,7 @@ dependencies:
   retrofit: ^3.3.1
   dio: ^4.0.6
   retrofit_generator: ^4.2.0
+  flutter_markdown: ^0.6.12
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +79,7 @@ flutter:
     - assets/images/mobility/승합차.png
     - assets/images/mobility/k3.jfif
     - assets/images/mobility/k5.jfif
+    - assets/manual/default.md
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
