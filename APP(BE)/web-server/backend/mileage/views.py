@@ -18,8 +18,8 @@ class history(APIView):
             "user_id",
             openapi.IN_QUERY,
             description="user_id",
-            type=openapi.TYPE_INTEGER,
-            default=-1,
+            type=openapi.TYPE_STRING,
+            default="",
         ),
     ]
     
