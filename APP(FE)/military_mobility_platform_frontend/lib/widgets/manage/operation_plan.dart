@@ -49,6 +49,11 @@ class OperationPlan extends StatelessWidget {
 
 class OperationPlanSet extends StatefulWidget {
   const OperationPlanSet({super.key});
+  final _driver = "";
+  final _commander = "";
+  final _operation= "";
+  final _oprationNote =""; 
+
 
   @override
   State<OperationPlanSet> createState() => _OperationPlanSetState();
@@ -101,6 +106,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
+                        //onChanged: (val) => _driver = val
                       ),
                   ),
                 ]
@@ -134,6 +140,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
+                        //onChanged: (val) => _driver = val
                       ),
                   ),
                 ]
@@ -167,6 +174,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
+                        //onChanged: (val) => _driver = val
                       ),
                   ),
                 ]
@@ -199,6 +207,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
+                        //onChanged: (val) => _driver = val
                       ),
                   ),
                 ]
@@ -212,6 +221,30 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
               onPressed: () => Navigator.of(context).pop(), 
+              /*onPressed: () {
+                int check = 0;
+                if(_driver == null) {
+                  Toast.showFailToast('운전자 정보를 등록해주세요.');
+                  check++;
+                }
+                if(_driver == null) {
+                  Toast.showFailToast('선탑자 정보를 등록해주세요.');
+                  check++;
+                }
+                if(_driver == null) {
+                  Toast.showFailToast('운행 목적을 입력해주세요.');
+                  check++;
+                }
+                if(_driver == null) {
+                  Toast.showFailToast('비고를 입력해주세요.');
+                  check++;
+                }
+
+                if(check == 0) {
+                  Toast.showSuccessToast('운전 계획이 작성되었습니다.');
+                  Navigator.of(context).pop();
+                }
+              }*/ 
               child: const Text('운행 계획 작성하기', style: TextStyle(fontSize: 18.0)),
             ),
           ),
