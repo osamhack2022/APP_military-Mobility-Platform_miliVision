@@ -13,7 +13,7 @@ def get_user(user_id):
 def get_car(car_id):
     car = Car.objects.get(id=car_id)
     serializer = CarSerializer(car)
-    return serializer.data 
+    return serializer.data
 
 def get_notification():
     notifications = Notification.objects.all()

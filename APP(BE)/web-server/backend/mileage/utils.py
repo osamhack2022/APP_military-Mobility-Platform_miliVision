@@ -4,7 +4,7 @@ from tms.models import *
 from .serializers import *
 
 def get_history(history_id):
-    history = History.objects.get(id = history_id)
+    history = History.objects.get(id=history_id)
     serializer = HistirySerializer(history)
     return serializer.data
 
