@@ -5,7 +5,7 @@ from .serializers import *
 from django.db.models import Q
 
 def get_history(history_id):
-    history = History.objects.get(id=history_id)
+    history = History.objects.all()
     serializer = HistirySerializer(history)
     return serializer.data
 
