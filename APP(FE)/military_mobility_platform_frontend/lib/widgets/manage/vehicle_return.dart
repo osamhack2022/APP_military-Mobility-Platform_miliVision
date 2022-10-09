@@ -73,18 +73,6 @@ class VehicleReturn extends StatelessWidget {
     );
   }
 }
-/*
-void showToast(){
-  Fluttertoast.showToast(
-    msg: '차량 반납 완료',
-    gravity: ToastGravity.TOP,
-    backgroundColor: Color(0xffffffff),
-    fontSize: 20,
-    textColor: Colors.black,
-    toastLength: Toast.LENGTH_SHORT,
-  );
-}
-*/
 
 class VehicleReturnSet extends StatefulWidget {
   const VehicleReturnSet({super.key});
