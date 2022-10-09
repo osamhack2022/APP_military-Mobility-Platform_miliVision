@@ -59,23 +59,19 @@ class _EmergencyEvacuationRequestSetState extends State<EmergencyEvacuationReque
       child: Scaffold(
         body: Column(
           children: [
-            /*IconButton(
+            IconButton(
               icon: Icon(Icons.arrow_back_ios),
               color: Colors.black,
               iconSize: 15.0,
               onPressed: () {Navigator.of(context).pop();},
-            ),*/
+            ),
             const Padding(
                 padding: EdgeInsets.only(bottom: 100.0)
             ),
-            Image.network(
-                        'https://www.4pns.com/__FileSave/Board/Work/216/1888022460_ZQky0gOb_EC9D98EBACB4EC82ACEBA0B9EBB680.gif',
-                        width: 300.0,
-                        height: 300.0,
-                        fit: BoxFit.cover,
-                        ),
-            //iamge
-            
+            Image.asset('assets/images/MEDCOM.jpg'),
+                        //width: 300.0,
+                        //height: 300.0,
+                        //fit: BoxFit.cover,            
             const Padding(
                 padding: EdgeInsets.only(bottom: 10.0)
             ),
