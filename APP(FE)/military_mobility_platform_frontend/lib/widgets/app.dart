@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/constatns/theme.dart';
 import 'package:military_mobility_platform_frontend/provider/auth.dart';
-import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
+import 'package:military_mobility_platform_frontend/provider/reservation_list.dart';
+import 'package:military_mobility_platform_frontend/provider/mobility_request.dart';
 import 'package:military_mobility_platform_frontend/service/mobility_assets.dart';
 import 'package:provider/provider.dart';
 import 'package:military_mobility_platform_frontend/provider/navigation.dart';
@@ -20,9 +21,10 @@ class App extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (context) => NavigationProvider()),
           ChangeNotifierProvider(create: (context) => AuthProvider()),
-          ChangeNotifierProvider(create: (context) => MobilityListProvider()),
           ChangeNotifierProvider(
-              create: (context) => RequestedMobilityListProvider()),
+              create: (context) => MobilityRequestProvider()),
+          ChangeNotifierProvider(
+              create: (context) => ReservationListProvider()),
         ],
         child: const NavigatedHome(),
       ),

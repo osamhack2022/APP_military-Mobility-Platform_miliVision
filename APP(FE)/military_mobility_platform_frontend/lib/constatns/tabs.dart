@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/model/tab.dart';
-import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
+import 'package:military_mobility_platform_frontend/provider/reservation_list.dart';
 import 'package:military_mobility_platform_frontend/provider/navigation.dart';
 import 'package:military_mobility_platform_frontend/widgets/info/info.dart';
 import 'package:military_mobility_platform_frontend/widgets/list/detailed_info/detailed_info.dart';
@@ -48,7 +48,7 @@ final kTabs = [
         title: '상세정보',
         leading: (context) => IconButton(
             onPressed: () {
-              Provider.of<RequestedMobilityListProvider>(context, listen: false)
+              Provider.of<ReservationListProvider>(context, listen: false)
                   .deselect();
               Provider.of<NavigationProvider>(context, listen: false)
                   .animateToTabWithName('list');

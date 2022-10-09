@@ -7,12 +7,14 @@ class MobilityAssets {
     '상용1톤': '$mobilityImagePath/상용1톤.jfif',
     '승합차': '$mobilityImagePath/승합차.png',
     'K3': '$mobilityImagePath/k3.jfif',
-    'K5': '$mobilityImagePath/k5.jfif'
+    'K5': '$mobilityImagePath/k5.jfif',
+    '두돈반': '$mobilityImagePath/두돈반.jpg'
   };
 
   static void precacheMobilityImages(BuildContext context) {
     mobilityImageDict
         .forEach((_, value) => precacheImage(AssetImage(value), context));
+    precacheImage(const AssetImage('assets/images/blank.jpg'), context);
   }
 
   static AssetImage getMobilityImage(String type) {

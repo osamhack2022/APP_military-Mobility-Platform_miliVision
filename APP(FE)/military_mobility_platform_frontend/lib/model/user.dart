@@ -5,14 +5,16 @@ part 'user.g.dart';
 @JsonSerializable()
 class UserDTO {
   const UserDTO(
-      {required this.battalion_id,
+      {required this.battalionID,
       required this.email,
-      required this.login_id,
+      required this.loginID,
       required this.permission});
 
-  final String battalion_id;
+  @JsonKey(name: 'battalion_id')
+  final String battalionID;
   final String email;
-  final String login_id;
+  @JsonKey(name: 'login_id')
+  final String loginID;
   final int permission;
 
   factory UserDTO.fromJson(Map<String, dynamic> json) =>
@@ -35,15 +37,22 @@ class TokenDTO {
 @JsonSerializable()
 class RegisterReqDTO {
   const RegisterReqDTO(
-      {required this.login_id,
+      {required this.loginID,
       required this.password,
       required this.email,
-      required this.battalion_id});
+      required this.battalionID,
+      required this.permission,
+      this.isStaff = false});
 
-  final String login_id;
+  @JsonKey(name: 'login_id')
+  final String loginID;
   final String password;
   final String email;
-  final String battalion_id;
+  @JsonKey(name: 'battalion_id')
+  final String battalionID;
+  final int permission;
+  @JsonKey(name: 'is_staff')
+  final bool isStaff;
 
   Map<String, dynamic> toJson() => _$RegisterReqDTOToJson(this);
 }
@@ -61,11 +70,12 @@ class RegisterResDTO {
 @JsonSerializable()
 class LoginReqDTO {
   const LoginReqDTO({
-    required this.login_id,
+    required this.loginID,
     required this.password,
   });
 
-  final String login_id;
+  @JsonKey(name: 'login_id')
+  final String loginID;
   final String password;
 
   Map<String, dynamic> toJson() => _$LoginReqDTOToJson(this);

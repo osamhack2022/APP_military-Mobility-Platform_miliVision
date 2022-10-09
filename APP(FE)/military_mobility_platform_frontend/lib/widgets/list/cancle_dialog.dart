@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:military_mobility_platform_frontend/model/mobility.dart';
+import 'package:military_mobility_platform_frontend/model/reservation.dart';
+import 'package:military_mobility_platform_frontend/provider/auth.dart';
+import 'package:military_mobility_platform_frontend/provider/reservation_list.dart';
+import 'package:military_mobility_platform_frontend/service/toast.dart';
+import 'package:provider/provider.dart';
 
 class CancelRequestDialog extends StatelessWidget {
-  const CancelRequestDialog(this.mobility, {super.key});
+  const CancelRequestDialog(
+      {required this.reservation, required this.parentContext, super.key});
 
-  final RequestedMobilityDTO mobility;
+  final ReservationDTO reservation;
+  final BuildContext parentContext;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +25,20 @@ class CancelRequestDialog extends StatelessWidget {
     );
   }
 
-  void _cancelRequest(BuildContext context) {
-    print('배차 신청 취소');
-    Navigator.pop(context);
+  Future<void> _cancelRequest(BuildContext context) async {
+    try {
+      final authProvider =
+          Provider.of<AuthProvider>(parentContext, listen: false);
+      final reservationListProvider =
+          Provider.of<ReservationListProvider>(parentContext, listen: false);
+      await reservationListProvider.deleteReservation(
+          authProvider.authenticatedClient!, reservation);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pop(context);
+      });
+    } catch (exception) {
+      print(exception);
+      Toast.showFailToast('배차신청 취소에 실패했습니다.');
+    }
   }
 }

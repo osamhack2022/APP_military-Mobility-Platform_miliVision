@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
+import 'package:military_mobility_platform_frontend/provider/reservation_list.dart';
+import 'package:military_mobility_platform_frontend/provider/mobility_request.dart';
 import 'package:military_mobility_platform_frontend/service/mobility_assets.dart';
 import 'package:military_mobility_platform_frontend/widgets/request/select_mobility/request_button.dart';
 import 'package:provider/provider.dart';
@@ -9,8 +10,8 @@ class SelectMobilityTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mobilityListProvider = Provider.of<MobilityListProvider>(context);
-    final mobilities = mobilityListProvider.mobilities;
+    final mobilityListProvider = Provider.of<MobilityRequestProvider>(context);
+    final mobilities = mobilityListProvider.availableMobilities;
     final theme = Theme.of(context);
     return ListView.separated(
         itemCount: mobilities.length,
@@ -20,7 +21,7 @@ class SelectMobilityTab extends StatelessWidget {
                 height: 100.0,
                 fit: BoxFit.fitHeight,
               ),
-              title: Text(mobilities[index].id),
+              title: Text(mobilities[index].id.toString()),
               subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

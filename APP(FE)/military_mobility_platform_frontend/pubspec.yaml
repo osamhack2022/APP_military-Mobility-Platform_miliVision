@@ -40,7 +40,6 @@ dependencies:
   google_fonts: ^3.0.1
   shared_preferences: ^2.0.15
   json_serializable: ^6.4.1
-  http: ^0.13.5
   intl: ^0.17.0
   flutter_datetime_picker: ^1.5.1
   fluttertoast: ^8.0.9
@@ -80,6 +79,7 @@ flutter:
     - assets/images/mobility/k3.jfif
     - assets/images/mobility/k5.jfif
     - assets/manual/default.md
+    - assets/images/mobility/두돈반.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

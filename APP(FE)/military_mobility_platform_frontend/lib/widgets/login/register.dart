@@ -14,7 +14,7 @@ class RegisterTab extends StatefulWidget {
 }
 
 class RegisterTabState extends State<RegisterTab> {
-  static const availableRoles = ['탑승자', '수송업무 담당자', '운영자'];
+  static const kPermissions = {'일반사용자': 0, '수송 관리자': 1, '운전병': 2};
 
   final _formKey = GlobalKey<FormState>();
   String id = "";
@@ -22,7 +22,7 @@ class RegisterTabState extends State<RegisterTab> {
   String email = "";
   String baseName = "";
   String passwd = "";
-  String role = availableRoles[0];
+  int permission = kPermissions.values.first;
 
   RegisterTabState();
 
@@ -79,11 +79,13 @@ class RegisterTabState extends State<RegisterTab> {
 
   Widget _buildRoleDropDown(BuildContext context) {
     return DropdownButtonFormField(
-        value: role,
-        items: availableRoles
-            .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+        value: permission,
+        items: kPermissions
+            .map((key, val) =>
+                MapEntry(key, DropdownMenuItem(value: val, child: Text(key))))
+            .values
             .toList(),
-        onChanged: (val) => role = val ?? availableRoles[0]);
+        onChanged: (val) => permission = val ?? kPermissions.values.first);
   }
 
   Widget _buildRegisterButton(BuildContext context) {
@@ -97,7 +99,12 @@ class RegisterTabState extends State<RegisterTab> {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     _formKey.currentState?.save();
     authProvider
-        .register(id: id, password: passwd, email: email, battalionID: baseName)
+        .register(
+            id: id,
+            password: passwd,
+            email: email,
+            battalionID: baseName,
+            permission: permission)
         .then((success) {
       if (success) {
         showDialog(

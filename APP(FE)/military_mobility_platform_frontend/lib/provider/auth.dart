@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/model/user.dart';
 import 'package:military_mobility_platform_frontend/service/api.dart';
@@ -8,29 +9,26 @@ class AuthProvider extends ChangeNotifier {
 
   bool get isLoggedIn => _token != null;
   TokenDTO? get token => _token;
+  Dio? get authenticatedClient => isLoggedIn
+      ? Dio(BaseOptions(headers: {'Authorization': 'Bearer ${_token!.access}'}))
+      : null;
 
   Future<bool> login({required String id, required String password}) async {
-    // final response =
-    //     await APIService.login(LoginReqDTO(login_id: id, password: password));
-    // if (response != null) {
-    //   _token = response.token;
-    //   LocalStorage().writeUserToken(_token!);
-    //   APIService.setUserToken(_token!);
-    //   notifyListeners();
-    //   return true;
-    // } else {
-    //   return false;
-    // }
-    _token = TokenDTO(access: id, refresh: password);
-    LocalStorage().writeUserToken(_token!);
-    notifyListeners();
-    return true;
+    try {
+      final response = await APIService(Dio())
+          .login(LoginReqDTO(loginID: id, password: password));
+      _token = response.token;
+      LocalStorage().writeUserToken(_token!);
+      notifyListeners();
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 
   void logout() {
     _token = null;
     LocalStorage().removeUserToken();
-    APIService.removeUserToken();
     notifyListeners();
   }
 
@@ -38,13 +36,19 @@ class AuthProvider extends ChangeNotifier {
       {required String id,
       required String password,
       required String email,
-      required String battalionID}) async {
-    final dto = RegisterReqDTO(
-        login_id: id,
-        password: password,
-        email: email,
-        battalion_id: battalionID);
-    final response = await APIService.register(dto);
-    return response != null;
+      required String battalionID,
+      required int permission}) async {
+    try {
+      final dto = RegisterReqDTO(
+          loginID: id,
+          password: password,
+          email: email,
+          battalionID: battalionID,
+          permission: permission);
+      await APIService(Dio()).register(dto);
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 }
