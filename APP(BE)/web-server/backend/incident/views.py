@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Incident
-from .serializers import IncidentSerializer
+from .models import Incident, Rescue
+from .serializers import IncidentSerializer, RescueSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status, filters
@@ -51,8 +51,59 @@ class incident(APIView):
                         ''')
     def delete(self, request):
         try: 
-            car_id = request.GET['incident_id']
-            Car.objects.get(id=incident_id).delete()
+            incident_id = request.GET['incident_id']
+            Incident.objects.get(id=incident_id).delete()
+            return Response(status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class rescue(APIView):
+    @swagger_auto_schema(operation_summary='구급 신청 정보 얻기', operation_description='''
+                                                                                                            ----response----
+                                                                                                                type: list
+                                                                                                                model: Rescue
+                                                                                                            ''')
+    def get(self, request):
+        return Response(Rescue.objects.all())
+    
+    @swagger_auto_schema(request_body=RescueSerializer, operation_summary='구난 차량 요청하기', operation_description='''
+                                                                                                            ----request----
+                                                                                                                car: 사고차량 id
+                                                                                                                location:사고위치
+                                                                                                                service_needs:요청 서비스
+                                                                                                                note: 특이사항
+                                                                                                                                                                                                                            ----response----
+                                                                                                                type: object
+                                                                                                                model: Rescue
+                                                                                                            ''')
+    def post(self, request):    
+        serializer = RescueSerializer(data=request.data)
+        if serializer.is_valid():
+            token = request.META['HTTP_AUTHORIZATION'][7:]
+            user = get_user_from_access_token(token)
+            serializer.save(user=user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @swagger_auto_schema(manual_parameters=[
+        openapi.Parameter(
+            "rescue_id",
+            openapi.IN_QUERY,
+            description="rescue_id",
+            type=openapi.TYPE_STRING,
+            default=""
+    )], operation_summary='구난 신청정보 삭제하기',
+    operation_description='''
+                        rescue_id: 삭제하고자 하는 신청 정보의 ID
+                        ----response----
+                            type: only status
+                        ''')
+    def delete(self, request):
+        try: 
+            rescue_id = request.GET['rescue_id']
+            Rescue.objects.get(id=rescue_id).delete()
             return Response(status=status.HTTP_200_OK)
         except Exception as e:
             print(e)

@@ -8,3 +8,10 @@ class Incident(models.Model):
     incident_type=models.IntegerField(default=0)
     location=models.CharField(max_length=30)
     image=models.ImageField(blank=True)
+
+class Rescue(models.Model):
+    user=models.ForeignKey(User,related_name='rescue_user',on_delete=models.CASCADE)
+    car=models.ForeignKey(Car,related_name='rescue_car',on_delete=models.CASCADE)
+    location=models.CharField(max_length=30)
+    service_needs=models.CharField(max_length=100)
+    note=models.CharField(max_length=100)
