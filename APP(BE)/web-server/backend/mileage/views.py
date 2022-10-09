@@ -6,6 +6,9 @@ from drf_yasg.utils import swagger_auto_schema
 from .utils import *
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
+from login.views import get_user_from_access_token
+from rest_framework.response import Response
+from rest_framework import status
 
 # Create your views here.
 
@@ -18,25 +21,16 @@ class history(APIView):
             type=openapi.TYPE_INTEGER,
             default=-1,
         ),
-        openapi.Parameter(
-            "car_id",
-            openapi.IN_QUERY,
-            description="car_id",
-            type=openapi.TYPE_INTEGER,
-            default=-1,
-        ),
     ]
     
     @swagger_auto_schema(manual_parameters=get_params, operation_summary='운행 기록 얻기')
     def get(self, request):
         try:
-            user_id = int(request.GET['user_id'])
-            car_id = int(request.GET['car_id'])
-    
-            if user_id != -1:
-                return Response(get_history_by_user(user_id), status=status.HTTP_200_OK)
-            elif car_id != -1:
-                return Response(get_history_by_car(car_id), status=status.HTTP_200_OK)
+            # token = request.META['HTTP_AUTHORIZATION'][7:]
+            # user = get_user_from_access_token(token)
+            # user_id = user.id
+            user_id = request.GET['user_id']
+            return Response(get_history_by_user(user_id), status=status.HTTP_200_OK)
             
         except Exception as e:
             print(e)
