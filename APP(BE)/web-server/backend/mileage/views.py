@@ -18,23 +18,34 @@ class history(APIView):
             "user_id",
             openapi.IN_QUERY,
             description="user_id",
-            type=openapi.TYPE_INTEGER,
-            default=-1,
+            type=openapi.TYPE_STRING,
+            default="",
         ),
     ]
     
-    @swagger_auto_schema(manual_parameters=get_params, operation_summary='운행 기록 얻기')
+    @swagger_auto_schema(manual_parameters=get_params, 
+                         operation_summary='주행 기록 얻기', 
+                         operation_description='''
+                                            ---request---
+                                               없음 : 요청한 토큰의 이용자 객ㅊ를 받아옴
+                                            ---response---
+                                               type: object
+                                               model: History
+                                               '''
+                    	)
     def get(self, request):
-        try:
-            # token = request.META['HTTP_AUTHORIZATION'][7:]
-            # user = get_user_from_access_token(token)
-            # user_id = user.id
-            user_id = request.GET['user_id']
-            return Response(get_history_by_user(user_id), status=status.HTTP_200_OK)
+        # try:
+        #     token = request.META['HTTP_AUTHORIZATION'][7:]
+        #     user = get_user_from_access_token(token)
+        #     user_id = user.id
+        #     # user_id = request.GET['user_id']
+        #     # return Response(get_history_by_user(user_id), status=status.HTTP_200_OK)
+        #     return Response(get_history(), status=status.HTTP_200_OK)
             
-        except Exception as e:
-            print(e)
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        # except Exception as e:
+        #     print(e)
+        #     return Response(status=status.HTTP_400_BAD_REQUEST)
+	return Response(get_history()) 
     
     @swagger_auto_schema(request_body=historyBookingSerializer, operation_summary="주행기록 작성하기")
     def post(self, request):
