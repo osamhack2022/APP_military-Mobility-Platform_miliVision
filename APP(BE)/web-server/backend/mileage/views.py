@@ -45,7 +45,7 @@ class history(APIView):
         # except Exception as e:
         #     print(e)
         #     return Response(status=status.HTTP_400_BAD_REQUEST)
-		return Response(get_history()) 
+	return Response(get_history()) 
     
     @swagger_auto_schema(request_body=historyBookingSerializer, operation_summary="주행기록 작성하기")
     def post(self, request):
