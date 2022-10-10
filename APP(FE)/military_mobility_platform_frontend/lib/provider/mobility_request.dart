@@ -8,11 +8,21 @@ import 'package:military_mobility_platform_frontend/model/reservation.dart';
 import 'package:military_mobility_platform_frontend/service/api.dart';
 
 class MobilityRequestProvider extends ChangeNotifier {
+  MobilityRequestProvider() {
+    const kInterval = 15;
+    final now = DateTime.now();
+    _departureTime = now.subtract(Duration(minutes: now.minute % kInterval));
+    if (now.minute % 15 != 0) {
+      _departureTime = _departureTime.add(const Duration(minutes: kInterval));
+    }
+    _arrivalTime = _departureTime.add(const Duration(days: 1));
+  }
+
   String _departure = kLocations[0];
   String _destination = kLocations[0];
   int _passengers = 0;
-  DateTime _departureTime = DateTime.now();
-  DateTime _arrivalTime = DateTime.now();
+  late DateTime _departureTime;
+  late DateTime _arrivalTime;
   List<MobilityDTO> _availableMobilities = [];
 
   String get departure => _departure;

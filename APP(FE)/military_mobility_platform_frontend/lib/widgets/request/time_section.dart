@@ -45,8 +45,9 @@ class TimeSection extends StatelessWidget {
         behavior: HitTestBehavior.translucent,
         onTap: () {
           Feedback.forTap(context);
-          final minTime = DateTime.now().subtract(const Duration(days: 30));
-          final maxTime = DateTime.now().add(const Duration(days: 30));
+          final now = DateTime.now();
+          final minTime = now.subtract(Duration(minutes: now.minute));
+          final maxTime = minTime.add(const Duration(days: 30));
           DatePicker.showDateTimePicker(context,
               showTitleActions: true,
               minTime: minTime,
