@@ -7,6 +7,7 @@ from login.models import *
 class Car(models.Model):
     id=models.PositiveIntegerField(primary_key=True)
     car_model=models.CharField(max_length=30, null=True)
+    license_plate=models.CharField(max_length=30, null=True)
     can_ride=models.PositiveIntegerField(default=4)
     propulsion_type=models.CharField(max_length=30, null=True)
     color=models.CharField(max_length=30, null=True)
