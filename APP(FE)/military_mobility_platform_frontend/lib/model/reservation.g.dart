@@ -9,8 +9,8 @@ part of 'reservation.dart';
 ReservationDTO _$ReservationDTOFromJson(Map<String, dynamic> json) =>
     ReservationDTO(
       id: json['id'] as int,
-      booker: json['booker'] as int,
-      mobility: json['car'] as int,
+      booker: UserDTO.fromJson(json['booker'] as Map<String, dynamic>),
+      mobility: MobilityDTO.fromJson(json['car'] as Map<String, dynamic>),
       departure: json['departure'] as String,
       destination: json['destination'] as String,
       passengers: json['followers_num'] as int,

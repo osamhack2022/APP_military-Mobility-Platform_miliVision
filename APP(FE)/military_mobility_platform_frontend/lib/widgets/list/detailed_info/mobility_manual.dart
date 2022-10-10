@@ -6,12 +6,12 @@ import 'package:military_mobility_platform_frontend/service/mobility_assets.dart
 class MobilityManual extends StatelessWidget {
   const MobilityManual(this.mobility, {super.key});
 
-  final int mobility;
+  final MobilityDTO mobility;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: MobilityAssets.getMobilityManual('type 임시'),
+        future: MobilityAssets.getMobilityManual(mobility.type),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());

@@ -15,11 +15,12 @@ class RequestedMobilityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mobility = reservation.mobility;
     return Card(
         elevation: 3.0,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           _buildRequestStatusSection(context),
-          Image(image: MobilityAssets.getMobilityImage('type 임시')),
+          Image(image: MobilityAssets.getMobilityImage(mobility.type)),
           _buildInfoSection(context),
           _buildButtonSection(context),
         ]));
@@ -70,9 +71,10 @@ class RequestedMobilityCard extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('id 임시', style: textTheme.labelMedium),
-          Text('type 임시', style: textTheme.labelMedium),
-          Text('fuelType 임시|color 임시', style: textTheme.labelMedium),
+          Text(mobility.id.toString(), style: textTheme.labelMedium),
+          Text(mobility.type, style: textTheme.labelMedium),
+          Text('${mobility.fuelType}|${mobility.color}',
+              style: textTheme.labelMedium),
         ]));
   }
 

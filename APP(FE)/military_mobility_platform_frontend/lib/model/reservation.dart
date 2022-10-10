@@ -1,4 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:military_mobility_platform_frontend/model/mobility.dart';
+import 'package:military_mobility_platform_frontend/model/user.dart';
 
 part 'reservation.g.dart';
 
@@ -16,9 +18,9 @@ class ReservationDTO {
       required this.status});
 
   final int id;
-  final int booker;
+  final UserDTO booker;
   @JsonKey(name: 'car')
-  final int mobility;
+  final MobilityDTO mobility;
   final String departure;
   final String destination;
   @JsonKey(name: 'followers_num')
