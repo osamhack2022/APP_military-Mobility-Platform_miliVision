@@ -31,12 +31,12 @@ class notification(APIView):
     
     @swagger_auto_schema(request_body=NotificationSerializer, operation_summary='알림 보내기', operation_description='''
                                                                                                             ----request----
-                                                                                                                type_of_notification: 알림 종류 예)배차예약, 응급 구조 신청
+                                                                                                                type_of_notification: 알림 종류 예)배차 예약, 응급 구조 신청
                                                                                                                 message: 보내고자 하는 내용
                                                                                                                 battalion_receiver: 전파하고자 하는 부대의 코드(4자)
                                                                                                                 user_sender: 보내는 사람의 user_id (현 사용자)
                                                                                                                 permission: 관리자 2, 대대원 전체 1, 모든 앱 사용자 0
-                                                                                                                reservation: 배차 예약과 관련된 알림이라면 reservation_id를 추가
+                                                                                                                related_id: 관련된 모델의 id를 입력(관리자 페이지에서 바로가기 용도)
                                                                                                             ----response----
                                                                                                                 type: object
                                                                                                                 model: Notification
@@ -129,6 +129,7 @@ class reservation(APIView):
                                                                     ,operation_description='''
                                                                                         ----request----
                                                                                             car: 예약하고자 하는 차량의 ID(4자 부대코드 + 차량 번호)
+                                                                                            driving_by_self: 본인이 운전할 것인지에 대한 여부
                                                                                             departure: 출발지
                                                                                             destination: 도착지
                                                                                             reservation_start: 예약 시작일
@@ -146,29 +147,34 @@ class reservation(APIView):
                                                                            (Q(reservation_start__range=[serializer.validated_data["reservation_start"], serializer.validated_data["reservation_end"]]) | 
                                                                            Q(reservation_end__range=[serializer.validated_data["reservation_start"], serializer.validated_data["reservation_end"]])) &
                                                                            Q(status=1))
-            if len(reservation) != 0: #예약이 있을 때 배차가 없는 운전병을 배치    
-                reservation = reservation.values()
-                already_reserved = [rv["driver_id"] for rv in reservation]
-                available_driver = User.objects.filter(
-                    Q(permission=2) &
-                    ~Q(id__in=already_reserved) &
-                    Q(battalion_id=str(serializer.validated_data["car"].id)[:4])
-                )
-                if len(available_driver) == 0: 
-                    return Response("대기중인 운전병이 없습니다.", status=status.HTTP_400_BAD_REQUEST)
-                serializer.save(booker=user, driver=available_driver[0])
-            else: #예약이 없을 때는 아무 0번째 운전병을 배치
-                available_driver = User.objects.filter(Q(permission=2) & 
-                                                        Q(battalion_id=str(serializer.validated_data["car"].id)[:4]))
-                if len(available_driver) == 0: 
-                    return Response("대기중인 운전병이 없습니다.", status=status.HTTP_400_BAD_REQUEST)
-                serializer.save(booker=user, driver=available_driver[0])
+            
+            if serializer.validated_data["driving_by_self"] == True:
+                serializer.save(booker=user, driver=user)
+            else:
+                if len(reservation) != 0: #예약이 있을 때 배차가 없는 운전병을 배치    
+                    reservation = reservation.values()
+                    already_reserved = [rv["driver_id"] for rv in reservation]
+                    available_driver = User.objects.filter(
+                        Q(permission=2) &
+                        ~Q(id__in=already_reserved) &
+                        Q(battalion_id=str(serializer.validated_data["car"].id)[:4])
+                    )
+                    if len(available_driver) == 0: 
+                        return Response("대기중인 운전병이 없습니다.", status=status.HTTP_400_BAD_REQUEST)
+                    serializer.save(booker=user, driver=available_driver[0])
+                else: #예약이 없을 때는 아무 0번째 운전병을 배치
+                    available_driver = User.objects.filter(Q(permission=2) & 
+                                                            Q(battalion_id=str(serializer.validated_data["car"].id)[:4]))
+                    if len(available_driver) == 0: 
+                        return Response("대기중인 운전병이 없습니다.", status=status.HTTP_400_BAD_REQUEST)
+                    serializer.save(booker=user, driver=available_driver[0])
             battalion_receiver = str(serializer.data["car"])[:4]
             Notification.objects.create(
                 user_sender=user,
                 battalion_receiver=battalion_receiver,
+                type_of_notification="배차 신청",
                 permission=1,
-                reservation=serializer.instance,
+                related_id=serializer.instance.id,
                 message=f"{user.login_id}이(가) 배차를 신청했습니다."
             )
             

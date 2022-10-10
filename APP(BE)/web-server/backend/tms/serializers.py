@@ -6,13 +6,13 @@ import datetime
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
-        fields = ('type_of_notification', 'message', "battalion_receiver", "user_sender", "permission", "reservation")
+        fields = ('type_of_notification', 'message', "battalion_receiver", "user_sender", "permission", "related_id")
 
 
 class ReservationBookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservation
-        fields = ('car', 'departure', 'destination', 'reservation_start', 'reservation_end')
+        fields = ('car', 'driving_by_self', 'departure', 'destination', 'reservation_start', 'reservation_end')
 
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,7 +26,7 @@ class ReservationSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Reservation
-        fields = ('id', 'booker', 'car', 'driver', 'departure', 'destination', 'followers_num', 'stopover', 'is_sharing', 'reservation_start', 'reservation_end', 'status', 'reason', 'safety_checklist', 'operation_plan', 'created_at')
+        fields = ('id', 'booker', 'car', 'driver', 'departure', 'destination', 'followers_num', 'driving_by_self', 'stopover', 'is_sharing', 'reservation_start', 'reservation_end', 'status', 'reason', 'safety_checklist', 'operation_plan', 'created_at')
 
 
 class ReservationJoinCarSerializer(serializers.ModelSerializer):

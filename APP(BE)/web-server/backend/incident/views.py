@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Incident, Rescue
 from .serializers import IncidentSerializer, RescueSerializer
+from tms.models import Notification
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, status, filters
@@ -33,6 +34,14 @@ class incident(APIView):
             token = request.META['HTTP_AUTHORIZATION'][7:]
             user = get_user_from_access_token(token)
             serializer.save(user=user)
+            Notification.objects.create(
+                user_sender=user,
+                battalion_receiver=user.battalion_id,
+                type_of_notification="사고 차량 신고",
+                permission=1,
+                message=f"{user.login_id}이(가) 사고 차량을 신고했습니다.",
+                related_id=serializer.instance.id
+            )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -60,7 +69,7 @@ class incident(APIView):
 
 
 class rescue(APIView):
-    @swagger_auto_schema(operation_summary='구급 신청 정보 얻기', operation_description='''
+    @swagger_auto_schema(operation_summary='구난 신청 정보 얻기', operation_description='''
                                                                                                             ----response----
                                                                                                                 type: list
                                                                                                                 model: Rescue
@@ -84,6 +93,14 @@ class rescue(APIView):
             token = request.META['HTTP_AUTHORIZATION'][7:]
             user = get_user_from_access_token(token)
             serializer.save(user=user)
+            Notification.objects.create(
+                user_sender=user,
+                battalion_receiver=user.battalion_id,
+                type_of_notification="구난 차량 요청",
+                permission=1,
+                message=f"{user.login_id}이(가) 구난 차량 요청을 했습니다.",
+                related_id=serializer.instance.id
+            )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
