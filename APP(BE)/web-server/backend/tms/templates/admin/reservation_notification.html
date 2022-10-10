@@ -48,7 +48,7 @@
             else {
                 var BtnText = document.createTextNode( '내용 보기' );
             }
-            Btn.setAttribute('id',data.data.related_id);
+            Btn.setAttribute('id',data.data.type_of_notification + data.data.related_id);
             Btn.appendChild(BtnText);
             Btn.onclick = function(){button_onclick(data.data.type_of_notification, data.data.related_id);}
             var tr = document.createElement("tr");
@@ -67,6 +67,7 @@
             var log = document.getElementById('log') 
             log.appendChild(tr);
             toastr.success(data.data.message);
+            document.getElementById(data.data.type_of_notification + data.data.related_id).focus();
         };
 
         Socket.onclose = function(e) {
