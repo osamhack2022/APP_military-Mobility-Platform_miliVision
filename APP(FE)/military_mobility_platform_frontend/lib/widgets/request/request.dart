@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/provider/auth.dart';
 import 'package:military_mobility_platform_frontend/provider/mobility_request.dart';
 import 'package:military_mobility_platform_frontend/provider/navigation.dart';
+import 'package:military_mobility_platform_frontend/service/snackbar.dart';
 import 'package:military_mobility_platform_frontend/service/toast.dart';
 import 'package:military_mobility_platform_frontend/widgets/request/time_section.dart';
 import 'package:military_mobility_platform_frontend/widgets/request/location_section.dart';
@@ -60,9 +61,7 @@ class RequestButton extends StatelessWidget {
         final navigationProvider =
             Provider.of<NavigationProvider>(context, listen: false);
         final mobilities = mobilityRequestProvider.availableMobilities.length;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            duration: const Duration(seconds: 2),
-            content: Text('요청하신 조건에 총 $mobilities대의 차량이 선택 가능합니다.')));
+        Snackbar(context).showInfo('요청하신 조건에 총 $mobilities대의 차량이 선택 가능합니다.');
         navigationProvider.animateToTabWithName('select mobility');
       });
     } catch (exception) {

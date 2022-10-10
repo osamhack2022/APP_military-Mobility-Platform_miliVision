@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/provider/auth.dart';
+import 'package:military_mobility_platform_frontend/service/snackbar.dart';
 import 'package:military_mobility_platform_frontend/service/toast.dart';
 import 'package:military_mobility_platform_frontend/widgets/login/components.dart';
 import 'package:provider/provider.dart';
@@ -107,21 +108,8 @@ class RegisterTabState extends State<RegisterTab> {
             permission: permission)
         .then((success) {
       if (success) {
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (dialogContext) => AlertDialog(
-                  title: const Text('관리자의 승인 이후에 로그인할 수 있습니다.'),
-                  content: const Text('승인에는 2~3일정도 소요되며 승인 시 알림이 전송됩니다.'),
-                  actions: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(dialogContext);
-                          Navigator.pop(context);
-                        },
-                        child: const Text('닫기'))
-                  ],
-                ));
+        Navigator.pop(context);
+        Snackbar(context).showSuccess('관리자의 승인 이후에 로그인할 수 있습니다.');
       } else {
         Toast.showFailToast('회원가입에 실패했습니다.');
       }
