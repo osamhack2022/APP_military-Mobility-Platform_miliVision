@@ -9,6 +9,7 @@ from drf_yasg.utils import swagger_auto_schema
 from login.views import get_user_from_access_token
 from rest_framework.response import Response
 from rest_framework import status
+from .serializers import *
 
 # Create your views here.
 
@@ -32,7 +33,7 @@ class history(APIView):
                                                type: object
                                                model: History
                                                '''
-                    	)
+                                               )
     def get(self, request):
         # try:
         #     token = request.META['HTTP_AUTHORIZATION'][7:]
@@ -45,7 +46,9 @@ class history(APIView):
         # except Exception as e:
         #     print(e)
         #     return Response(status=status.HTTP_400_BAD_REQUEST)
-	return Response(get_history()) 
+        historys = History.objects.all()
+        serializer = HistorySerializer(historys, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK) 
     
     @swagger_auto_schema(request_body=historyBookingSerializer, operation_summary="주행기록 작성하기")
     def post(self, request):
