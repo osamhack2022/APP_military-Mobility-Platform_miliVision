@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-//import 'package:map_pin_picker/map_pin_picker.dart';
+import 'package:map_pin_picker/map_pin_picker.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import "package:latlng/latlng.dart";
+//import 'package:latlong2/latlong.dart';
 
 class RecoveryTeamRequest extends StatelessWidget {
   const RecoveryTeamRequest({super.key});
@@ -51,30 +51,125 @@ class RecoveryTeamRequest extends StatelessWidget {
 }
 
 class VehicleLocationCheck extends StatefulWidget {
-  const VehicleLocationCheck({super.key});
+  const VehicleLocationCheck({Key? key}) : super(key: key);
 
   @override
   State<VehicleLocationCheck> createState() => _VehicleLocationCheckState();
 }
 
 class _VehicleLocationCheckState extends State<VehicleLocationCheck> {
-  //final _controller = Completer<GoogleMapController>();
-  //MapPickerController mapPickerController = MapPickerController();
+  final _controller = Completer<GoogleMapController>();
+  MapPickerController mapPickerController = MapPickerController();
 
-  /*CameraPosition cameraPosition = const CameraPosition(
-    target: LatLng(41.311158, 69.279737),
+  CameraPosition cameraPosition = CameraPosition(
+    target: LatLng(37.512590, 127.033549),
     zoom: 14.4746,
-  );*/
+  );
 
   var textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Text('.');
-    
-    
-    /*Scaffold(
-      body: Column(
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          MapPicker(
+            // pass icon widget
+            iconWidget: SvgPicture.asset(
+              "assets/location_icon.svg",
+              height: 60,
+            ),
+            //add map picker controller
+            mapPickerController: mapPickerController,
+            child: GoogleMap(
+              myLocationEnabled: true,
+              zoomControlsEnabled: false,
+              // hide location button
+              myLocationButtonEnabled: false,
+              mapType: MapType.normal,
+              // camera position
+              initialCameraPosition: cameraPosition,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+              onCameraMoveStarted: () {
+                // notify map is moving
+                mapPickerController.mapMoving!();
+                textController.text = "checking ...";
+              },
+              onCameraMove: (cameraPosition) {
+                this.cameraPosition = cameraPosition;
+              },
+              onCameraIdle: () async {
+                // notify map stopped moving
+                mapPickerController.mapFinishedMoving!();
+                //get address name from camera position
+                List<Placemark> placemarks = await placemarkFromCoordinates(
+                  cameraPosition.target.latitude,
+                  cameraPosition.target.longitude,
+                );
+                // update the ui with the address
+                textController.text =
+                '${placemarks.first.name}, ${placemarks.first.administrativeArea}, ${placemarks.first.country}';
+              },
+            ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).viewPadding.top + 20,
+            width: MediaQuery.of(context).size.width - 50,
+            height: 50,
+            child: TextFormField(
+              maxLines: 3,
+              textAlign: TextAlign.center,
+              readOnly: true,
+              decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.zero, border: InputBorder.none),
+              controller: textController,
+            ),
+          ),
+          Positioned(
+            bottom: 24,
+            left: 24,
+            right: 24,
+            child: SizedBox(
+              height: 50,
+              child: TextButton(
+                child: const Text(
+                  "다음",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.normal,
+                    color: Colors.white,
+                    fontSize: 19,
+                    // height: 19/19,
+                  ),
+                ),
+                onPressed: () {
+                  print(
+                      "Location ${cameraPosition.target.latitude} ${cameraPosition.target.longitude}");
+                  print("Address: ${textController.text}");
+                  Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => RecoveryTeamRequestContent())
+                  );
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                  MaterialStateProperty.all<Color>(const Color(0xFF6200EE)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+      
+      /*Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           IconButton(
@@ -92,104 +187,9 @@ class _VehicleLocationCheckState extends State<VehicleLocationCheck> {
           ),
           const Padding(
               padding: EdgeInsets.only(bottom: 10.0)
-          ),*/
-          /////map_pin_picker
-          /*Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              MapPicker(
-                // pass icon widget
-                iconWidget: Image.asset(
-                  "assets/images/map_picker_icon.png",
-                  height: 60,
-                ),
-                //add map picker controller
-                mapPickerController: mapPickerController,
-                child: GoogleMap(
-                  myLocationEnabled: true,
-                  zoomControlsEnabled: false,
-                  // hide location button
-                  myLocationButtonEnabled: false,
-                  mapType: MapType.normal,
-                  //  camera position
-                  initialCameraPosition: cameraPosition,
-                  onMapCreated: (GoogleMapController controller) {
-                    _controller.complete(controller);
-                  },
-                  onCameraMoveStarted: () {
-                    // notify map is moving
-                    mapPickerController.mapMoving!();
-                    textController.text = "checking ...";
-                  },
-                  onCameraMove: (cameraPosition) {
-                    this.cameraPosition = cameraPosition;
-                  },
-                  onCameraIdle: () async {
-                    // notify map stopped moving
-                    mapPickerController.mapFinishedMoving!();
-                    //get address name from camera position
-                    List<Placemark> placemarks = await placemarkFromCoordinates(
-                      cameraPosition.target.latitude,
-                      cameraPosition.target.longitude,
-                    );
-
-                    // update the ui with the address
-                    textController.text =
-                    '${placemarks.first.name}, ${placemarks.first.administrativeArea}, ${placemarks.first.country}';
-                  },
-                ),
-              ),
-              Positioned(
-                top: MediaQuery.of(context).viewPadding.top + 20,
-                width: MediaQuery.of(context).size.width - 50,
-                height: 50,
-                child: TextFormField(
-                  maxLines: 3,
-                  textAlign: TextAlign.center,
-                  readOnly: true,
-                  decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.zero, border: InputBorder.none),
-                  controller: textController,
-                ),
-              ),
-              */
-              /*Positioned(
-                bottom: 24,
-                left: 24,
-                right: 24,
-                child: SizedBox(
-                  height: 50,
-                  child: TextButton(
-                    child: const Text(
-                      "Submit",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.normal,
-                        color: Color(0xFFFFFFFF),
-                        fontSize: 19,
-                        // height: 19/19,
-                      ),
-                    ),
-                    onPressed: () {
-                      print(
-                          "Location ${cameraPosition.target.latitude} ${cameraPosition.target.longitude}");
-                      print("Address: ${textController.text}");
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                      MaterialStateProperty.all<Color>(const Color(0xFFA3080C)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              )*/
-          //  ],
-          //),
-          /*
+          ),          
+        ],
+       ),
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
@@ -239,7 +239,7 @@ class _RecoveryTeamRequestContentState extends State<RecoveryTeamRequestContent>
               padding: EdgeInsets.only(bottom: 10.0)
           ),
           const Padding(
-            padding: EdgeInsets.only(left: 10.0),
+            padding: EdgeInsets.only(left: 10.0, bottom: 20.0),
             child: Text('긴급출동 요청내용을 입력해주세요', style: TextStyle(fontSize: 18.0,)),
           ),
           Padding(
@@ -288,7 +288,7 @@ class _RecoveryTeamRequestContentState extends State<RecoveryTeamRequestContent>
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 15.0, right: 12.0),
+                        padding: EdgeInsets.only(left: 15.0, right: 14.0),
                         child: Text('요청서비스', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
                       ),
                       Flexible(

@@ -48,9 +48,9 @@ dependencies:
   map_pin_picker: ^0.0.1
   geocoding: ^2.0.5
   flutter_svg: ^1.1.5
-  # google_maps_flutter_web: ^0.4.0+3
-  image_picker: ^0.8.6
-  latlng: ^0.2.0
+  google_maps_flutter_web: ^0.4.0+3
+  image_picker: ^0.8.4+4
+  latlong2: ^0.8.1
   
 
 dev_dependencies:
