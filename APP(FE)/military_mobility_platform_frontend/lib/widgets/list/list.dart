@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/provider/auth.dart';
+import 'package:military_mobility_platform_frontend/provider/drive_info.dart';
 import 'package:military_mobility_platform_frontend/provider/reservation_list.dart';
 import 'package:military_mobility_platform_frontend/widgets/list/listview.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +14,14 @@ class ListTab extends StatelessWidget {
     final reservationListProvider =
         Provider.of<ReservationListProvider>(context, listen: false);
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<DriveInfoProvider>(context, listen: false)
+          .deselectReservation();
+    });
+
     return FutureBuilder(
-        future:
-            reservationListProvider.getReservations(authProvider.authenticatedClient!),
+        future: reservationListProvider
+            .getReservations(authProvider.authenticatedClient!),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());

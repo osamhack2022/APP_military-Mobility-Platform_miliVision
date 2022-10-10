@@ -47,6 +47,10 @@ dependencies:
   dio: ^4.0.6
   retrofit_generator: ^4.2.0
   flutter_markdown: ^0.6.12
+  flutter_polyline_points: ^1.0.0
+  google_maps_flutter: ^2.2.1
+  location: ^4.4.0
+  google_maps_flutter_web: ^0.4.0+3
 
 dev_dependencies:
   flutter_test:
