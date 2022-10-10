@@ -26,16 +26,16 @@ def get_reservation(reservation_id):
     return serializer.data
 
 def get_reservation_by_booker(booker):
-    reservation = Reservation.objects.filter(Q(booker=booker) & Q(reservation_start__gte=datetime.now()))
+    reservation = Reservation.objects.filter(Q(booker=booker) & Q(reservation_end__gte=datetime.now()))
     serializer = ReservationSerializer(reservation, many=True)
     return serializer.data
 
 def get_reservation_by_driver(driver_id):
-    reservation = Reservation.objects.filter(Q(driver=driver_id) & Q(reservation_start__gte=datetime.now()))
+    reservation = Reservation.objects.filter(Q(driver=driver_id) & Q(reservation_end__gte=datetime.now()))
     serializer = ReservationSerializer(reservation, many=True)
     return serializer.data
 
 def get_reservation_by_battalion(battalion_id):
-    reservation = Reservation.objects.select_related('car').filter(Q(car__id__startswith=battalion_id) & Q(reservation_start__gte=datetime.now()))
+    reservation = Reservation.objects.select_related('car').filter(Q(car__id__startswith=battalion_id) & Q(reservation_end__gte=datetime.now()))
     serializer = ReservationSerializer(reservation, many=True)
     return serializer.data

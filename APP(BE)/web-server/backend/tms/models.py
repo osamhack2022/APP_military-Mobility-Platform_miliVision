@@ -21,14 +21,15 @@ class Reservation(models.Model):
     departure=models.CharField(max_length=264,default="")
     destination=models.CharField(max_length=264,default="")
     followers_num=models.PositiveIntegerField(default=0)
-    stopover=models.CharField(max_length=264,default="")
+    driving_by_self=models.BooleanField(default=False)
+    stopover=models.CharField(max_length=264,default="",null=True)
     is_sharing=models.BooleanField(default=False)
     reservation_start=models.DateTimeField('reservation start', default=datetime.now)
     reservation_end=models.DateTimeField('reservation end', default=datetime.now)
     status=models.IntegerField(default=0)
     reason=models.CharField(max_length=264,null=True,blank=True,default="")
     safety_checklist=models.BooleanField(default=False)
-    operation_plan=models.CharField(max_length=256,default="")
+    operation_plan=models.CharField(max_length=256,default="",null=True)
     created_at=models.DateTimeField('created_at', default=datetime.now, editable=False)
 
 class Notification(models.Model):
@@ -37,5 +38,5 @@ class Notification(models.Model):
     permission=models.IntegerField(default=0) #관리자 2, 대대원 전체 1, 모든 앱 사용자 0
     message=models.CharField(max_length=264,null=True,blank=True,default="")
     status=models.CharField(max_length=264,null=True,blank=True,default="unread")
-    reservation=models.ForeignKey(Reservation,null=True,blank=True,related_name='reservation',on_delete=models.CASCADE)
+    related_id=models.PositiveIntegerField(null=True,blank=True)
     type_of_notification=models.CharField(max_length=264,null=True,blank=True)
