@@ -48,10 +48,10 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>갤러리 접근 허용 필요</string>
+	<string>갤러리 접근 권한을 허용해주세요.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>카메라 접근 허용 필요</string>
+	<string>카메라 접근 권한을 허용해주세요.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>마이크 권한 접근 허용 필요</string>
+	<string>마이크 접근 권한을 허용해주세요.</string>
 </dict>
 </plist>

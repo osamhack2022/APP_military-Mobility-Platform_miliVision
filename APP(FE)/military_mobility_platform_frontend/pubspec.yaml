@@ -49,7 +49,8 @@ dependencies:
   geocoding: ^2.0.5
   flutter_svg: ^1.1.5
   google_maps_flutter_web: ^0.4.0+3
-  image_picker: ^0.8.6
+  image_picker: ^0.8.4+4
+  latlong2: ^0.8.1
   
 
 dev_dependencies:
@@ -79,6 +80,7 @@ flutter:
   assets:
     - assets/images/blank.jpg
     - assets/images/MEDCOM.jpg
+    - assets/images/map_picker_icon.png
     - assets/images/mobility/상용1톤.jfif
     - assets/images/mobility/승합차.png
     - assets/images/mobility/k3.jfif

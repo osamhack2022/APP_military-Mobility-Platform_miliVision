@@ -260,11 +260,11 @@ class _AccidentReportSetImageResultState extends State<AccidentReportSetImageRes
               width: 380,
               decoration: BoxDecoration(border: Border.all(),), 
               child: Image.network(
-                        'http://www.adinews.co.kr/news/photo/202209/59895_107532_1837.jpg',
-                        width: 50.0,
-                        height: 50.0,
-                        fit: BoxFit.cover,
-                        ),
+                'http://www.adinews.co.kr/news/photo/202209/59895_107532_1837.jpg',
+                width: 50.0,
+                height: 50.0,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           const Padding(
