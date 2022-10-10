@@ -76,7 +76,7 @@ class ReservationAdmin(admin.ModelAdmin):
             path('alert/', self.admin_site.admin_view(self.reservation_status_view))
         ]
         return post_urls + urls
-    
+
     def reservation_status_view(self, request):
         if request.user == None:
             raise Http404("User does not exist")
