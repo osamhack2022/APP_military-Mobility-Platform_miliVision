@@ -52,7 +52,7 @@ class history(APIView):
         serializer = HistorySerializer(historys, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK) 
     
-    @swagger_auto_schema(request_body=historyBookingSerializer, 
+    @swagger_auto_schema(request_body=HistorySerializer, 
                          operation_summary="주행기록 작성하기",
                          operation_description='''
                                                 ---request---
