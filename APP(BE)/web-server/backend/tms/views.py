@@ -72,6 +72,7 @@ class car(APIView):
     @swagger_auto_schema(request_body=CarSerializer, operation_summary='차량 추가하기', operation_description='''
                                                                                                             ----request----
                                                                                                                 id: 4자 부대코드 + 차량 번호
+                                                                                                                license_plate: 차량 번호판
                                                                                                                 car_model: 차량 모델
                                                                                                                 can_ride: 탑승 가능한 총 인원
                                                                                                                 propulsion_type: 연료 종류

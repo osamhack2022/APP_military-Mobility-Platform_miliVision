@@ -10,15 +10,15 @@ admin.site.register(Notification)
 
 class CarAdmin(admin.ModelAdmin):
     model = Car
-    list_display = ('id', 'car_model', 'can_ride', 'propulsion_type', 'color')
-    list_filter = ('id', 'car_model', 'can_ride', 'propulsion_type', 'color')
+    list_display = ('id', 'license_plate', 'car_model', 'can_ride', 'propulsion_type', 'color')
+    list_filter = ('id', 'license_plate', 'car_model', 'can_ride', 'propulsion_type', 'color')
     fieldsets = (
-        (None, {'fields': ('id', 'car_model', 'can_ride', 'propulsion_type', 'color')}),
+        (None, {'fields': ('id', 'license_plate', 'car_model', 'can_ride', 'propulsion_type', 'color')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',), 
-            'fields': ('id', 'car_model', 'can_ride', 'propulsion_type', 'color')}
+            'fields': ('id', 'license_plate', 'car_model', 'can_ride', 'propulsion_type', 'color')}
         ),
     )
     search_fields = ('id', 'car_model')
