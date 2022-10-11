@@ -34,7 +34,7 @@ class incident(APIView):
             token = request.META['HTTP_AUTHORIZATION'][7:]
             user = get_user_from_access_token(token)
             serializer.save(user=user)
-            Notification.objects.create(
+            Notification.objects.create( #alert페이지에 알림 보내기
                 user_sender=user,
                 battalion_receiver=user.battalion_id,
                 type_of_notification="사고 차량 신고",
@@ -93,7 +93,7 @@ class rescue(APIView):
             token = request.META['HTTP_AUTHORIZATION'][7:]
             user = get_user_from_access_token(token)
             serializer.save(user=user)
-            Notification.objects.create(
+            Notification.objects.create( #alert페이지에 알림 보내기
                 user_sender=user,
                 battalion_receiver=user.battalion_id,
                 type_of_notification="구난 차량 요청",

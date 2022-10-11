@@ -12,7 +12,7 @@ from .serializers import NotificationSerializer
 import json
 
 
-@receiver(post_save, sender=Notification)
+@receiver(post_save, sender=Notification) #Notification model에 새로운 데이터가 추가되면 자동으로 websocket channel에 알림
 def send_update(sender, instance, created, **kwargs):
     notification_serializer = NotificationSerializer(instance)
 

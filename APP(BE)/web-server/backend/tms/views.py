@@ -14,11 +14,11 @@ from login.views import get_user_from_access_token
 from rest_framework_simplejwt.authentication import JWTAuthentication
 import datetime
 
-# ws test - 1
+# webserver 테스트 페이지
 def index(request):
     return render(request, 'index.html')
 
-# ws test - 2
+# webserver 테스트 페이지
 def battalion(request, battalion):
     return render(request, 'battalion.html', {
         'battalion': battalion
@@ -142,35 +142,35 @@ class reservation(APIView):
     def post(self, request):
         serializer = ReservationBookingSerializer(data=request.data)
         if serializer.is_valid():
-            token = request.META['HTTP_AUTHORIZATION'][7:]
-            user = get_user_from_access_token(token)
+            token = request.META['HTTP_AUTHORIZATION'][7:] #token 자르기
+            user = get_user_from_access_token(token) #token으로 user object 호출
             reservation = Reservation.objects.select_related('driver').filter(Q(driver__battalion_id=int(str(serializer.validated_data["car"].id)[:4])) & # 이거 왜 int 추가해야 되는 건지 잘 모르겠음 여튼 int 안하면 안됨
                                                                            (Q(reservation_start__range=[serializer.validated_data["reservation_start"], serializer.validated_data["reservation_end"]]) | 
                                                                            Q(reservation_end__range=[serializer.validated_data["reservation_start"], serializer.validated_data["reservation_end"]])) &
-                                                                           Q(status=1))
+                                                                           Q(status=1)) #예약 호출 조건
             
             if serializer.validated_data["driving_by_self"] == True:
                 serializer.save(booker=user, driver=user)
             else:
                 if len(reservation) != 0: #예약이 있을 때 배차가 없는 운전병을 배치    
-                    reservation = reservation.values()
+                    reservation = reservation.values() 
                     already_reserved = [rv["driver_id"] for rv in reservation]
-                    available_driver = User.objects.filter(
+                    available_driver = User.objects.filter( #이미 예약이 걸려있는 운전병 배제
                         Q(permission=2) &
                         ~Q(id__in=already_reserved) &
                         Q(battalion_id=str(serializer.validated_data["car"].id)[:4])
                     )
-                    if len(available_driver) == 0: 
+                    if len(available_driver) == 0: #가용 가능한 운전병이 없을 때
                         return Response("대기중인 운전병이 없습니다.", status=status.HTTP_400_BAD_REQUEST)
                     serializer.save(booker=user, driver=available_driver[0])
                 else: #예약이 없을 때는 아무 0번째 운전병을 배치
                     available_driver = User.objects.filter(Q(permission=2) & 
                                                             Q(battalion_id=str(serializer.validated_data["car"].id)[:4]))
-                    if len(available_driver) == 0: 
+                    if len(available_driver) == 0: #가용 가능한 운전병이 없을 때
                         return Response("대기중인 운전병이 없습니다.", status=status.HTTP_400_BAD_REQUEST)
                     serializer.save(booker=user, driver=available_driver[0])
             battalion_receiver = str(serializer.data["car"])[:4]
-            Notification.objects.create(
+            Notification.objects.create( #alert페이지에 알림 보내기
                 user_sender=user,
                 battalion_receiver=battalion_receiver,
                 type_of_notification="배차 신청",
@@ -257,10 +257,10 @@ def get_available_car(request):
             reservation = Reservation.objects.select_related('car').filter(Q(car__id__startswith=user.battalion_id) &
                                                                            (Q(reservation_start__range=[serializer.data["reservation_start"], serializer.data["reservation_end"]]) | 
                                                                            Q(reservation_end__range=[serializer.data["reservation_start"], serializer.data["reservation_end"]])) &
-                                                                           Q(status=1))
+                                                                           Q(status=1)) #예약 호출 조건
             reservation = reservation.values()
             already_reserved = [rv["car_id"] for rv in reservation]
-            available_car = Car.objects.filter(
+            available_car = Car.objects.filter( #배차 예약이 있는 차량 배제
                 Q(id__startswith=user.battalion_id) &
                 Q(can_ride__gte=(serializer.data["followers_num"])) &
                 ~Q(id__in=already_reserved)
