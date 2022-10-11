@@ -1,0 +1,12 @@
+{% extends 'admin/change_list.html' %}
+
+{% block object-tools %}
+    <div>
+        <form action="alert/" method="POST">
+            {% csrf_token %}
+                <button type="submit" style="width: 150px; cursor:pointer;">Alert 바로가기</button>
+        </form>
+    </div>
+    <br />
+    {{ block.super }}
+{% endblock %}

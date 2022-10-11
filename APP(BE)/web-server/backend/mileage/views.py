@@ -28,7 +28,7 @@ class history(APIView):
                          operation_summary='주행 기록 얻기', 
                          operation_description='''
                                             ---request---
-                                               없음 : 요청한 토큰의 이용자 객ㅊ를 받아옴
+                                               없음 : 요청한 토큰의 이용자 객체를 받아옴
                                             ---response---
                                                type: object
                                                model: History
@@ -46,14 +46,30 @@ class history(APIView):
         # except Exception as e:
         #     print(e)
         #     return Response(status=status.HTTP_400_BAD_REQUEST)
-        historys = History.objects.all()
+        token = request.META['HTTP_AUTHORIZATION'][7:]
+        user = get_user_from_access_token(token)
+        historys = History.objects.filter(user_id=user.id)
         serializer = HistorySerializer(historys, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK) 
     
-    @swagger_auto_schema(request_body=historyBookingSerializer, operation_summary="주행기록 작성하기")
+    @swagger_auto_schema(request_body=HistorySerializer, 
+                         operation_summary="주행기록 작성하기",
+                         operation_description='''
+                                                ---request---
+                                                user_id: (int)요청한 사용자의 id / ex) 4
+                                                car_id: (int)탑승한 차의 id / ex) 1111001
+                                                department: (string) 출발지 / ex) 서울
+                                                arrival: (string) 도착지 / ex) 진해
+                                                datetime: (datetime) 운행한 날짜 / ex) 2022-10-10T13:54:39.700000+09:00
+                                                total_time: (int) 운행한 총 시간 / ex) 7
+                                                total_range: (int) 운행한 총 거리 / ex) 412
+                                                ---response---
+                                                type: object
+                                                model: History
+                                               ''')
     def post(self, request):
-        serializer = historyBookingSerializer(data=request.data)
-        if serializer.is_vaild():  # serializer가 vaild일 경우 필터링
+        serializer = HistorySerializer(data=request.data)
+        if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -66,7 +82,14 @@ class history(APIView):
             description="history_id",
             type=openapi.TYPE_INTEGER,
             default=""
-    )], operation_summary='주행기록 삭제하기')
+    	)], 
+                        operation_summary='주행기록 삭제하기',
+                        operation_description= '''
+                                               ---request---
+                                               history_id: (int) 삭제하고 싶은 History의 id
+                                               ---reponse---
+                                               None
+                                               ''')
     def delete(self, request):
         try:
             history_id = request.GET['history_id']

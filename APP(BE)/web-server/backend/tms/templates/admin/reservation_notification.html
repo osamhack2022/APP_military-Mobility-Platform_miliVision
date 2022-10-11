@@ -27,31 +27,47 @@
             + user_id
             + '/'
         );
-        const button_onclick = function (id) {
-                window.location.href = 'http://' + window.location.host + "/admin/tms/reservation/" + id + "/change/";
+        const button_onclick = function (type_of_notification, id) {
+                if (!type_of_notification.localeCompare('배차 신청')){
+                    window.location.href = 'http://' + window.location.host + "/admin/tms/reservation/" + id + "/change/";
+                }
+                else if (!type_of_notification.localeCompare('구난 차량 요청')){
+                    window.location.href = 'http://' + window.location.host + "/admin/incident/rescue/" + id + "/change/";
+                }
+                else if (!type_of_notification.localeCompare('사고 차량 신고')){
+                    window.location.href = 'http://' + window.location.host + "/admin/incident/incident/" + id + "/change/";
+                }
             }
         Socket.onmessage = function(e) {
             const data = JSON.parse(e.data);
+            console.log(data);
             var Btn = document.createElement( 'button' );
-            var BtnText = document.createTextNode( '내용 보기 및 승인' );
-            Btn.setAttribute('id',data.data.reservation);
+            if (!data.data.type_of_notification.localeCompare('배차 신청')){
+                var BtnText = document.createTextNode( '내용 보기 및 승인' );
+            }
+            else {
+                var BtnText = document.createTextNode( '내용 보기' );
+            }
+            Btn.setAttribute('id',data.data.type_of_notification + data.data.related_id);
             Btn.appendChild(BtnText);
-            Btn.onclick = function(event){
-                window.location.href = 'http://' + window.location.host + "/admin/tms/reservation/" + this.id + "/change/";
-            };
+            Btn.onclick = function(){button_onclick(data.data.type_of_notification, data.data.related_id);}
             var tr = document.createElement("tr");
             var td = document.createElement("td");
             var textNode = document.createTextNode(data.data.message);
             td.appendChild(textNode);
+            tr.appendChild(td)
             var td = document.createElement("td");
             var textNode = document.createTextNode(data.data.type_of_notification);
             td.appendChild(textNode);
+            tr.appendChild(td)
             var td = document.createElement("td");
             td.appendChild(Btn);
+            tr.appendChild(td)
 
             var log = document.getElementById('log') 
-            log.insertBefore(tr, log.firstChild).appendChild(Btn);
+            log.appendChild(tr);
             toastr.success(data.data.message);
+            document.getElementById(data.data.type_of_notification + data.data.related_id).focus();
         };
 
         Socket.onclose = function(e) {
@@ -60,7 +76,7 @@
     </script>
 </head>
 <body>
-    <h2>배차 예약 알림</h2>
+    <h2>알림</h2>
     <!-- <textarea id="log" cols="100" rows="20"></textarea><br> -->
     <div>
         <table border="1" id="log">
@@ -73,7 +89,13 @@
             <tr>
                 <td>{{notification.message}}</td>
                 <td>{{notification.type_of_notification}}</td>
-                <td><button type="button" id="{{notification.reservation.id}}" onclick="button_onclick(this.id);">내용 보기 및 승인</button></td>
+                {% if notification.type_of_notification == "배차 신청" %}
+                    <td><button type="button" id="{{notification.related_id}}" onclick="button_onclick('{{notification.type_of_notification}}', this.id);">내용 보기 및 승인</button></td>
+                {% elif notification.type_of_notification == "구난 차량 요청" %}
+                    <td><button type="button" id="{{notification.related_id}}" onclick="button_onclick('{{notification.type_of_notification}}', this.id);">내용 보기</button></td>
+                {% elif notification.type_of_notification == "사고 차량 신고" %}
+                    <td><button type="button" id="{{notification.related_id}}" onclick="button_onclick('{{notification.type_of_notification}}', this.id);">내용 보기</button></td>
+                {% endif %}
             </tr>
             {% endfor %}
         </table>
