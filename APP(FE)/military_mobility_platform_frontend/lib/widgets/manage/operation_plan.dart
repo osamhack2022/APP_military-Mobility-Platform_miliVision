@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/provider/operation_info.dart';
 import 'package:provider/provider.dart';
+import 'package:military_mobility_platform_frontend/service/toast.dart';
 
 class OperationPlan extends StatelessWidget {
   const OperationPlan({super.key});
@@ -49,11 +50,6 @@ class OperationPlan extends StatelessWidget {
 
 class OperationPlanSet extends StatefulWidget {
   const OperationPlanSet({super.key});
-  final _driver = "";
-  final _commander = "";
-  final _operation= "";
-  final _oprationNote =""; 
-
 
   @override
   State<OperationPlanSet> createState() => _OperationPlanSetState();
@@ -96,7 +92,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     padding: EdgeInsets.only(left: 12.0),
                   ),
                   SizedBox(
-                    width: 376,
+                    width: 350,
                     child:
                       TextField(
                         decoration: 
@@ -106,7 +102,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
-                        //onChanged: (val) => _driver = val
+                        onChanged: (val) => context.read<OperationInfoProvider>().driverInfo = val
                       ),
                   ),
                 ]
@@ -130,7 +126,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     padding: EdgeInsets.only(left: 12.0),
                   ),
                   SizedBox(
-                    width: 376,
+                    width: 350,
                     child:
                       TextField(
                         decoration: 
@@ -140,7 +136,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
-                        //onChanged: (val) => _driver = val
+                        onChanged: (val) => context.read<OperationInfoProvider>().commanderInfo = val
                       ),
                   ),
                 ]
@@ -164,7 +160,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     padding: EdgeInsets.only(left: 12.0),
                   ),
                   SizedBox(
-                    width: 376,
+                    width: 350,
                     child:
                       TextField(
                         decoration: 
@@ -174,7 +170,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
-                        //onChanged: (val) => _driver = val
+                        onChanged: (val) => context.read<OperationInfoProvider>().operationPurpose = val
                       ),
                   ),
                 ]
@@ -197,7 +193,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     padding: EdgeInsets.only(left: 12.0),
                   ),
                   SizedBox(
-                    width: 376,
+                    width: 350,
                     child:
                       TextField(
                         decoration: 
@@ -207,7 +203,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
-                        //onChanged: (val) => _driver = val
+                        onChanged: (val) => context.read<OperationInfoProvider>().operationNote = val
                       ),
                   ),
                 ]
@@ -220,7 +216,10 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(), 
+              onPressed: () { 
+                Toast.showSuccessToast('운행 계획이 작성되었습니다.');
+                Navigator.of(context).pop();
+              },
               /*onPressed: () {
                 int check = 0;
                 if(_driver == null) {

@@ -4,7 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_pin_picker/map_pin_picker.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-//import 'package:latlong2/latlong.dart';
+import 'package:geolocator/geolocator.dart';
+// import 'package:location/location.dart';
 
 class RecoveryTeamRequest extends StatelessWidget {
   const RecoveryTeamRequest({super.key});
@@ -50,6 +51,14 @@ class RecoveryTeamRequest extends StatelessWidget {
   }
 }
 
+/*
+Future<Position> getCurrentLocation() async {
+  Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high);
+  return position;
+}
+*/
+
 class VehicleLocationCheck extends StatefulWidget {
   const VehicleLocationCheck({Key? key}) : super(key: key);
 
@@ -59,10 +68,11 @@ class VehicleLocationCheck extends StatefulWidget {
 
 class _VehicleLocationCheckState extends State<VehicleLocationCheck> {
   final _controller = Completer<GoogleMapController>();
-  MapPickerController mapPickerController = MapPickerController();
+  MapPickerController mapPickerController = MapPickerController(); 
+  //var gps = await getCurrentLocation(); //gps.latitude gps.longitude
 
   CameraPosition cameraPosition = CameraPosition(
-    target: LatLng(37.512590, 127.033549),
+    target: LatLng(37.531918, 127.018598),
     zoom: 14.4746,
   );
 
@@ -114,6 +124,17 @@ class _VehicleLocationCheckState extends State<VehicleLocationCheck> {
                 '${placemarks.first.name}, ${placemarks.first.administrativeArea}, ${placemarks.first.country}';
               },
             ),
+          ),
+          Container(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  color: Colors.black,
+                  iconSize: 15.0,
+                  onPressed: () {Navigator.of(context).pop();},
+                ),
+              ),
           ),
           Positioned(
             top: MediaQuery.of(context).viewPadding.top + 20,
@@ -324,7 +345,12 @@ class _RecoveryTeamRequestContentState extends State<RecoveryTeamRequestContent>
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(), 
+              onPressed: () { 
+                int count = 0;
+                Navigator.popUntil(context, (route) {
+                    return count++ == 2;
+                });
+              },
               child: const Text('확인', style: TextStyle(fontSize: 18.0)),
             ),
           ),

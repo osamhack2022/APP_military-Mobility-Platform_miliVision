@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io' as io;
+import 'package:military_mobility_platform_frontend/provider/accident.dart';
+import 'package:provider/provider.dart';
 
 class AccidentReport extends StatelessWidget {
   const AccidentReport({super.key});
@@ -110,6 +112,7 @@ class _AccidentReportSetState extends State<AccidentReportSet> {
                   setState(() {
                     dropdownvalue = newValue!;
                   });
+                  //context.read<AccidentProvider>().accidentType = newValue;
                 },
               ), 
             )
@@ -128,7 +131,7 @@ class _AccidentReportSetState extends State<AccidentReportSet> {
                       padding: EdgeInsets.only(left: 2.0),
                     ),
                     SizedBox(
-                      width: 376,
+                      width: 350,
                       child:
                         TextField(
                           decoration: 
@@ -138,6 +141,7 @@ class _AccidentReportSetState extends State<AccidentReportSet> {
                                 borderSide: BorderSide(color: Colors.black),
                               ),
                             ),
+                          onChanged: (val) => context.read<AccidentProvider>().accidentLocation = val
                         ),
                     ),
                   ]
@@ -177,7 +181,10 @@ class _AccidentReportSetImageState extends State<AccidentReportSetImage> {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ChangeNotifierProvider(
+          create: (context) => AccidentProvider(),
+          child: MaterialApp (
+            home: Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -200,7 +207,9 @@ class _AccidentReportSetImageState extends State<AccidentReportSetImage> {
               height: 400,
               width: 380,
               decoration: BoxDecoration(border: Border.all(),), 
-              child: Text(''),
+              child: Image.file(context.read<AccidentProvider>().accidentImage) == null
+                    ?Text('')
+                    :Image.file(context.read<AccidentProvider>().accidentImage),
             ),
           ),
           const Padding(
@@ -209,16 +218,32 @@ class _AccidentReportSetImageState extends State<AccidentReportSetImage> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => AccidentReportSetImageResult())
-                );
+              onPressed: () async {
+                var picker = ImagePicker();
+                var image = await picker.pickImage(source: ImageSource.camera);
+                if (image != null) {
+                  context.read<AccidentProvider>().accidentImage = io.File(image.path);
+                }
+              },
+              child: const Text('카메라에서 사진 업로드하기', style: TextStyle(fontSize: 18.0)),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: ElevatedButton(
+              onPressed: () async {
+                var picker = ImagePicker();
+                var image = await picker.pickImage(source: ImageSource.gallery);
+                if (image != null) {
+                  context.read<AccidentProvider>().accidentImage = io.File(image.path);
+                }
               }, 
-              child: const Text('사진 업로드하기', style: TextStyle(fontSize: 18.0)),
+              child: const Text('갤러리에서 사진 업로드하기', style: TextStyle(fontSize: 18.0)),
             ),
           )
         ],
       )
+      ))
     );
   }
 }
@@ -273,7 +298,12 @@ class _AccidentReportSetImageResultState extends State<AccidentReportSetImageRes
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(), 
+              onPressed: () { 
+                int count = 0;
+                Navigator.popUntil(context, (route) {
+                    return count++ == 2;
+                });
+              },
               child: const Text('사진 업로드하기', style: TextStyle(fontSize: 18.0)),
             ),
           )
