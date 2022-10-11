@@ -112,6 +112,7 @@ class _AccidentReportSetState extends State<AccidentReportSet> {
                   setState(() {
                     dropdownvalue = newValue!;
                   });
+                  context.read<AccidentProvider>().accidentType = newValue;
                 },
               ), 
             )
@@ -140,6 +141,7 @@ class _AccidentReportSetState extends State<AccidentReportSet> {
                                 borderSide: BorderSide(color: Colors.black),
                               ),
                             ),
+                          onChanged: (val) => context.read<AccidentProvider>().accidentLocation = val
                         ),
                     ),
                   ]
