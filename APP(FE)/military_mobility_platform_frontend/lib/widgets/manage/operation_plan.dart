@@ -50,11 +50,6 @@ class OperationPlan extends StatelessWidget {
 
 class OperationPlanSet extends StatefulWidget {
   const OperationPlanSet({super.key});
-  final _driver = "";
-  final _commander = "";
-  final _operation= "";
-  final _oprationNote =""; 
-
 
   @override
   State<OperationPlanSet> createState() => _OperationPlanSetState();
@@ -107,7 +102,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
-                        //onChanged: (val) => _driver = val
+                        onChanged: (val) => context.read<OperationInfoProvider>().driverInfo = val
                       ),
                   ),
                 ]
@@ -141,7 +136,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
-                        //onChanged: (val) => _driver = val
+                        onChanged: (val) => context.read<OperationInfoProvider>().commanderInfo = val
                       ),
                   ),
                 ]
@@ -175,7 +170,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
-                        //onChanged: (val) => _driver = val
+                        onChanged: (val) => context.read<OperationInfoProvider>().operationPurpose = val
                       ),
                   ),
                 ]
@@ -208,7 +203,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
-                        //onChanged: (val) => _driver = val
+                        onChanged: (val) => context.read<OperationInfoProvider>().operationNote = val
                       ),
                   ),
                 ]

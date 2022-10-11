@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:military_mobility_platform_frontend/provider/operation_info.dart';
+import 'package:provider/provider.dart';
 import 'package:military_mobility_platform_frontend/widgets/manage/manage.dart';
 import 'package:military_mobility_platform_frontend/service/toast.dart';
 
@@ -201,6 +203,7 @@ class _SafetyCheckListSetState extends State<SafetyCheckListSet> {
                   }
                 }
                 if(check == 0) {
+                  context.read<OperationInfoProvider>().safetyCheck = "True";
                   Toast.showSuccessToast('안전 점검표가 제출되었습니다.');
                   Navigator.of(context).pop();
                 }
