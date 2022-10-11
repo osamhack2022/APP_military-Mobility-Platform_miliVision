@@ -198,7 +198,7 @@ $ yarn start or npm run start
 ## 프로젝트 관리 및 개발 문서
  - [Figma 프로젝트 화면설계서 링크](https://www.figma.com/file/UTHVGHLnpkpmhcldx03Cjj/Military-Mobility-Platform?node-id=0%3A1)
 <div align="center">
-    <img src="images/figma.PNG" alt="figma 화면설계서 화면" width="500" height="1000">
+    <img src="images/figma.PNG" alt="figma 화면설계서 화면">
 </div>
 
 
