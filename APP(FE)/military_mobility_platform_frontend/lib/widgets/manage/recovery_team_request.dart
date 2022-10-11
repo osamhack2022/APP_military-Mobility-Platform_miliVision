@@ -115,6 +115,17 @@ class _VehicleLocationCheckState extends State<VehicleLocationCheck> {
               },
             ),
           ),
+          Container(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  color: Colors.black,
+                  iconSize: 15.0,
+                  onPressed: () {Navigator.of(context).pop();},
+                ),
+              ),
+          ),
           Positioned(
             top: MediaQuery.of(context).viewPadding.top + 20,
             width: MediaQuery.of(context).size.width - 50,
@@ -324,7 +335,12 @@ class _RecoveryTeamRequestContentState extends State<RecoveryTeamRequestContent>
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(), 
+              onPressed: () { 
+                int count = 0;
+                Navigator.popUntil(context, (route) {
+                    return count++ == 2;
+                });
+              },
               child: const Text('확인', style: TextStyle(fontSize: 18.0)),
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/provider/operation_info.dart';
 import 'package:provider/provider.dart';
+import 'package:military_mobility_platform_frontend/service/toast.dart';
 
 class OperationPlan extends StatelessWidget {
   const OperationPlan({super.key});
@@ -96,7 +97,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     padding: EdgeInsets.only(left: 12.0),
                   ),
                   SizedBox(
-                    width: 376,
+                    width: 350,
                     child:
                       TextField(
                         decoration: 
@@ -130,7 +131,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     padding: EdgeInsets.only(left: 12.0),
                   ),
                   SizedBox(
-                    width: 376,
+                    width: 350,
                     child:
                       TextField(
                         decoration: 
@@ -164,7 +165,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     padding: EdgeInsets.only(left: 12.0),
                   ),
                   SizedBox(
-                    width: 376,
+                    width: 350,
                     child:
                       TextField(
                         decoration: 
@@ -197,7 +198,7 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     padding: EdgeInsets.only(left: 12.0),
                   ),
                   SizedBox(
-                    width: 376,
+                    width: 350,
                     child:
                       TextField(
                         decoration: 
@@ -220,7 +221,10 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(), 
+              onPressed: () { 
+                Toast.showSuccessToast('운행 계획이 작성되었습니다.');
+                Navigator.of(context).pop();
+              },
               /*onPressed: () {
                 int check = 0;
                 if(_driver == null) {
