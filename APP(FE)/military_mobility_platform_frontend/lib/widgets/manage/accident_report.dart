@@ -112,7 +112,7 @@ class _AccidentReportSetState extends State<AccidentReportSet> {
                   setState(() {
                     dropdownvalue = newValue!;
                   });
-                  context.read<AccidentProvider>().accidentType = newValue;
+                  //context.read<AccidentProvider>().accidentType = newValue;
                 },
               ), 
             )

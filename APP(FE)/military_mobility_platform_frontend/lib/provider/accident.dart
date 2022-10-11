@@ -5,8 +5,8 @@ class AccidentProvider extends ChangeNotifier {
   String _accidentLocation = "";
   var _accidentImage = null;
 
-  get accidentType => _accidentType;
-  get accidentLocation => _accidentLocation;
+  String get accidentType => _accidentType;
+  String get accidentLocation => _accidentLocation;
   get accidentImage => _accidentImage;
 
   void set accidentType(String accidentType) {
