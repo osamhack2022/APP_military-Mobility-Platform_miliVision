@@ -208,6 +208,9 @@ $ yarn start or npm run start
 </div>
 
  - [backend swagger 링크](http://20.214.203.20:8000/swagger)
+<div align="center">
+    <img src="images/swagger.PNG" alt="database 화면" width="500" height="500">
+</div>
 
 [(Back to top)](#목차)
 
