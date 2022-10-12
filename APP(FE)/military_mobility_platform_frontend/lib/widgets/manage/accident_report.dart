@@ -56,6 +56,7 @@ class AccidentReportSet extends StatefulWidget {
 }
 
 class _AccidentReportSetState extends State<AccidentReportSet> {
+  
   String dropdownvalue = '차 대 사람';
 
   var items = [
@@ -171,7 +172,7 @@ class _AccidentReportSetState extends State<AccidentReportSet> {
 }
 
 class AccidentReportSetImage extends StatefulWidget {
-  const AccidentReportSetImage({super.key});
+  const AccidentReportSetImage({Key? key}) : super(key: key);
 
   @override
   State<AccidentReportSetImage> createState() => _AccidentReportSetImageState();
@@ -181,69 +182,87 @@ class _AccidentReportSetImageState extends State<AccidentReportSetImage> {
   
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-          create: (context) => AccidentProvider(),
-          child: MaterialApp (
-            home: Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            color: Colors.black,
-            iconSize: 15.0,
-            onPressed: () {Navigator.of(context).pop();},
-          ),
-          const Padding(
-              padding: EdgeInsets.only(bottom: 10.0)
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10.0, bottom: 25.0),
-            child: Text('사고현장 사진 업로드', style: TextStyle(fontSize: 22.5, fontWeight: FontWeight.bold)),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 10.0),
-            child: Container( 
-              height: 400,
-              width: 380,
-              decoration: BoxDecoration(border: Border.all(),), 
-              child: Image.file(context.read<AccidentProvider>().accidentImage) == null
-                    ?Text('')
-                    :Image.file(context.read<AccidentProvider>().accidentImage),
+    return ListenableProvider<AccidentProvider>(
+      create:(_) => AccidentProvider(),
+      builder: (context, child) {
+      return Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              color: Colors.black,
+              iconSize: 15.0,
+              onPressed: () {Navigator.of(context).pop();},
             ),
-          ),
-          const Padding(
-              padding: EdgeInsets.only(bottom: 20.0)
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: ElevatedButton(
-              onPressed: () async {
-                var picker = ImagePicker();
-                var image = await picker.pickImage(source: ImageSource.camera);
-                if (image != null) {
-                  context.read<AccidentProvider>().accidentImage = io.File(image.path);
-                }
-              },
-              child: const Text('카메라에서 사진 업로드하기', style: TextStyle(fontSize: 18.0)),
+            const Padding(
+                padding: EdgeInsets.only(bottom: 10.0)
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: ElevatedButton(
-              onPressed: () async {
-                var picker = ImagePicker();
-                var image = await picker.pickImage(source: ImageSource.gallery);
-                if (image != null) {
-                  context.read<AccidentProvider>().accidentImage = io.File(image.path);
-                }
-              }, 
-              child: const Text('갤러리에서 사진 업로드하기', style: TextStyle(fontSize: 18.0)),
+            const Padding(
+              padding: EdgeInsets.only(left: 10.0, bottom: 25.0),
+              child: Text('사고현장 사진 업로드', style: TextStyle(fontSize: 22.5, fontWeight: FontWeight.bold)),
             ),
-          )
-        ],
-      )
-      ))
+            /*
+            Padding(
+              padding: EdgeInsets.only(left: 10.0),
+              child: Container( 
+                height: 400,
+                width: 380,
+                decoration: BoxDecoration(border: Border.all(),), 
+                child: Image.file(context.read<AccidentProvider>().accidentImage) == null
+                      ?Text('')
+                      :Image.file(context.read<AccidentProvider>().accidentImage),
+              ),
+            ),
+            */
+            const Padding(
+                padding: EdgeInsets.only(bottom: 20.0)
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                onPressed: () async {
+                  var picker = ImagePicker();
+                  var image = await picker.pickImage(source: ImageSource.camera);
+                  if (image != null) {
+                    context.read<AccidentProvider>().accidentImage = io.File(image.path);
+                  }
+                },
+                child: const Text('카메라에서 사진 업로드하기', style: TextStyle(fontSize: 18.0)),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                onPressed: () async {
+                  var picker = ImagePicker();
+                  var image = await picker.pickImage(source: ImageSource.gallery);
+                  if (image != null) {
+                    context.read<AccidentProvider>().accidentImage = io.File(image.path);
+                  }
+                }, 
+                child: const Text('갤러리에서 사진 업로드하기', style: TextStyle(fontSize: 18.0)),
+              ),
+            ),
+            const Padding(
+                padding: EdgeInsets.only(bottom: 20.0)
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                onPressed: () {
+                  int count = 0;
+                Navigator.popUntil(context, (route) {
+                    return count++ == 2;
+                });
+                }, 
+                child: const Text('접수하기', style: TextStyle(fontSize: 18.0)),
+              ),
+            )
+          ],
+        )
+      );    
+      }
     );
   }
 }
