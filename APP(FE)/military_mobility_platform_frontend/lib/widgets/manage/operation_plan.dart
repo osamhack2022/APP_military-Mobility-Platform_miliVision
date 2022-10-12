@@ -56,9 +56,16 @@ class OperationPlanSet extends StatefulWidget {
 }
 
 class _OperationPlanSetState extends State<OperationPlanSet> {
+  TextEditingController TdriverInfo = TextEditingController();
+  TextEditingController TcommanderInfo = TextEditingController();
+  TextEditingController ToperationPurpose = TextEditingController();
+  TextEditingController ToperationNote = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
+    List<bool> _isFilled = [false, false, false, false,];
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,6 +102,12 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     width: 350,
                     child:
                       TextField(
+                        onChanged: (val) { 
+                          setState(() {
+                            _isFilled[0] = true;
+                          });
+                          context.watch<OperationInfoProvider>().driverInfo = val;
+                        },
                         decoration: 
                           const InputDecoration(hintText: "일병 OOO", 
                             enabledBorder: OutlineInputBorder(
@@ -102,7 +115,6 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
-                        onChanged: (val) => context.read<OperationInfoProvider>().driverInfo = val
                       ),
                   ),
                 ]
@@ -129,6 +141,12 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     width: 350,
                     child:
                       TextField(
+                        onChanged: (val) { 
+                          setState(() {
+                            _isFilled[1] = true;
+                          });
+                          context.watch<OperationInfoProvider>().commanderInfo = val;
+                        },
                         decoration: 
                           const InputDecoration(hintText: "중사 OOO", 
                             enabledBorder: OutlineInputBorder(
@@ -136,7 +154,6 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
-                        onChanged: (val) => context.read<OperationInfoProvider>().commanderInfo = val
                       ),
                   ),
                 ]
@@ -163,6 +180,12 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     width: 350,
                     child:
                       TextField(
+                        onChanged: (val) {
+                          setState(() {
+                            _isFilled[2] = true;
+                          }); 
+                          context.watch<OperationInfoProvider>().operationPurpose = val;
+                        },
                         decoration: 
                           const InputDecoration(hintText: "ex) 환자 후송, 출장, 회의 참석 등", 
                             enabledBorder: OutlineInputBorder(
@@ -170,7 +193,6 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
-                        onChanged: (val) => context.read<OperationInfoProvider>().operationPurpose = val
                       ),
                   ),
                 ]
@@ -196,6 +218,12 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     width: 350,
                     child:
                       TextField(
+                        onChanged: (val) { 
+                          setState(() {
+                            _isFilled[3] = true;
+                          });
+                          context.watch<OperationInfoProvider>().operationNote = val;
+                        },
                         decoration: 
                           const InputDecoration(hintText: "ex) 이동 간 동승자 경유지에서 탑승 예정", 
                             enabledBorder: OutlineInputBorder(
@@ -203,7 +231,6 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                               borderSide: BorderSide(color: Colors.black),
                             ),
                           ),
-                        onChanged: (val) => context.read<OperationInfoProvider>().operationNote = val
                       ),
                   ),
                 ]
@@ -216,34 +243,20 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () { 
-                Toast.showSuccessToast('운행 계획이 작성되었습니다.');
-                Navigator.of(context).pop();
-              },
-              /*onPressed: () {
+              onPressed: () {
                 int check = 0;
-                if(_driver == null) {
-                  Toast.showFailToast('운전자 정보를 등록해주세요.');
-                  check++;
+                for(int i=0; i < _isFilled.length; i++){
+                  if(_isFilled[i] == false) {
+                    Toast.showFailToast('모든 항목을 작성해주십이오.');
+                    check++;
+                    break;
+                  }
                 }
-                if(_driver == null) {
-                  Toast.showFailToast('선탑자 정보를 등록해주세요.');
-                  check++;
-                }
-                if(_driver == null) {
-                  Toast.showFailToast('운행 목적을 입력해주세요.');
-                  check++;
-                }
-                if(_driver == null) {
-                  Toast.showFailToast('비고를 입력해주세요.');
-                  check++;
-                }
-
                 if(check == 0) {
                   Toast.showSuccessToast('운전 계획이 작성되었습니다.');
                   Navigator.of(context).pop();
                 }
-              }*/ 
+              },
               child: const Text('운행 계획 작성하기', style: TextStyle(fontSize: 18.0)),
             ),
           ),

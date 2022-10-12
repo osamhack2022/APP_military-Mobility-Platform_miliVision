@@ -13,7 +13,7 @@ class OperationInfoProvider extends ChangeNotifier {
   String get operationPurpose => _operationPurpose;
   String get operationNote => _operationNote;
 
-  void set safetyCheck(String safetyCheck){
+  void set safetyCheck(String safetyCheck) {
     _safetyCheck = safetyCheck;
     notifyListeners();
   }

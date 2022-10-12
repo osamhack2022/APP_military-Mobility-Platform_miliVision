@@ -203,9 +203,9 @@ class _SafetyCheckListSetState extends State<SafetyCheckListSet> {
                   }
                 }
                 if(check == 0) {
-                  context.read<OperationInfoProvider>().safetyCheck = "True";
                   Toast.showSuccessToast('안전 점검표가 제출되었습니다.');
                   Navigator.of(context).pop();
+                  context.read<OperationInfoProvider>().safetyCheck = "True";
                 }
               }, 
               child: const Text('안전 점검표 제출하기', style: TextStyle(fontSize: 18.0)),
