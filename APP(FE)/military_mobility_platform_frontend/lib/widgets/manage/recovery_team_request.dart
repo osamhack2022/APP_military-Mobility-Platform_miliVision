@@ -4,7 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_pin_picker/map_pin_picker.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-//import 'package:latlong2/latlong.dart';
+import 'package:geolocator/geolocator.dart';
+// import 'package:location/location.dart';
 
 class RecoveryTeamRequest extends StatelessWidget {
   const RecoveryTeamRequest({super.key});
@@ -50,6 +51,14 @@ class RecoveryTeamRequest extends StatelessWidget {
   }
 }
 
+/*
+Future<Position> getCurrentLocation() async {
+  Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high);
+  return position;
+}
+*/
+
 class VehicleLocationCheck extends StatefulWidget {
   const VehicleLocationCheck({Key? key}) : super(key: key);
 
@@ -59,10 +68,11 @@ class VehicleLocationCheck extends StatefulWidget {
 
 class _VehicleLocationCheckState extends State<VehicleLocationCheck> {
   final _controller = Completer<GoogleMapController>();
-  MapPickerController mapPickerController = MapPickerController();
+  MapPickerController mapPickerController = MapPickerController(); 
+  //var gps = await getCurrentLocation(); //gps.latitude gps.longitude
 
   CameraPosition cameraPosition = CameraPosition(
-    target: LatLng(37.512590, 127.033549),
+    target: LatLng(37.531918, 127.018598),
     zoom: 14.4746,
   );
 

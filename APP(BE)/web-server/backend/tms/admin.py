@@ -44,10 +44,10 @@ admin.site.register(Car, CarAdmin)
 
 class ReservationAdmin(admin.ModelAdmin):
     model = Reservation
-    list_display = ('id', 'booker', 'car', 'driver', 'departure', 'destination', 'reservation_start', 'reservation_end', 'status')
+    list_display = ('id', 'booker', 'car', 'driver', 'driving_by_self', 'departure', 'destination', 'reservation_start', 'reservation_end', 'status')
     list_filter = ('id', 'booker', 'car', 'driver')
     fieldsets = (
-        (None, {'fields': ('booker', 'car', 'driver', 'departure', 'destination','followers_num','stopover', 'is_sharing', 'reservation_start', 'reservation_end', 'status', 'reason', 'safety_checklist', 'operation_plan')}),
+        (None, {'fields': ('booker', 'car', 'driver', 'driving_by_self',  'departure', 'destination','followers_num','stopover', 'is_sharing', 'reservation_start', 'reservation_end', 'status', 'reason', 'safety_checklist', 'operation_plan')}),
     )
     search_fields = ('id', 'booker', 'car', 'driver', 'status')
     ordering = ('id',)
@@ -77,6 +77,7 @@ class ReservationAdmin(admin.ModelAdmin):
         ]
         return post_urls + urls
 
+    #어드민 페이지에 alert 페이지 추가
     def reservation_status_view(self, request):
         if request.user == None:
             raise Http404("User does not exist")
