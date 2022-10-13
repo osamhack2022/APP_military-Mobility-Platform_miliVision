@@ -19,27 +19,22 @@ class OperationInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void set safetyCheck(String safetyCheck) {
-    _safetyCheck = safetyCheck;
-    notifyListeners();
-  }
-
-  void set driverInfo(String driverInfo) {
+  void driverInfoSet(String driverInfo) {
     _driverInfo = driverInfo;
     notifyListeners();
   }
 
-  void set commanderInfo(String commanderInfo) {
+  void commanderInfoSet(String commanderInfo) {
     _commanderInfo = commanderInfo;
     notifyListeners();
   }
 
-  void set operationPurpose(String operationPurpose) {
+  void operationPurposeSet(String operationPurpose) {
     _operationPurpose = operationPurpose;
     notifyListeners();
   }
 
-  void set operationNote(String operationNote) {
+  void operationNoteSet(String operationNote) {
     _operationNote = operationNote;
     notifyListeners();
   }
