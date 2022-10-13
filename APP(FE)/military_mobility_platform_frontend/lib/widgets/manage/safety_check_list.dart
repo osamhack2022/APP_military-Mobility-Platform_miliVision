@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/provider/operation_info.dart';
 import 'package:provider/provider.dart';
@@ -12,39 +13,39 @@ class SafetyCheckList extends StatelessWidget {
   Widget build(BuildContext context) {
     const subtitle = '안전 점검표';
     return Material( child:
-    GestureDetector(
-      child: 
-        Container(
-          width: 168,
-          height: 149,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(1.0),
-                spreadRadius: 0,
-                blurRadius: 7,
-                offset: Offset(0, 5),
-              ),
-            ],
+      GestureDetector(
+        child: 
+          Container(
+            width: 168,
+            height: 149,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(1.0),
+                  spreadRadius: 0,
+                  blurRadius: 7,
+                  offset: Offset(0, 5),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.fromLTRB(0,25,0,20),
+                  child: Icon(Icons.checklist, size: 60),
+                ),
+                Text(subtitle, style: TextStyle(fontSize: 16)),
+              ]
+            )
           ),
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(0,25,0,20),
-                child: Icon(Icons.checklist, size: 60),
-              ),
-              Text(subtitle, style: TextStyle(fontSize: 16)),
-            ]
-          )
-        ),
         onTap: () {
           Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SafetyCheckListSet())
+            context, MaterialPageRoute(builder: (childContext) => SafetyCheckListSet(context: context))
           );
         },
-    )
+      )
     );
   }
 }
@@ -89,7 +90,8 @@ class LabeledCheckbox extends StatelessWidget {
 }
 
 class SafetyCheckListSet extends StatefulWidget {
-  const SafetyCheckListSet({super.key});
+  const SafetyCheckListSet({super.key, required this.context});
+  final BuildContext context;
 
   @override
   State<SafetyCheckListSet> createState() => _SafetyCheckListSetState();
@@ -100,7 +102,10 @@ class _SafetyCheckListSetState extends State<SafetyCheckListSet> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ChangeNotifierProvider<OperationInfoProvider>(
+      create: (_) => OperationInfoProvider(),
+      builder: (context,child){
+        return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -113,9 +118,9 @@ class _SafetyCheckListSetState extends State<SafetyCheckListSet> {
           const Padding(
               padding: EdgeInsets.only(bottom: 10.0)
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(left: 10.0),
-            child: Text('안전 점검표', style: TextStyle(fontSize: 22.5, fontWeight: FontWeight.bold)),
+            child: Text(context.watch<OperationInfoProvider>().safetyCheck, style: TextStyle(fontSize: 22.5, fontWeight: FontWeight.bold)),
           ),
           const Padding(
               padding: EdgeInsets.only(bottom: 10.0)
@@ -203,9 +208,9 @@ class _SafetyCheckListSetState extends State<SafetyCheckListSet> {
                   }
                 }
                 if(check == 0) {
+                  context.read<OperationInfoProvider>().safetyCheckTrue;
                   Toast.showSuccessToast('안전 점검표가 제출되었습니다.');
                   Navigator.of(context).pop();
-                  context.read<OperationInfoProvider>().safetyCheck = "True";
                 }
               }, 
               child: const Text('안전 점검표 제출하기', style: TextStyle(fontSize: 18.0)),
@@ -214,5 +219,8 @@ class _SafetyCheckListSetState extends State<SafetyCheckListSet> {
         ],
       )
     );
+      }
+    );
+     
   }
 }

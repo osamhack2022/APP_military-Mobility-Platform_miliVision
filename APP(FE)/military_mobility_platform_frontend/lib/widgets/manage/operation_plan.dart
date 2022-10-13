@@ -102,11 +102,12 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     width: 350,
                     child:
                       TextField(
+                        controller: TdriverInfo,
                         onChanged: (val) { 
                           setState(() {
                             _isFilled[0] = true;
                           });
-                          context.watch<OperationInfoProvider>().driverInfo = val;
+                          //context.watch<OperationInfoProvider>().driverInfo = val;
                         },
                         decoration: 
                           const InputDecoration(hintText: "일병 OOO", 
@@ -141,11 +142,12 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     width: 350,
                     child:
                       TextField(
+                        controller: TcommanderInfo,
                         onChanged: (val) { 
                           setState(() {
                             _isFilled[1] = true;
                           });
-                          context.watch<OperationInfoProvider>().commanderInfo = val;
+                          //context.watch<OperationInfoProvider>().commanderInfo = val;
                         },
                         decoration: 
                           const InputDecoration(hintText: "중사 OOO", 
@@ -180,11 +182,12 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     width: 350,
                     child:
                       TextField(
+                        controller: ToperationPurpose,
                         onChanged: (val) {
                           setState(() {
                             _isFilled[2] = true;
                           }); 
-                          context.watch<OperationInfoProvider>().operationPurpose = val;
+                          //context.watch<OperationInfoProvider>().operationPurpose = val;
                         },
                         decoration: 
                           const InputDecoration(hintText: "ex) 환자 후송, 출장, 회의 참석 등", 
@@ -218,11 +221,12 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
                     width: 350,
                     child:
                       TextField(
+                        controller: ToperationNote,
                         onChanged: (val) { 
                           setState(() {
                             _isFilled[3] = true;
                           });
-                          context.watch<OperationInfoProvider>().operationNote = val;
+                          //context.watch<OperationInfoProvider>().operationNote = val;
                         },
                         decoration: 
                           const InputDecoration(hintText: "ex) 이동 간 동승자 경유지에서 탑승 예정", 
@@ -244,6 +248,11 @@ class _OperationPlanSetState extends State<OperationPlanSet> {
             padding: const EdgeInsets.all(10),
             child: ElevatedButton(
               onPressed: () {
+                context.watch<OperationInfoProvider>().driverInfo = TdriverInfo.text;
+                context.watch<OperationInfoProvider>().commanderInfo = TcommanderInfo.text;
+                context.watch<OperationInfoProvider>().operationPurpose = ToperationPurpose.text;
+                context.watch<OperationInfoProvider>().operationNote = ToperationNote.text;
+
                 int check = 0;
                 for(int i=0; i < _isFilled.length; i++){
                   if(_isFilled[i] == false) {
