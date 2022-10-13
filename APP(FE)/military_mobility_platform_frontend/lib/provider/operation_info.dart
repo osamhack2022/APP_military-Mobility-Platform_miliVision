@@ -13,9 +13,15 @@ class OperationInfoProvider extends ChangeNotifier {
   String get commanderInfo => _commanderInfo;
   String get operationPurpose => _operationPurpose;
   String get operationNote => _operationNote;
+  String get vehicleReturn => _vehicleReturn;
 
   void safetyCheckTrue() {
     _safetyCheck = "True";
+    notifyListeners();
+  }
+
+  void vehicleReturnTrue() {
+    _vehicleReturn = "True";
     notifyListeners();
   }
 
