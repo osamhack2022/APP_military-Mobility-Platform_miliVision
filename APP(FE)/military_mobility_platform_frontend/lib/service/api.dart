@@ -43,4 +43,8 @@ abstract class APIService {
   @GET('/tms/finishing_using')
   Future<OperationDTO> returnVehicle(
       @Body() OperationDTO dto);
+  
+  @POST('/incident/incident')
+  Future<AccidentDTO> reportAccident(
+      @Body() AccidentDTO dto);
 }
