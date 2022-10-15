@@ -12,6 +12,7 @@ class OperationInfoProvider extends ChangeNotifier {
   String _operationPurpose = "";
   String _operationNote = "";
   String _vehicleReturn = "False";
+  String _operationPlan = "";
 
   String get safetyCheck => _safetyCheck;
   String get driverInfo => _driverInfo;
@@ -48,6 +49,7 @@ class OperationInfoProvider extends ChangeNotifier {
 
   void operationNoteSet(String operationNote) {
     _operationNote = operationNote;
+    _operationPlan = _operationNote + " " + _operationPurpose;
     notifyListeners();
   }
   
@@ -59,6 +61,18 @@ class OperationInfoProvider extends ChangeNotifier {
           safety_checklist: _safetyCheckBool,);
       
       return APIService(authClient).confirmSafetyCheck(dto);
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
+    
+  Future<OperationDTO> makeOperationPlan(
+      Dio authClient, ReservationDTO reservation) async {
+    try {
+      final dto = OperationDTO(
+          reservation_id: reservation.id,
+          operation_plan: _operationPlan,);
+      
+      return APIService(authClient).makeOperationPlan(dto);
     } catch (exception) {
       return Future.error(exception.toString());
     }
