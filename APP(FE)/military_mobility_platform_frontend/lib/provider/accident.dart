@@ -5,6 +5,7 @@ import 'package:military_mobility_platform_frontend/model/mobility.dart';
 import 'package:military_mobility_platform_frontend/service/api.dart';
 
 class AccidentProvider extends ChangeNotifier {
+  List<AccidentDTO> _accidentReports = [];
   String _accidentType = "";
   String _accidentLocation = "";
   var _accidentImage = null;
@@ -56,7 +57,7 @@ class AccidentProvider extends ChangeNotifier {
     notifyListeners();
   }
   
-  Future<AccidentDTO> reportAccident(
+  Future<AccidentDTO> postAccidentReport(
       Dio authClient, MobilityDTO mobility) async {
     try {
       final dto = OperationDTO(
@@ -65,9 +66,34 @@ class AccidentProvider extends ChangeNotifier {
           location: _accidentLocation,
           image: _accidentImage);
       
-      return APIService(authClient).reportAccident(dto);
+      return APIService(authClient).postAccidentReport(dto);
     } catch (exception) {
       return Future.error(exception.toString());
     }
   
+  Future<AccidentDTO> postAccidentReport(
+      Dio authClient, MobilityDTO mobility) async {
+    try {
+      final dto = OperationDTO(
+          car: mobility.id,
+          incident_type: _accidentType,
+          location: _accidentLocation,
+          image: _accidentImage);
+      
+      return APIService(authClient).postAccidentReport(dto);
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }  
+    
+  Future<bool> getAccidentReport(Dio authClient) async {
+    try {
+      final rep = await APIService(authClient).getAccidentReport();
+      _accidentReports = rep;
+      notifyListeners();
+      return true;
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
+  }
+    
 }
