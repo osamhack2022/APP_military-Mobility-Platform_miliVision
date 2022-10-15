@@ -7,80 +7,32 @@ part of 'mobility.dart';
 // **************************************************************************
 
 MobilityDTO _$MobilityDTOFromJson(Map<String, dynamic> json) => MobilityDTO(
-      id: json['id'] as String,
-      type: json['type'] as String,
-      fuelType: json['fuelType'] as String,
+      id: json['id'] as int,
+      type: json['car_model'] as String,
+      fuelType: json['propulsion_type'] as String,
       color: json['color'] as String,
     );
 
 Map<String, dynamic> _$MobilityDTOToJson(MobilityDTO instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'type': instance.type,
-      'fuelType': instance.fuelType,
+      'car_model': instance.type,
+      'propulsion_type': instance.fuelType,
       'color': instance.color,
     };
 
-RequestedMobilityDTO _$RequestedMobilityDTOFromJson(
+GetAvailableMobilitiesReqDTO _$GetAvailableMobilitiesReqDTOFromJson(
         Map<String, dynamic> json) =>
-    RequestedMobilityDTO(
-      mobility: MobilityDTO.fromJson(json['mobility'] as Map<String, dynamic>),
-      waiting: json['waiting'] as bool,
-      accepted: json['accepted'] as bool,
-      departureTime: DateTime.parse(json['departureTime'] as String),
-      arrivalTime: DateTime.parse(json['arrivalTime'] as String),
+    GetAvailableMobilitiesReqDTO(
+      passengers: json['followers_num'] as int,
+      departureTime: DateTime.parse(json['reservation_start'] as String),
+      arrivalTime: DateTime.parse(json['reservation_end'] as String),
     );
 
-Map<String, dynamic> _$RequestedMobilityDTOToJson(
-        RequestedMobilityDTO instance) =>
+Map<String, dynamic> _$GetAvailableMobilitiesReqDTOToJson(
+        GetAvailableMobilitiesReqDTO instance) =>
     <String, dynamic>{
-      'mobility': instance.mobility,
-      'waiting': instance.waiting,
-      'accepted': instance.accepted,
-      'departureTime': instance.departureTime.toIso8601String(),
-      'arrivalTime': instance.arrivalTime.toIso8601String(),
-    };
-
-MobilityRequestReqDTO _$MobilityRequestReqDTOFromJson(
-        Map<String, dynamic> json) =>
-    MobilityRequestReqDTO(
-      departure: json['departure'] as String,
-      destination: json['destination'] as String,
-      passengers: json['passengers'] as int,
-    );
-
-Map<String, dynamic> _$MobilityRequestReqDTOToJson(
-        MobilityRequestReqDTO instance) =>
-    <String, dynamic>{
-      'departure': instance.departure,
-      'destination': instance.destination,
-      'passengers': instance.passengers,
-    };
-
-MobilityRequestResDTO _$MobilityRequestResDTOFromJson(
-        Map<String, dynamic> json) =>
-    MobilityRequestResDTO(
-      mobilities: (json['mobilities'] as List<dynamic>)
-          .map((e) => MobilityDTO.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$MobilityRequestResDTOToJson(
-        MobilityRequestResDTO instance) =>
-    <String, dynamic>{
-      'mobilities': instance.mobilities,
-    };
-
-RequestedMobilityListResDTO _$RequestedMobilityListResDTOFromJson(
-        Map<String, dynamic> json) =>
-    RequestedMobilityListResDTO(
-      mobilities: (json['mobilities'] as List<dynamic>)
-          .map((e) => RequestedMobilityDTO.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$RequestedMobilityListResDTOToJson(
-        RequestedMobilityListResDTO instance) =>
-    <String, dynamic>{
-      'mobilities': instance.mobilities,
+      'followers_num': instance.passengers,
+      'reservation_start': instance.departureTime.toIso8601String(),
+      'reservation_end': instance.arrivalTime.toIso8601String(),
     };

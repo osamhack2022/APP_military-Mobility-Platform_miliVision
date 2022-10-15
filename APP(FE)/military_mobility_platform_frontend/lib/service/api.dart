@@ -1,73 +1,34 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:military_mobility_platform_frontend/model/mobility.dart';
+import 'package:military_mobility_platform_frontend/model/reservation.dart';
 import 'package:military_mobility_platform_frontend/model/user.dart';
-import 'package:http/http.dart' as http;
+import 'package:retrofit/retrofit.dart';
 
-class APIService {
-  static const kBaseUrl = '34.105.35.232:8000';
+part 'api.g.dart';
 
-  static TokenDTO? _token;
-  static void setUserToken(TokenDTO token) => _token = token;
-  static void removeUserToken() => _token = null;
+@RestApi(baseUrl: "http://20.214.203.20:8000")
+abstract class APIService {
+  factory APIService(Dio dio, {String baseUrl}) = _APIService;
 
-  static Future<LoginResDTO?> login(LoginReqDTO dto) async {
-    final url = Uri.http(kBaseUrl, 'user/login/');
-    final response = await http.post(url, body: dto.toJson());
-    if (response.statusCode != 200) {
-      return null;
-    } else {
-      final body = jsonDecode(response.body);
-      return LoginResDTO.fromJson(body);
-    }
-  }
+  @POST('/user/login')
+  Future<LoginResDTO> login(@Body() LoginReqDTO dto);
 
-  static Future<RegisterResDTO?> register(RegisterReqDTO dto) async {
-    final url = Uri.http(kBaseUrl, 'user/register/');
-    final response = await http.post(url, body: dto.toJson());
-    if (response.statusCode != 200) {
-      return null;
-    } else {
-      final body = jsonDecode(response.body);
-      return RegisterResDTO.fromJson(body);
-    }
-  }
+  @POST('/user/register')
+  Future<RegisterResDTO> register(@Body() RegisterReqDTO dto);
 
-  static Future<MobilityRequestResDTO?> requestMobilities(
-      MobilityRequestReqDTO dto) async {
-    const list = [
-      MobilityDTO(id: '12하8839', type: 'K3', fuelType: '휘발유', color: '블루'),
-      MobilityDTO(id: '12하8829', type: '상용1톤', fuelType: '휘발유', color: '블루'),
-      MobilityDTO(id: '12하8833', type: '승합차', fuelType: '휘발유', color: '그레이'),
-      MobilityDTO(id: '12하8872', type: 'K3', fuelType: '휘발유', color: '블랙'),
-    ];
-    return const MobilityRequestResDTO(mobilities: list);
-  }
+  @POST('/tms/get_available_car')
+  Future<GetAvailableMobilitiesResDTO> getAvailableMobilities(
+      @Body() GetAvailableMobilitiesReqDTO dto);
 
-  static Future<RequestedMobilityListResDTO?> requestedMobilitiesList() async {
-    final list = [
-      RequestedMobilityDTO(
-          mobility: const MobilityDTO(
-              id: '12하8839', type: 'K3', fuelType: '휘발유', color: '블루'),
-          waiting: false,
-          accepted: true,
-          departureTime: DateTime(2022, 9, 10, 9),
-          arrivalTime: DateTime(2022, 9, 20, 11)),
-      RequestedMobilityDTO(
-          mobility: const MobilityDTO(
-              id: '12하8829', type: '상용1톤', fuelType: '휘발유', color: '블루'),
-          waiting: false,
-          accepted: false,
-          departureTime: DateTime(2022, 9, 12, 11),
-          arrivalTime: DateTime(2022, 9, 12, 13)),
-      RequestedMobilityDTO(
-          mobility: const MobilityDTO(
-              id: '12하8833', type: '승합차', fuelType: '휘발유', color: '그레이'),
-          waiting: true,
-          accepted: false,
-          departureTime: DateTime(2022, 9, 12, 11),
-          arrivalTime: DateTime(2022, 9, 12, 13)),
-    ];
-    return RequestedMobilityListResDTO(mobilities: list);
-  }
+  @GET('/tms/reservation')
+  Future<GetReservationsResDTO> getReservations();
+
+  @POST('/tms/reservation')
+  Future<MakeReservationResDTO> makeReservation(
+      @Body() MakeReservationReqDTO dto);
+
+  @DELETE('/tms/reservation')
+  Future<void> deleteReservation(@Query('reservation_id') int reservationID);
 }

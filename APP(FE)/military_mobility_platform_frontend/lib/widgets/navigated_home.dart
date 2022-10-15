@@ -31,7 +31,11 @@ class NavigatedHomeState extends State<NavigatedHome> {
               controller: navigationProvider.pageController,
               children: navigationProvider.tabWidgets,
             ),
-            bottomNavigationBar: _buildNavigationBar(context))
+            bottomNavigationBar: _buildNavigationBar(context),
+            floatingActionButton:
+                navigationProvider.currentTab.floatingButton != null
+                    ? navigationProvider.currentTab.floatingButton!(context)
+                    : null)
         : const Scaffold(body: LoginTab());
   }
 
