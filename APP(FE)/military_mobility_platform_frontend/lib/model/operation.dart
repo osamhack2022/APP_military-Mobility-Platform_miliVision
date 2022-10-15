@@ -10,8 +10,7 @@ class OperationDTO {
          this.operation_plan});
     
     final integer reservation_id;
-    @JsonKey(name: 'safety_checklist')
-    final bool safetyCheck;
+    final bool safety_checklist;
     final String operation_plan;
   
   factory OperationDTO.fromJson(Map<String, dynamic> json) =>
