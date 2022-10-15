@@ -4,7 +4,6 @@ import 'package:military_mobility_platform_frontend/provider/auth.dart';
 import 'package:military_mobility_platform_frontend/provider/drive_info.dart';
 import 'package:military_mobility_platform_frontend/provider/reservation_list.dart';
 import 'package:military_mobility_platform_frontend/provider/mobility_request.dart';
-import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
 import 'package:military_mobility_platform_frontend/provider/accident.dart';
 import 'package:military_mobility_platform_frontend/provider/operation_info.dart';
 import 'package:military_mobility_platform_frontend/service/mobility_assets.dart';
@@ -30,8 +29,6 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(
               create: (context) => ReservationListProvider()),
           ChangeNotifierProvider(create: (context) => DriveInfoProvider()),
-          ChangeNotifierProvider(create: (context) => MobilityListProvider()),
-          ChangeNotifierProvider(create: (context) => RequestedMobilityListProvider()),
           ChangeNotifierProvider(create: (context) => AccidentProvider()),
           ChangeNotifierProvider(create: (context) => OperationInfoProvider()),
         ],
