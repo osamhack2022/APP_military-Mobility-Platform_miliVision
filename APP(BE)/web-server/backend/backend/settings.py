@@ -30,8 +30,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
-
+APPEND_SLASH = False
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +39,7 @@ INSTALLED_APPS = [
     'login',
     'tms',
     'mileage',
+    'incident',
     'drf_yasg',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -53,7 +53,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', #cors header
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -159,7 +159,7 @@ DATABASES = {
         'NAME': 'milivision',
         'USER': 'root',
         'PASSWORD': 'user1234', # mariaDB 설치 시 입력한 root 비밀번호 입력
-        'HOST': '20.214.203.20',
+        'HOST': '20.214.203.20', #20.214.203.20
         'PORT': '3306'
     }
 }
@@ -168,7 +168,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("20.214.203.20", 6379)],
+            "hosts": [('20.214.203.20', 6379)],
         },
     },
 }
@@ -226,3 +226,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_ALLOW_ALL = True 
 CORS_ALLOW_CREDENTIALS = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

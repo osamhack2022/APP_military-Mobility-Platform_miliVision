@@ -7,15 +7,14 @@ from login.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .utils import get_notification
-from .serializers import NotificationSerializer, ReservationSerializer
+from .serializers import NotificationSerializer
 
 import json
 
 
-@receiver(post_save, sender=Notification)
+@receiver(post_save, sender=Notification) #Notification model에 새로운 데이터가 추가되면 자동으로 websocket channel에 알림
 def send_update(sender, instance, created, **kwargs):
     notification_serializer = NotificationSerializer(instance)
-    reservation_serializer = ReservationSerializer(instance.reservation)
 
     if created:
         channel_layer=get_channel_layer()

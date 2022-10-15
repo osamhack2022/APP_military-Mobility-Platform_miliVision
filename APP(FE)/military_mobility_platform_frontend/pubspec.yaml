@@ -48,10 +48,16 @@ dependencies:
   retrofit_generator: ^4.2.0
   flutter_markdown: ^0.6.12
   flutter_polyline_points: ^1.0.0
+  flutter_svg: ^1.1.5
   google_maps_flutter: ^2.2.1
-  location: ^4.4.0
   google_maps_flutter_web: ^0.4.0+3
   floating_action_bubble: ^1.1.4
+  map_pin_picker: ^0.0.1
+  geocoding: ^2.0.5
+  geolocator: ^9.0.2
+  latlong2: ^0.8.1
+  image_picker: ^0.8.4+4
+  location: ^4.4.0
 
 dev_dependencies:
   flutter_test:
@@ -79,12 +85,15 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/blank.jpg
+    - assets/images/MEDCOM.jpg
+    - assets/images/map_picker_icon.png
     - assets/images/mobility/상용1톤.jfif
     - assets/images/mobility/승합차.png
     - assets/images/mobility/k3.jfif
     - assets/images/mobility/k5.jfif
     - assets/manual/default.md
     - assets/images/mobility/두돈반.jpg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -10,15 +10,15 @@ admin.site.register(Notification)
 
 class CarAdmin(admin.ModelAdmin):
     model = Car
-    list_display = ('id', 'car_model', 'can_ride', 'propulsion_type', 'color')
-    list_filter = ('id', 'car_model', 'can_ride', 'propulsion_type', 'color')
+    list_display = ('id', 'license_plate', 'car_model', 'can_ride', 'propulsion_type', 'color')
+    list_filter = ('id', 'license_plate', 'car_model', 'can_ride', 'propulsion_type', 'color')
     fieldsets = (
-        (None, {'fields': ('id', 'car_model', 'can_ride', 'propulsion_type', 'color')}),
+        (None, {'fields': ('id', 'license_plate', 'car_model', 'can_ride', 'propulsion_type', 'color')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',), 
-            'fields': ('id', 'car_model', 'can_ride', 'propulsion_type', 'color')}
+            'fields': ('id', 'license_plate', 'car_model', 'can_ride', 'propulsion_type', 'color')}
         ),
     )
     search_fields = ('id', 'car_model')
@@ -44,13 +44,14 @@ admin.site.register(Car, CarAdmin)
 
 class ReservationAdmin(admin.ModelAdmin):
     model = Reservation
-    list_display = ('id', 'booker', 'car', 'driver', 'departure', 'destination', 'reservation_start', 'reservation_end', 'status')
+    list_display = ('id', 'booker', 'car', 'driver', 'driving_by_self', 'departure', 'destination', 'reservation_start', 'reservation_end', 'status')
     list_filter = ('id', 'booker', 'car', 'driver')
     fieldsets = (
-        (None, {'fields': ('booker', 'car', 'driver', 'departure', 'destination','followers_num','stopover', 'is_sharing', 'reservation_start', 'reservation_end', 'status', 'reason', 'safety_checklist', 'operation_plan')}),
+        (None, {'fields': ('booker', 'car', 'driver', 'driving_by_self',  'departure', 'destination','followers_num','stopover', 'is_sharing', 'reservation_start', 'reservation_end', 'status', 'reason', 'safety_checklist', 'operation_plan')}),
     )
     search_fields = ('id', 'booker', 'car', 'driver', 'status')
     ordering = ('id',)
+    change_list_template = "admin/reservation_changelist.html"
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
@@ -72,14 +73,15 @@ class ReservationAdmin(admin.ModelAdmin):
     def get_urls(self):
         urls = super(ReservationAdmin, self).get_urls()
         post_urls = [
-            path('status/', self.admin_site.admin_view(self.reservation_status_view))
+            path('alert/', self.admin_site.admin_view(self.reservation_status_view))
         ]
         return post_urls + urls
-    
+
+    #어드민 페이지에 alert 페이지 추가
     def reservation_status_view(self, request):
         if request.user == None:
             raise Http404("User does not exist")
-
+        print(request.user)
         context = dict(
             self.admin_site.each_context(request),
             notifications=Notification.objects.filter(battalion_receiver=request.user.battalion_id),

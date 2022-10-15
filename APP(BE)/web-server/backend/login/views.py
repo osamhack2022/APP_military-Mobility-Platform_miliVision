@@ -5,17 +5,32 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializers import RegisterSerializer, UserSerializer
+from .models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import AccessToken
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+
+def get_user_from_access_token(access_token_str):
+    access_token_obj = AccessToken(access_token_str)
+    user_id=access_token_obj['user_id']
+    return User.objects.get(login_id=user_id)
 
 
 # Create your views here.
 class RegisterAPIView(APIView):
     permission_classes = [AllowAny]
 
-    @swagger_auto_schema(request_body=RegisterSerializer)
+    @swagger_auto_schema(request_body=RegisterSerializer, operation_description='''
+                                                                                request:
+                                                                                    is_staff: admin페이지의 접근 권한 여부
+                                                                                    battalion_id: 부대코드(4자)
+                                                                                    permission: 0 일반사용자, 1 수송 관리자, 2 운전병
+                                                                                response:
+                                                                                    user: 생성된 유저 정보
+                                                                                    token: authentication token
+                                                                                ''')
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
@@ -48,6 +63,14 @@ class AuthView(APIView):
             'login_id': openapi.Parameter('login_id', openapi.IN_BODY, type=openapi.TYPE_STRING),
             'password': openapi.Parameter('password', openapi.IN_BODY, type=openapi.TYPE_STRING)
         },
+        operation_description='''
+            request:
+                login_id: 로그인 id
+                password: 비밀번호
+            response:
+                user: 생성된 유저 정보
+                token: authentication token
+            '''
     ))
     def post(self, request):
         user = authenticate(
@@ -82,7 +105,13 @@ class LogoutView(APIView):
           properties={
               'refresh_token': openapi.Parameter('refresh_token', openapi.IN_BODY, type=openapi.TYPE_STRING)
         },
-    ),)
+    ),
+    operation_description='''
+        request:
+            refresh_token
+        response:
+            type: only status
+        ''')
     def post(self, request):
         try:
             refresh_token = request.data["refresh_token"]
