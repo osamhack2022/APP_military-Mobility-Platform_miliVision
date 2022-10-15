@@ -120,7 +120,7 @@ class _SafetyCheckListSetState extends State<SafetyCheckListSet> {
               ),
               Padding(
                 padding: EdgeInsets.only(left: 10.0),
-                child: Text(context.watch<OperationInfoProvider>().safetyCheck, style: TextStyle(fontSize: 22.5, fontWeight: FontWeight.bold)),
+                child: Text('안전 점검표', style: TextStyle(fontSize: 22.5, fontWeight: FontWeight.bold)),
               ),
               const Padding(
                   padding: EdgeInsets.only(bottom: 10.0)
