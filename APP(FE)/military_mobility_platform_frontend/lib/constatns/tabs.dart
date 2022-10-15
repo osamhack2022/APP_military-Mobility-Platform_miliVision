@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:military_mobility_platform_frontend/provider/drive_info.dart';
-import 'package:military_mobility_platform_frontend/service/snackbar.dart';
 import 'package:military_mobility_platform_frontend/widgets/action_bubble.dart';
 import 'package:military_mobility_platform_frontend/widgets/drive/drive.dart';
 import 'package:military_mobility_platform_frontend/model/tab.dart';
@@ -27,7 +25,7 @@ final kTabs = [
       name: 'request',
       builder: () => const RequestTab(),
       appbar: const AppBarVO(title: '배차신청'),
-      navBarItem: const NavBarItemVO(label: '배차신청', icon: Icons.info)),
+      navBarItem: const NavBarItemVO(label: '배차신청')),
   TabVO(
     name: 'select mobility',
     appbar: AppBarVO(
@@ -44,7 +42,7 @@ final kTabs = [
       name: 'list',
       builder: () => const ListTab(),
       appbar: const AppBarVO(title: '배차확인'),
-      navBarItem: const NavBarItemVO(label: '배차확인', icon: Icons.info)),
+      navBarItem: const NavBarItemVO(label: '배차확인')),
   TabVO(
       name: 'detailed info',
       appbar: AppBarVO(
@@ -63,11 +61,9 @@ final kTabs = [
   TabVO(
       name: 'drive',
       builder: () => const DriveTab(),
-      appbar: const AppBarVO(title: '운행시작'),
-      navBarItem: const NavBarItemVO(label: '운행시작', icon: Icons.info)),
+      appbar: const AppBarVO(title: '운행시작')),
   TabVO(
       name: 'manage',
       builder: () => const ManageTab(),
-      appbar: const AppBarVO(title: '차량관리'),
-      navBarItem: const NavBarItemVO(label: '차량관리', icon: Icons.info)),
+      appbar: const AppBarVO(title: '차량관리')),
 ];

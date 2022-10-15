@@ -31,6 +31,12 @@ class ActionBubbleState extends State<ActionBubble>
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textStyle = GoogleFonts.roboto(
@@ -98,19 +104,13 @@ class ActionBubbleState extends State<ActionBubble>
 
   void _startDrive(BuildContext context) async {
     try {
-      final driveInfoProvider =
-          Provider.of<DriveInfoProvider>(context, listen: false);
       final navigationProvider =
           Provider.of<NavigationProvider>(context, listen: false);
-      await driveInfoProvider.startDriveMock();
       navigationProvider.animateToTabWithName('drive');
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Snackbar(context).showInfo('운행을 시작합니다.');
-      });
     } catch (exception) {
       print(exception.toString());
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Snackbar(context).showError('운행을 시작할 수 없습니다.');
+        Snackbar(context).showError('운행탭으로 이동할 수 없습니다.');
       });
     }
     _animationController.reverse();

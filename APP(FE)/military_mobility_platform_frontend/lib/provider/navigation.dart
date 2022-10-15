@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:military_mobility_platform_frontend/constatns/tabs.dart';
 import 'package:military_mobility_platform_frontend/model/tab.dart';
 
@@ -17,10 +18,16 @@ class NavigationProvider extends ChangeNotifier {
       kTabs.where((element) => element.navBarItem != null).toList();
 
   List<BottomNavigationBarItem> get navigationBarOptions => navBarItemTabs
-      .map((e) => BottomNavigationBarItem(
-            icon: Icon(e.navBarItem!.icon),
-            label: e.navBarItem!.label,
-          ))
+      .asMap()
+      .entries
+      .map((entry) => BottomNavigationBarItem(
+          icon: Text(entry.value.navBarItem!.label,
+              style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.bold,
+                  color: entry.key == _currentNavBarItemIdx
+                      ? Colors.white
+                      : Colors.white60)),
+          label: ''))
       .toList();
 
   AppBar buildCurrentTabAppBar(BuildContext context) => AppBar(
