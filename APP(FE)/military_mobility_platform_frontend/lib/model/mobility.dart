@@ -10,8 +10,10 @@ class MobilityDTO {
       required this.fuelType,
       required this.color});
 
-  final String id;
+  final int id;
+  @JsonKey(name: 'car_model')
   final String type;
+  @JsonKey(name: 'propulsion_type')
   final String fuelType;
   final String color;
 
@@ -21,55 +23,20 @@ class MobilityDTO {
 }
 
 @JsonSerializable()
-class RequestedMobilityDTO {
-  const RequestedMobilityDTO(
-      {required this.mobility,
-      required this.waiting,
-      required this.accepted,
+class GetAvailableMobilitiesReqDTO {
+  const GetAvailableMobilitiesReqDTO(
+      {required this.passengers,
       required this.departureTime,
       required this.arrivalTime});
 
-  final MobilityDTO mobility;
-  final bool waiting;
-  final bool accepted;
+  @JsonKey(name: 'followers_num')
+  final int passengers;
+  @JsonKey(name: 'reservation_start')
   final DateTime departureTime;
+  @JsonKey(name: 'reservation_end')
   final DateTime arrivalTime;
 
-  factory RequestedMobilityDTO.fromJson(Map<String, dynamic> json) =>
-      _$RequestedMobilityDTOFromJson(json);
-  Map<String, dynamic> toJson() => _$RequestedMobilityDTOToJson(this);
+  Map<String, dynamic> toJson() => _$GetAvailableMobilitiesReqDTOToJson(this);
 }
 
-@JsonSerializable()
-class MobilityRequestReqDTO {
-  const MobilityRequestReqDTO(
-      {required this.departure,
-      required this.destination,
-      required this.passengers});
-
-  final String departure;
-  final String destination;
-  final int passengers;
-
-  Map<String, dynamic> toJson() => _$MobilityRequestReqDTOToJson(this);
-}
-
-@JsonSerializable()
-class MobilityRequestResDTO {
-  const MobilityRequestResDTO({required this.mobilities});
-
-  final List<MobilityDTO> mobilities;
-
-  factory MobilityRequestResDTO.fromJson(Map<String, dynamic> json) =>
-      _$MobilityRequestResDTOFromJson(json);
-}
-
-@JsonSerializable()
-class RequestedMobilityListResDTO {
-  const RequestedMobilityListResDTO({required this.mobilities});
-
-  final List<RequestedMobilityDTO> mobilities;
-
-  factory RequestedMobilityListResDTO.fromJson(Map<String, dynamic> json) =>
-      _$RequestedMobilityListResDTOFromJson(json);
-}
+typedef GetAvailableMobilitiesResDTO = List<MobilityDTO>;

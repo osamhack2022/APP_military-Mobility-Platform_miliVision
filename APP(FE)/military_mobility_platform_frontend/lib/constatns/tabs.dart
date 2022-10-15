@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:military_mobility_platform_frontend/provider/drive_info.dart';
+import 'package:military_mobility_platform_frontend/service/snackbar.dart';
+import 'package:military_mobility_platform_frontend/widgets/drive/drive.dart';
 import 'package:military_mobility_platform_frontend/model/tab.dart';
-import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
+import 'package:military_mobility_platform_frontend/provider/reservation_list.dart';
 import 'package:military_mobility_platform_frontend/provider/navigation.dart';
-import 'package:military_mobility_platform_frontend/widgets/info/info.dart';
 import 'package:military_mobility_platform_frontend/widgets/list/detailed_info/detailed_info.dart';
 import 'package:military_mobility_platform_frontend/widgets/list/list.dart';
 import 'package:military_mobility_platform_frontend/widgets/manage/manage.dart';
@@ -43,28 +45,48 @@ final kTabs = [
       appbar: const AppBarVO(title: '배차확인'),
       navBarItem: const NavBarItemVO(label: '배차확인', icon: Icons.info)),
   TabVO(
-    name: 'detailed info',
-    appbar: AppBarVO(
-        title: '상세정보',
-        leading: (context) => IconButton(
-            onPressed: () {
-              Provider.of<RequestedMobilityListProvider>(context, listen: false)
-                  .deselect();
-              Provider.of<NavigationProvider>(context, listen: false)
-                  .animateToTabWithName('list');
-            },
-            icon: const Icon(Icons.arrow_back_ios)),
-        actions: (_) => []),
-    builder: () => const DetailedInfoTab(),
-  ),
+      name: 'detailed info',
+      appbar: AppBarVO(
+          title: '상세정보',
+          leading: (context) => IconButton(
+              onPressed: () {
+                Provider.of<ReservationListProvider>(context, listen: false)
+                    .deselect();
+                Provider.of<NavigationProvider>(context, listen: false)
+                    .animateToTabWithName('list');
+              },
+              icon: const Icon(Icons.arrow_back_ios)),
+          actions: (_) => []),
+      builder: () => const DetailedInfoTab(),
+      floatingButton: (context) => FloatingActionButton(
+          elevation: 2.0,
+          onPressed: (() async {
+            try {
+              final driveInfoProvider =
+                  Provider.of<DriveInfoProvider>(context, listen: false);
+              final navigationProvider =
+                  Provider.of<NavigationProvider>(context, listen: false);
+              await driveInfoProvider.startDriveMock();
+              navigationProvider.animateToTabWithName('drive');
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Snackbar(context).showInfo('운행을 시작합니다.');
+              });
+            } catch (exception) {
+              print(exception.toString());
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Snackbar(context).showError('운행을 시작할 수 없습니다.');
+              });
+            }
+          }),
+          child: const Icon(Icons.play_arrow))),
   TabVO(
       name: 'manage',
       builder: () => const ManageTab(),
       appbar: const AppBarVO(title: '차량관리'),
       navBarItem: const NavBarItemVO(label: '차량관리', icon: Icons.info)),
   TabVO(
-      name: 'info',
-      builder: () => const InfoTab(),
-      appbar: const AppBarVO(title: '내 정보'),
-      navBarItem: const NavBarItemVO(label: '내 정보', icon: Icons.info)),
+      name: 'drive',
+      builder: () => const DriveTab(),
+      appbar: const AppBarVO(title: '운행시작'),
+      navBarItem: const NavBarItemVO(label: '운행시작', icon: Icons.info)),
 ];

@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:military_mobility_platform_frontend/model/mobility.dart';
-import 'package:military_mobility_platform_frontend/provider/mobility_list.dart';
+import 'package:military_mobility_platform_frontend/model/reservation.dart';
+import 'package:military_mobility_platform_frontend/provider/reservation_list.dart';
 import 'package:military_mobility_platform_frontend/provider/navigation.dart';
 import 'package:military_mobility_platform_frontend/service/mobility_assets.dart';
 import 'package:military_mobility_platform_frontend/widgets/list/cancle_dialog.dart';
 import 'package:provider/provider.dart';
 
 class RequestedMobilityCard extends StatelessWidget {
-  final RequestedMobilityDTO requestedMobility;
+  final ReservationDTO reservation;
   final int index;
-  const RequestedMobilityCard(this.requestedMobility, this.index, {super.key});
+  const RequestedMobilityCard(this.reservation, this.index, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    final mobility = reservation.mobility;
     return Card(
         elevation: 3.0,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           _buildRequestStatusSection(context),
-          Image(
-              image: MobilityAssets.getMobilityImage(
-                  requestedMobility.mobility.type)),
+          Image(image: MobilityAssets.getMobilityImage(mobility.type)),
           _buildInfoSection(context),
           _buildButtonSection(context),
         ]));
@@ -43,9 +42,9 @@ class RequestedMobilityCard extends StatelessWidget {
 
   Widget _buildAcceptStatusSection() {
     Widget acceptStatusText;
-    if (requestedMobility.waiting) {
+    if (reservation.waiting) {
       acceptStatusText = const Text('승인대기중');
-    } else if (requestedMobility.accepted) {
+    } else if (reservation.accepted) {
       acceptStatusText =
           Text('배차완료', style: GoogleFonts.roboto(color: Colors.blue));
     } else {
@@ -59,23 +58,20 @@ class RequestedMobilityCard extends StatelessWidget {
 
   Widget _buildDateTimeSection(BuildContext context) {
     final theme = Theme.of(context);
-    final departureTime = DateFormat('MM.dd a HH:mm')
-        .format(requestedMobility.departureTime)
-        .toLowerCase();
-    final arrivalTime = DateFormat('MM.dd a HH:mm')
-        .format(requestedMobility.arrivalTime)
-        .toLowerCase();
-    return Text('$departureTime ~ $arrivalTime',
-        style: theme.textTheme.bodySmall);
+    final startTime =
+        DateFormat('MM.dd a HH:mm').format(reservation.startTime).toLowerCase();
+    final endTime =
+        DateFormat('MM.dd a HH:mm').format(reservation.endTime).toLowerCase();
+    return Text('$startTime ~ $endTime', style: theme.textTheme.bodySmall);
   }
 
   Widget _buildInfoSection(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final mobility = requestedMobility.mobility;
+    final mobility = reservation.mobility;
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(mobility.id, style: textTheme.labelMedium),
+          Text(mobility.id.toString(), style: textTheme.labelMedium),
           Text(mobility.type, style: textTheme.labelMedium),
           Text('${mobility.fuelType}|${mobility.color}',
               style: textTheme.labelMedium),
@@ -92,13 +88,12 @@ class RequestedMobilityCard extends StatelessWidget {
                 onPressed: () => showDialog(
                     context: context,
                     barrierDismissible: false,
-                    builder: (context) =>
-                        CancelRequestDialog(requestedMobility)),
+                    builder: (buildContext) => CancelRequestDialog(
+                        reservation: reservation, parentContext: context)),
                 child: const Text('신청취소')),
             TextButton(
                 onPressed: () {
-                  Provider.of<RequestedMobilityListProvider>(context,
-                          listen: false)
+                  Provider.of<ReservationListProvider>(context, listen: false)
                       .select(index);
                   Provider.of<NavigationProvider>(context, listen: false)
                       .animateToTabWithName('detailed info');

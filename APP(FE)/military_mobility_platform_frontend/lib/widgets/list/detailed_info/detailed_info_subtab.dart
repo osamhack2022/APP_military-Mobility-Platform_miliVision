@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:military_mobility_platform_frontend/model/mobility.dart';
+import 'package:military_mobility_platform_frontend/model/reservation.dart';
 import 'package:military_mobility_platform_frontend/widgets/list/detailed_info/mobility_community.dart';
 import 'package:military_mobility_platform_frontend/widgets/list/detailed_info/mobility_manual.dart';
 
 class DetailedInfoSubTab extends StatefulWidget {
-  const DetailedInfoSubTab(this.requestedMobility, {super.key});
-  final RequestedMobilityDTO requestedMobility;
+  const DetailedInfoSubTab(this.reservation, {super.key});
+  final ReservationDTO reservation;
 
   @override
   DetailedInfoSubTabState createState() => DetailedInfoSubTabState();
@@ -46,8 +46,12 @@ class DetailedInfoSubTabState extends State<DetailedInfoSubTab>
       ),
       Expanded(
           child: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: _tabController,
-        children: const [MobilityManual(), MobilityCommunity()],
+        children: [
+          MobilityManual(widget.reservation.mobility),
+          const MobilityCommunity()
+        ],
       ))
     ]));
   }

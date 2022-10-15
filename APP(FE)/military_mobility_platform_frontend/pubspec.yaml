@@ -40,10 +40,14 @@ dependencies:
   google_fonts: ^3.0.1
   shared_preferences: ^2.0.15
   json_serializable: ^6.4.1
-  http: ^0.13.5
   intl: ^0.17.0
   flutter_datetime_picker: ^1.5.1
   fluttertoast: ^8.0.9
+  retrofit: ^3.3.1
+  dio: ^4.0.6
+  retrofit_generator: ^4.2.0
+  flutter_markdown: ^0.6.12
+  flutter_polyline_points: ^1.0.0
   flutter_svg: ^1.1.5
   google_maps_flutter: ^2.2.1
   google_maps_flutter_web: ^0.4.0+3
@@ -53,9 +57,6 @@ dependencies:
   latlong2: ^0.8.1
   image_picker: ^0.8.4+4
   location: ^4.4.0
-  
-  
-  
 
 dev_dependencies:
   flutter_test:
@@ -89,6 +90,8 @@ flutter:
     - assets/images/mobility/승합차.png
     - assets/images/mobility/k3.jfif
     - assets/images/mobility/k5.jfif
+    - assets/manual/default.md
+    - assets/images/mobility/두돈반.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
