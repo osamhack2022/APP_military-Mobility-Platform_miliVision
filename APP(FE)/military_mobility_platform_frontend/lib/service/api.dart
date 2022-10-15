@@ -45,6 +45,9 @@ abstract class APIService {
       @Body() OperationDTO dto);
   
   @POST('/incident/incident')
-  Future<AccidentDTO> reportAccident(
+  Future<AccidentDTO> postAccidentReport(
       @Body() AccidentDTO dto);
+  
+  @GET('/incident/incident')
+  Future<AccidentDTO> getAccidentReport();
 }
