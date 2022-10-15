@@ -9,7 +9,7 @@ class OperationDTO {
          this.safety_checklist,
          this.operation_plan});
     
-    final integer reservation_id;
+    final int reservation_id;
     final bool safety_checklist;
     final String operation_plan;
   
