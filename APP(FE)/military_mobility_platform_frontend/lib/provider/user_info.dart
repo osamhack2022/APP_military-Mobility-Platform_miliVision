@@ -9,17 +9,17 @@ class UserInfoProvider extends ChangeNotifier {
   String get userName => _userName;
   String get regiment => _regiment;
 
-  void set UserImage(var userImage) {
+  void userImageSet(var userImage) {
     _userImage = userImage;
     notifyListeners();
   }
 
-  void set UserName(String userName) {
+  void userNameSet(String userName) {
     _userName = userName;
     notifyListeners();
   }
 
-  void set Regiment(String regiment) {
+  void regimentSet(String regiment) {
     _regiment = regiment;
     notifyListeners();
   }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:military_mobility_platform_frontend/service/toast.dart';
+import 'package:military_mobility_platform_frontend/provider/operation_info.dart';
+import 'package:provider/provider.dart';
 
 class VehicleReturn extends StatelessWidget {
   const VehicleReturn({super.key});
@@ -35,6 +38,10 @@ class VehicleReturn extends StatelessWidget {
           )
         ),
         onTap: () {
+          Toast.showSuccessToast('차량 반납 완료');
+          context.read<OperationInfoProvider>().vehicleReturnTrue();
+          //서버에 반납 완료 보내는 코드
+          /*
           showDialog(
             context: context,
             builder: (context) {
@@ -63,9 +70,9 @@ class VehicleReturn extends StatelessWidget {
                 ],
               );
             },
-          );
+          );*/
         },
-    )
+      )
     );
   }
 }

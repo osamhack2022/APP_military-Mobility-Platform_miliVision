@@ -11,6 +11,7 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    restart: always
   db:
     build:
         context: ./db
@@ -26,6 +27,8 @@ services:
     volumes:
       - ./db/data:/var/lib/mysql
       - ./db/data/conf.d:/etc/mysql/conf.d
+    restart: always
+
   redis:
     image: redis:latest
     container_name: Redis
@@ -37,3 +40,5 @@ services:
     ports:
       - "6379:6379"
     command: redis-server /usr/local/etc/redis/redis.conf
+    restart: always
+

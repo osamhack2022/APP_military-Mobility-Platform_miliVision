@@ -59,33 +59,36 @@ class _EmergencyEvacuationRequestSetState extends State<EmergencyEvacuationReque
       child: Scaffold(
         body: Column(
           children: [
-            /*IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              color: Colors.black,
-              iconSize: 15.0,
-              onPressed: () {Navigator.of(context).pop();},
-            ),*/
-            const Padding(
-                padding: EdgeInsets.only(bottom: 100.0)
+            Container(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  color: Colors.black,
+                  iconSize: 15.0,
+                  onPressed: () {Navigator.of(context).pop();},
+                ),
+              ),
             ),
-            Image.network(
-                        'https://www.4pns.com/__FileSave/Board/Work/216/1888022460_ZQky0gOb_EC9D98EBACB4EC82ACEBA0B9EBB680.gif',
-                        width: 300.0,
-                        height: 300.0,
-                        fit: BoxFit.cover,
-                        ),
-            //iamge
-            
             const Padding(
-                padding: EdgeInsets.only(bottom: 10.0)
+              padding: EdgeInsets.only(bottom: 100.0)
+            ),
+            Image.asset(
+              'assets/images/MEDCOM.jpg',
+              width: 100.0,
+              height: 120.0,
+              fit: BoxFit.cover,            
+            ),     
+            const Padding(
+              padding: EdgeInsets.only(bottom: 10.0)
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 30.0),
+              child: Text('Emergency Center', style: TextStyle(fontSize: 30.0))
             ),
             const Padding(
                 padding: EdgeInsets.only(bottom: 30.0),
-                child: Text('Emergency Center', style: TextStyle(fontSize: 30.0))
-            ),
-            const Padding(
-                padding: EdgeInsets.only(bottom: 30.0),
-                child: Text('본 서비스를 이용하기 위해서는 사용자 코드를 입력하세요.', style: TextStyle(fontSize: 13.0))
+                child: Text('본 서비스를 이용하기 위해서는 사용자 코드를 입력하셔야 합니다.', style: TextStyle(fontSize: 13.0))
             ),
             SizedBox(
               width: 300,
