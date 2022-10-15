@@ -8,7 +8,6 @@ import 'package:military_mobility_platform_frontend/widgets/drive/map.dart';
 import 'package:provider/provider.dart';
 
 class DriveTab extends StatelessWidget {
-  static const kZoom = 13.5;
   const DriveTab({super.key});
 
   @override
@@ -49,7 +48,6 @@ class DriveTab extends StatelessWidget {
     final hours = time.inHours.toString().padLeft(2, '0');
     final minutes = time.inMinutes.remainder(60).toString().padLeft(2, '0');
     final seconds = time.inSeconds.remainder(60).toString().padLeft(2, '0');
-    print(seconds);
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       const Text('운행시간'),
       Text("$hours:$minutes:$seconds", style: style)

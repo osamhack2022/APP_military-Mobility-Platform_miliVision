@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/provider/drive_info.dart';
 import 'package:military_mobility_platform_frontend/service/snackbar.dart';
+import 'package:military_mobility_platform_frontend/widgets/action_bubble.dart';
 import 'package:military_mobility_platform_frontend/widgets/drive/drive.dart';
 import 'package:military_mobility_platform_frontend/model/tab.dart';
 import 'package:military_mobility_platform_frontend/provider/reservation_list.dart';
@@ -58,35 +59,15 @@ final kTabs = [
               icon: const Icon(Icons.arrow_back_ios)),
           actions: (_) => []),
       builder: () => const DetailedInfoTab(),
-      floatingButton: (context) => FloatingActionButton(
-          elevation: 2.0,
-          onPressed: (() async {
-            try {
-              final driveInfoProvider =
-                  Provider.of<DriveInfoProvider>(context, listen: false);
-              final navigationProvider =
-                  Provider.of<NavigationProvider>(context, listen: false);
-              await driveInfoProvider.startDriveMock();
-              navigationProvider.animateToTabWithName('drive');
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                Snackbar(context).showInfo('운행을 시작합니다.');
-              });
-            } catch (exception) {
-              print(exception.toString());
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                Snackbar(context).showError('운행을 시작할 수 없습니다.');
-              });
-            }
-          }),
-          child: const Icon(Icons.play_arrow))),
-  TabVO(
-      name: 'manage',
-      builder: () => const ManageTab(),
-      appbar: const AppBarVO(title: '차량관리'),
-      navBarItem: const NavBarItemVO(label: '차량관리', icon: Icons.info)),
+      floatingButton: (context) => const ActionBubble()),
   TabVO(
       name: 'drive',
       builder: () => const DriveTab(),
       appbar: const AppBarVO(title: '운행시작'),
       navBarItem: const NavBarItemVO(label: '운행시작', icon: Icons.info)),
+  TabVO(
+      name: 'manage',
+      builder: () => const ManageTab(),
+      appbar: const AppBarVO(title: '차량관리'),
+      navBarItem: const NavBarItemVO(label: '차량관리', icon: Icons.info)),
 ];

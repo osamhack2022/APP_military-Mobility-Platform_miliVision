@@ -13,7 +13,7 @@ class DriveMap extends StatefulWidget {
 }
 
 class DriveMapState extends State<DriveMap> {
-  static const kZoom = 13.5;
+  static const kZoom = 17.0;
   LatLng? location;
   final Completer<GoogleMapController> _controller = Completer();
 
