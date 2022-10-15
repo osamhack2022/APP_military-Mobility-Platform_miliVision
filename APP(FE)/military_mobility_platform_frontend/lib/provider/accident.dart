@@ -1,4 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:military_mobility_platform_frontend/model/accident.dart';
+import 'package:military_mobility_platform_frontend/model/mobility.dart';
+import 'package:military_mobility_platform_frontend/service/api.dart';
 
 class AccidentProvider extends ChangeNotifier {
   String _accidentType = "";
@@ -51,4 +55,19 @@ class AccidentProvider extends ChangeNotifier {
     _recoveryTeamRequestNote = recoveryTeamRequestNote;
     notifyListeners();
   }
+  
+  Future<AccidentDTO> reportAccident(
+      Dio authClient, MobilityDTO mobility) async {
+    try {
+      final dto = OperationDTO(
+          car: mobility.id,
+          incident_type: _accidentType,
+          location: _accidentLocation,
+          image: _accidentImage);
+      
+      return APIService(authClient).reportAccident(dto);
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
+  
 }
