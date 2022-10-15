@@ -58,7 +58,7 @@ class OperationInfoProvider extends ChangeNotifier {
     try {
       final dto = OperationDTO(
           reservation_id: reservation.id,
-          safety_checklist: _safetyCheckBool,);
+          safety_checklist: _safetyCheckBool);
       
       return APIService(authClient).confirmSafetyCheck(dto);
     } catch (exception) {
@@ -70,9 +70,20 @@ class OperationInfoProvider extends ChangeNotifier {
     try {
       final dto = OperationDTO(
           reservation_id: reservation.id,
-          operation_plan: _operationPlan,);
+          operation_plan: _operationPlan);
       
       return APIService(authClient).makeOperationPlan(dto);
+    } catch (exception) {
+      return Future.error(exception.toString());
+    }
+    
+    Future<OperationDTO> returnVehicle(
+      Dio authClient, ReservationDTO reservation) async {
+    try {
+      final dto = OperationDTO(
+          reservation_id: reservation.id);
+      
+      return APIService(authClient).returnVehicle(dto);
     } catch (exception) {
       return Future.error(exception.toString());
     }
