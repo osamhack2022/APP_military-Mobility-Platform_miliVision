@@ -14,18 +14,7 @@ from .serializers import *
 # Create your views here.
 
 class history(APIView):
-    get_params = [
-        openapi.Parameter(
-            "user_id",
-            openapi.IN_QUERY,
-            description="user_id",
-            type=openapi.TYPE_STRING,
-            default="",
-        ),
-    ]
-    
-    @swagger_auto_schema(manual_parameters=get_params, 
-                         operation_summary='주행 기록 얻기', 
+    @swagger_auto_schema(operation_summary='주행 기록 얻기', 
                          operation_description='''
                                             ---request---
                                                없음 : 요청한 토큰의 이용자 객체를 받아옴
