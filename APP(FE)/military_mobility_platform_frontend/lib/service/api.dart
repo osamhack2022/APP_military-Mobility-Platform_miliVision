@@ -31,4 +31,31 @@ abstract class APIService {
 
   @DELETE('/tms/reservation')
   Future<void> deleteReservation(@Query('reservation_id') int reservationID);
+  
+  @POST('/tms/safety_checklist')
+  Future<OperationDTO> confirmSafetyCheck(
+      @Body() OperationDTO dto);
+  
+  @POST('/tms/add_operation_plan')
+  Future<OperationDTO> makeOperationPlan(
+      @Body() OperationDTO dto);
+  
+  @GET('/tms/finishing_using')
+  Future<OperationDTO> returnVehicle(
+      @Body() OperationDTO dto);
+  
+  @POST('/incident/incident')
+  Future<AccidentDTO> postAccidentReport(
+      @Body() AccidentDTO dto);
+  
+  @GET('/incident/incident')
+  Future<AccidentDTO> getAccidentReport();
+  
+  @POST('/incident/rescue')
+  Future<RecoveryTeamDTO> postRecoveryTeam(
+      @Body() RecoveryTeamDTO dto);
+  
+  @GET('/incident/rescue')
+  Future<RecoveryTeamDTO> getRecoveryTeam();
+
 }
