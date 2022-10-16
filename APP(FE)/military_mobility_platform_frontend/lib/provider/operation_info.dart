@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:military_mobility_platform_frontend/model/operation.dart';
 import 'package:military_mobility_platform_frontend/model/mobility.dart';
+import 'package:military_mobility_platform_frontend/model/reservation.dart';
+import 'package:military_mobility_platform_frontend/model/operation.dart';
+
 import 'package:military_mobility_platform_frontend/service/api.dart';
 
 class OperationInfoProvider extends ChangeNotifier {
   String _safetyCheck = "False";
-  bool _safetyCheckBool = False;
+  bool _safetyCheckBool = false;
   String _driverInfo = "";
   String _commanderInfo = "";
   String _operationPurpose = "";
@@ -23,7 +25,7 @@ class OperationInfoProvider extends ChangeNotifier {
 
   void safetyCheckTrue() {
     _safetyCheck = "True";
-    _safetyCheckBool = True;
+    _safetyCheckBool = true;
     notifyListeners();
   }
 
@@ -53,8 +55,7 @@ class OperationInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
   
-  Future<OperationDTO> confirmSafetyCheck(
-      Dio authClient, ReservationDTO reservation) async {
+  Future<OperationDTO> confirmSafetyCheck(Dio authClient, ReservationDTO reservation) async {
     try {
       final dto = OperationDTO(
           reservation_id: reservation.id,
@@ -64,9 +65,9 @@ class OperationInfoProvider extends ChangeNotifier {
     } catch (exception) {
       return Future.error(exception.toString());
     }
+  }
     
-  Future<OperationDTO> makeOperationPlan(
-      Dio authClient, ReservationDTO reservation) async {
+  Future<OperationDTO> makeOperationPlan(Dio authClient, ReservationDTO reservation) async {
     try {
       final dto = OperationDTO(
           reservation_id: reservation.id,
@@ -76,9 +77,9 @@ class OperationInfoProvider extends ChangeNotifier {
     } catch (exception) {
       return Future.error(exception.toString());
     }
+  }
     
-    Future<OperationDTO> returnVehicle(
-      Dio authClient, ReservationDTO reservation) async {
+  Future<OperationDTO> returnVehicle(Dio authClient, ReservationDTO reservation) async {
     try {
       final dto = OperationDTO(
           reservation_id: reservation.id);
@@ -87,4 +88,5 @@ class OperationInfoProvider extends ChangeNotifier {
     } catch (exception) {
       return Future.error(exception.toString());
     }
+  }
 }

@@ -4,6 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:military_mobility_platform_frontend/model/mobility.dart';
 import 'package:military_mobility_platform_frontend/model/reservation.dart';
 import 'package:military_mobility_platform_frontend/model/user.dart';
+import 'package:military_mobility_platform_frontend/model/operation.dart';
+import 'package:military_mobility_platform_frontend/model/accident.dart';
+import 'package:military_mobility_platform_frontend/model/recovery_team.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api.g.dart';

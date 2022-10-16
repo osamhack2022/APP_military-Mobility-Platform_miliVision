@@ -7,12 +7,12 @@ class RecoveryTeamDTO {
     const RecoveryTeamDTO(
         {required this.car,
          required this.location,
-         required this.servide_needs,
+         required this.service_needs,
          required this.note});
     
     final int car;
     final String location;
-    final String servide_needs;
+    final String service_needs;
     final String note;
 
   

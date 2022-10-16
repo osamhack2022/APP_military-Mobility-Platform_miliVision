@@ -6,9 +6,9 @@ part 'accident.g.dart';
 class AccidentDTO {
     const AccidentDTO(
         {required this.car,
-         this.incident_type,
+         required this.incident_type,
          required this.location,
-         this.image
+         required this.image
          });
     
     final int car;
@@ -20,3 +20,6 @@ class AccidentDTO {
       _$AccidentDTOFromJson(json);
   Map<String, dynamic> toJson() => _$AccidentDTOToJson(this);
 }
+
+typedef GetAccidentRepDTO = List<AccidentDTO>;
+

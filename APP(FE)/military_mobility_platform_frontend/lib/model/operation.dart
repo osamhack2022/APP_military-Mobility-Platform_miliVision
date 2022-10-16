@@ -5,9 +5,9 @@ part 'operation.g.dart';
 @JsonSerializable()
 class OperationDTO {
     const OperationDTO(
-        {this.reservation_id,
-         this.safety_checklist,
-         this.operation_plan});
+        {required this.reservation_id,
+         required this.safety_checklist,
+         required this.operation_plan});
     
     final int reservation_id;
     final bool safety_checklist;

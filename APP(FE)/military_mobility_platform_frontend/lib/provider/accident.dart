@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:military_mobility_platform_frontend/model/accident.dart';
 import 'package:military_mobility_platform_frontend/model/recovery_team.dart';
+import 'package:military_mobility_platform_frontend/model/reservation.dart';
 import 'package:military_mobility_platform_frontend/model/mobility.dart';
 import 'package:military_mobility_platform_frontend/service/api.dart';
 
@@ -59,8 +60,7 @@ class AccidentProvider extends ChangeNotifier {
     notifyListeners();
   }
   
-  Future<AccidentDTO> postAccidentReport(
-      Dio authClient, MobilityDTO mobility) async {
+  Future<AccidentDTO> postAccidentReport(Dio authClient, MobilityDTO mobility) async {
     try {
       final dto = AccidentDTO(
           car: mobility.id,
@@ -72,6 +72,7 @@ class AccidentProvider extends ChangeNotifier {
     } catch (exception) {
       return Future.error(exception.toString());
     }
+  }
     
   Future<bool> getAccidentReport(Dio authClient) async {
     try {
@@ -84,8 +85,7 @@ class AccidentProvider extends ChangeNotifier {
     }
   }
     
-  Future<RecoveryTeamDTO> postRecoveryTeam(
-      Dio authClient, MobilityDTO mobility) async {
+  Future<RecoveryTeamDTO> postRecoveryTeam(Dio authClient, MobilityDTO mobility) async {
     try {
       final dto = RecoveryTeamDTO(
           car: mobility.id,
@@ -97,6 +97,7 @@ class AccidentProvider extends ChangeNotifier {
     } catch (exception) {
       return Future.error(exception.toString());
     }
+  }
     
   Future<bool> getRecoveryTeam(Dio authClient) async {
     try {
