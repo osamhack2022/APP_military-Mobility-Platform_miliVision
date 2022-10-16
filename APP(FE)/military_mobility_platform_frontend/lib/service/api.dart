@@ -35,4 +35,7 @@ abstract class APIService {
 
   @POST('/mileage/history')
   Future<HistoryDTO> makeHistory(@Body() MakeHistoryReqDTO dto);
+
+  @GET('/mileage/history')
+  Future<GetHistoriesResDTO> getHistories();
 }

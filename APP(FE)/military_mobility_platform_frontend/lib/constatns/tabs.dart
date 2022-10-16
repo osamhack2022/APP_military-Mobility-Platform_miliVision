@@ -4,6 +4,7 @@ import 'package:military_mobility_platform_frontend/widgets/drive/drive.dart';
 import 'package:military_mobility_platform_frontend/model/tab.dart';
 import 'package:military_mobility_platform_frontend/provider/reservation_list.dart';
 import 'package:military_mobility_platform_frontend/provider/navigation.dart';
+import 'package:military_mobility_platform_frontend/widgets/history_list/history_list.dart';
 import 'package:military_mobility_platform_frontend/widgets/list/detailed_info/detailed_info.dart';
 import 'package:military_mobility_platform_frontend/widgets/list/list.dart';
 import 'package:military_mobility_platform_frontend/widgets/manage/manage.dart';
@@ -58,6 +59,11 @@ final kTabs = [
           actions: (_) => []),
       builder: () => const DetailedInfoTab(),
       floatingButton: (context) => const ActionBubble()),
+  TabVO(
+      name: 'history',
+      builder: () => const HistoryListTab(),
+      appbar: const AppBarVO(title: '운행이력'),
+      navBarItem: const NavBarItemVO(label: '운행이력')),
   TabVO(
       name: 'drive',
       builder: () => const DriveTab(),
