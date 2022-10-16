@@ -1,28 +1,34 @@
 import 'dart:async';
-import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:military_mobility_platform_frontend/model/mileage.dart';
 import 'package:military_mobility_platform_frontend/model/reservation.dart';
+import 'package:military_mobility_platform_frontend/service/api.dart';
 import 'package:military_mobility_platform_frontend/service/distance.dart';
 
 class DriveInfoProvider extends ChangeNotifier {
   ReservationDTO? _reservation;
   Location? _location;
-  StreamController<LatLng>? _locationStreamController;
+  final StreamController<LatLng> _locationStreamController =
+      StreamController<LatLng>();
   List<LatLng> _polyLineCoordinates = [];
   LatLng? _currentLocation;
   DateTime? _startTime;
   double _totalDistance = 0.0;
+  Timer? _mockTimer;
+  Timer? _timeTimer;
 
   ReservationDTO? get reservation => _reservation;
   bool get selectionExists => _reservation != null;
   bool get isDriving => _location != null;
-  Stream<LatLng>? get locationStream => _locationStreamController!.stream;
-  Duration? get drivingTime =>
-      _startTime != null ? DateTime.now().difference(_startTime!) : null;
-  double? get drivingDistance => _totalDistance;
+  Stream<LatLng> get locationStream => _locationStreamController.stream;
+  Duration get drivingTime => _startTime != null
+      ? DateTime.now().difference(_startTime!)
+      : const Duration(seconds: 0);
+  double get drivingDistance => _totalDistance;
   List<LatLng> get polyLineCoordinates => _polyLineCoordinates;
   LatLng? get currentLocation => _currentLocation;
 
@@ -45,6 +51,31 @@ class DriveInfoProvider extends ChangeNotifier {
     _location!.onLocationChanged.listen((newLocation) {
       _updateLocation(LatLng(newLocation.latitude!, newLocation.longitude!));
     });
+  }
+
+  Future<void> stopDrive(Dio authClient) async {
+    if (_mockTimer != null) {
+      _mockTimer!.cancel();
+    }
+    if (_timeTimer != null) {
+      _timeTimer!.cancel();
+    }
+    _location = null;
+    notifyListeners();
+
+    try {
+      final reservation = _reservation!;
+      // final response = await APIService(authClient).makeHistory(
+      //     MakeHistoryReqDTO(
+      //         carID: reservation.mobility.id,
+      //         departure: reservation.departure,
+      //         destination: reservation.destination,
+      //         datetime: DateTime.now(),
+      //         totalTime: drivingTime.inSeconds,
+      //         totalRange: (drivingDistance * 1000.0).round()));
+    } catch (exception) {
+      return Future.error(exception);
+    }
   }
 
   Future<void> startDriveMock() async {
@@ -89,15 +120,15 @@ class DriveInfoProvider extends ChangeNotifier {
       120,
       150,
       1000,
-    ].map((e) => e * 0.3).toList();
+    ].map((e) => e * 1.0).toList();
     _initDataToStartDrive();
 
     const interval = 0.5;
     var baseTime = 0;
     var idx = 0;
-    Timer.periodic(Duration(milliseconds: (1000.0 * interval).round()),
-        (timer) {
-      final elapsedTime = (drivingTime!.inMilliseconds - baseTime) / 1000.0;
+    _mockTimer = Timer.periodic(
+        Duration(milliseconds: (1000.0 * interval).round()), (timer) {
+      final elapsedTime = (drivingTime.inMilliseconds - baseTime) / 1000.0;
       var nextIdx = (idx + 1) % mockTimes.length;
       if (elapsedTime >= mockTimes[nextIdx]) {
         idx = nextIdx;
@@ -105,7 +136,7 @@ class DriveInfoProvider extends ChangeNotifier {
         if (nextIdx == 0) {
           idx = 0;
           nextIdx = (idx + 1) % mockTimes.length;
-          baseTime = drivingTime!.inMilliseconds;
+          baseTime = drivingTime.inMilliseconds;
         }
       }
 
@@ -121,12 +152,11 @@ class DriveInfoProvider extends ChangeNotifier {
 
   void _initDataToStartDrive() {
     _location = Location();
-    _locationStreamController = StreamController<LatLng>();
     _polyLineCoordinates = [];
     _startTime = DateTime.now();
     _totalDistance = 0.0;
 
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       notifyListeners();
     });
   }
