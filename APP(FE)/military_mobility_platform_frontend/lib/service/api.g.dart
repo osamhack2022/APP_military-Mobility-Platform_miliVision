@@ -165,14 +165,14 @@ class _APIService implements APIService {
   }
 
   @override
-  Future<OperationDTO> confirmSafetyCheck(dto) async {
+  Future<SafetyCheckDTO> confirmSafetyCheck(dto) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(dto.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<OperationDTO>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<SafetyCheckDTO>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -184,19 +184,19 @@ class _APIService implements APIService {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = OperationDTO.fromJson(_result.data!);
+    final value = SafetyCheckDTO.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<OperationDTO> makeOperationPlan(dto) async {
+  Future<OperationPlanDTO> makeOperationPlan(dto) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(dto.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<OperationDTO>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<OperationPlanDTO>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -208,19 +208,19 @@ class _APIService implements APIService {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = OperationDTO.fromJson(_result.data!);
+    final value = OperationPlanDTO.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<OperationDTO> returnVehicle(dto) async {
+  Future<OperationFinishDTO> returnVehicle(dto) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(dto.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<OperationDTO>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<OperationFinishDTO>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -232,42 +232,18 @@ class _APIService implements APIService {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = OperationDTO.fromJson(_result.data!);
+    final value = OperationFinishDTO.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<AccidentDTO> postAccidentReport(dto) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(dto.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<AccidentDTO>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/incident/incident',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AccidentDTO.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
-  Future<AccidentDTO> getAccidentReport() async {
+  Future<List<AccidentDTO>> getAccidentReport() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<AccidentDTO>(Options(
+        .fetch<List<dynamic>>(_setStreamType<List<AccidentDTO>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -279,42 +255,44 @@ class _APIService implements APIService {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AccidentDTO.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) => AccidentDTO.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 
   @override
-  Future<RecoveryTeamDTO> postRecoveryTeam(dto) async {
+  Future<PostAccidentRepDTO> postAccidentReport(dto) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(dto.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<RecoveryTeamDTO>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<PostAccidentRepDTO>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/incident/rescue',
+              '/incident/incident',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = RecoveryTeamDTO.fromJson(_result.data!);
+    final value = PostAccidentRepDTO.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<RecoveryTeamDTO> getRecoveryTeam() async {
+  Future<List<RecoveryTeamDTO>> getRecoveryTeam() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<RecoveryTeamDTO>(Options(
+        .fetch<List<dynamic>>(_setStreamType<List<RecoveryTeamDTO>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -326,7 +304,33 @@ class _APIService implements APIService {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = RecoveryTeamDTO.fromJson(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) => RecoveryTeamDTO.fromJson(i as Map<String, dynamic>))
+        .toList();
+    return value;
+  }
+
+  @override
+  Future<PostRecoveryTeamDTO> postRecoveryTeam(dto) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(dto.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<PostRecoveryTeamDTO>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/incident/rescue',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = PostRecoveryTeamDTO.fromJson(_result.data!);
     return value;
   }
 

@@ -55,9 +55,9 @@ class OperationInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
   
-  Future<OperationDTO> confirmSafetyCheck(Dio authClient, ReservationDTO reservation) async {
+  Future<SafetyCheckDTO> confirmSafetyCheck(Dio authClient, ReservationDTO reservation) async {
     try {
-      final dto = OperationDTO(
+      final dto = SafetyCheckDTO(
           reservation_id: reservation.id,
           safety_checklist: _safetyCheckBool);
       
@@ -67,9 +67,9 @@ class OperationInfoProvider extends ChangeNotifier {
     }
   }
     
-  Future<OperationDTO> makeOperationPlan(Dio authClient, ReservationDTO reservation) async {
+  Future<OperationPlanDTO> makeOperationPlan(Dio authClient, ReservationDTO reservation) async {
     try {
-      final dto = OperationDTO(
+      final dto = OperationPlanDTO(
           reservation_id: reservation.id,
           operation_plan: _operationPlan);
       
@@ -79,9 +79,9 @@ class OperationInfoProvider extends ChangeNotifier {
     }
   }
     
-  Future<OperationDTO> returnVehicle(Dio authClient, ReservationDTO reservation) async {
+  Future<OperationFinishDTO> returnVehicle(Dio authClient, ReservationDTO reservation) async {
     try {
-      final dto = OperationDTO(
+      final dto = OperationFinishDTO(
           reservation_id: reservation.id);
       
       return APIService(authClient).returnVehicle(dto);

@@ -8,19 +8,27 @@ import 'package:military_mobility_platform_frontend/service/api.dart';
 
 class AccidentProvider extends ChangeNotifier {
   List<AccidentDTO> _accidentReports = [];
+  int? _selectedIdxACC;
   String _accidentType = "";
   String _accidentLocation = "";
   var _accidentImage = null;
 
   List<RecoveryTeamDTO> _recoveryTeamReports = [];
+  int? _selectedIdxREC;
   String _recoveryTeamRequestLocation = "";
   String _recoveryTeamRequestService = "";
   String _recoveryTeamRequestNote = "";
 
+  List<AccidentDTO> get accidentReports => _accidentReports;
+  AccidentDTO? get selectedAccidentReport =>
+      _selectedIdxACC != null ? _accidentReports[_selectedIdxACC!] : null;
   String get accidentType => _accidentType;
   String get accidentLocation => _accidentLocation;
   get accidentImage => _accidentImage;
 
+  List<RecoveryTeamDTO> get recoveryTeamReports => _recoveryTeamReports;
+  RecoveryTeamDTO? get selectedRecoveryTeamReport =>
+      _selectedIdxREC != null ? _recoveryTeamReports[_selectedIdxREC!] : null;
   String get recoveryTeamRequestLocation => _recoveryTeamRequestLocation;
   String get recoveryTeamRequestService => _recoveryTeamRequestService;
   String get recoveryTeamRequestNote => _recoveryTeamRequestNote;
@@ -60,9 +68,9 @@ class AccidentProvider extends ChangeNotifier {
     notifyListeners();
   }
   
-  Future<AccidentDTO> postAccidentReport(Dio authClient, MobilityDTO mobility) async {
+  Future<PostAccidentRepDTO> postAccidentReport(Dio authClient, MobilityDTO mobility) async {
     try {
-      final dto = AccidentDTO(
+      final dto = PostAccidentRepReqDTO(
           car: mobility.id,
           incident_type: _accidentType,
           location: _accidentLocation,
@@ -85,9 +93,9 @@ class AccidentProvider extends ChangeNotifier {
     }
   }
     
-  Future<RecoveryTeamDTO> postRecoveryTeam(Dio authClient, MobilityDTO mobility) async {
+  Future<PostRecoveryTeamDTO> postRecoveryTeam(Dio authClient, MobilityDTO mobility) async {
     try {
-      final dto = RecoveryTeamDTO(
+      final dto = PostRecoveryTeamReqDTO(
           car: mobility.id,
           location: _recoveryTeamRequestLocation,
           service_needs: _recoveryTeamRequestService,
