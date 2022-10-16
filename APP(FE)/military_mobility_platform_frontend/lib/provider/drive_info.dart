@@ -65,14 +65,13 @@ class DriveInfoProvider extends ChangeNotifier {
 
     try {
       final reservation = _reservation!;
-      // final response = await APIService(authClient).makeHistory(
-      //     MakeHistoryReqDTO(
-      //         carID: reservation.mobility.id,
-      //         departure: reservation.departure,
-      //         destination: reservation.destination,
-      //         datetime: DateTime.now(),
-      //         totalTime: drivingTime.inSeconds,
-      //         totalRange: (drivingDistance * 1000.0).round()));
+      await APIService(authClient).makeHistory(MakeHistoryReqDTO(
+          carID: reservation.mobility.id,
+          departure: reservation.departure,
+          destination: reservation.destination,
+          datetime: DateTime.now(),
+          totalTime: drivingTime.inSeconds,
+          totalRange: (drivingDistance * 1000.0).round()));
     } catch (exception) {
       return Future.error(exception);
     }
@@ -166,7 +165,7 @@ class DriveInfoProvider extends ChangeNotifier {
       _totalDistance +=
           Distance.twoPoints(location, _polyLineCoordinates.last).value;
     }
-    _locationStreamController!.add(location);
+    _locationStreamController.add(location);
     _polyLineCoordinates.add(location);
     _currentLocation = location;
     notifyListeners();

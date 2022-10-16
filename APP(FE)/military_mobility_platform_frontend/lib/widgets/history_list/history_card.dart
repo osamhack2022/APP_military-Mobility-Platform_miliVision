@@ -39,9 +39,11 @@ class HistoryCard extends StatelessWidget {
   }
 
   Widget _buildTimeSection() {
-    final timeHour = (history.totalTime / 3600).floor();
-    final timeMin = (history.totalTime / 60).floor();
-    final timeSec = history.totalTime % 60;
+    final timeSec = (history.totalTime % 60).toString().padLeft(2, '0');
+    final timeMin =
+        ((history.totalTime / 60).floor() % 60).toString().padLeft(2, '0');
+    final timeHour =
+        (history.totalTime / 3600).floor().toString().padLeft(2, '0');
     final time = "운행시간: $timeHour:$timeMin:$timeSec";
     return Text(time);
   }
@@ -49,7 +51,7 @@ class HistoryCard extends StatelessWidget {
   Widget _buildRangeSection() {
     final rangeKm = history.totalRange / 1000.0;
     final formatter = NumberFormat('###0.00');
-    final range = "운행거리: ${formatter.format(rangeKm)}";
+    final range = "운행거리: ${formatter.format(rangeKm)}KM";
     return Text(range);
   }
 }
