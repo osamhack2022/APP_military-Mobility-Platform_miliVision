@@ -45,8 +45,8 @@ class DriveTab extends StatelessWidget {
                   } else {
                     try {
                       final authClient = authProvider.authenticatedClient!;
-                      navigationProvider.animateToTabWithName('detailed info');
                       await driveInfoProvider.stopDrive(authClient);
+                      navigationProvider.animateToTabWithName('history');
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         Snackbar(context).showInfo("운행 기록을 추가했습니다.");
                       });
