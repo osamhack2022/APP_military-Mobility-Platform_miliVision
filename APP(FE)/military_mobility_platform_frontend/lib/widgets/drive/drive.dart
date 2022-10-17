@@ -85,7 +85,7 @@ class DriveTab extends StatelessWidget {
   Widget _buildDrivingTime(BuildContext context) {
     final style =
         GoogleFonts.roboto(fontSize: 36.0, fontWeight: FontWeight.bold);
-    final time = Provider.of<DriveInfoProvider>(context).drivingTime!;
+    final time = Provider.of<DriveInfoProvider>(context).drivingTime;
     final hours = time.inHours.toString().padLeft(2, '0');
     final minutes = time.inMinutes.remainder(60).toString().padLeft(2, '0');
     final seconds = time.inSeconds.remainder(60).toString().padLeft(2, '0');
@@ -98,7 +98,7 @@ class DriveTab extends StatelessWidget {
   Widget _buildDrivingDistance(BuildContext context) {
     final style =
         GoogleFonts.roboto(fontSize: 36.0, fontWeight: FontWeight.bold);
-    final distance = Provider.of<DriveInfoProvider>(context).drivingDistance!;
+    final distance = Provider.of<DriveInfoProvider>(context).drivingDistance;
     final formatter = NumberFormat('###0.00');
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       const Text('운행거리'),

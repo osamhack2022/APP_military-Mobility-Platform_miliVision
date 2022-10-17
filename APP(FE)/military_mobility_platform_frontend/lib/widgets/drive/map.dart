@@ -17,7 +17,7 @@ class DriveMapState extends State<DriveMap> {
 
   void loadCurrentLocation(
       DriveInfoProvider provider, GoogleMapController controller) {
-    provider.locationStream!.listen((currentLocation) {
+    provider.locationStream.listen((currentLocation) {
       location = currentLocation;
       controller.animateCamera(
         CameraUpdate.newCameraPosition(
