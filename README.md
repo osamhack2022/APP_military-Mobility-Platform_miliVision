@@ -192,6 +192,10 @@ https://docs.google.com/presentation/d/e/2PACX-1vQ43KBXZZqnEAMP_ddxZRnNsgHBSEi2q
 $ git clone git주소
 $ yarn or npm install
 $ yarn start or npm run start
+
+backend(BE)
+$ cd APP(BE) #APP(BE)폴더로 이동
+$ sudo docker-compose up -d #web, db, redis(캐시 서버) 실행
 ```
 
 [(Back to top)](#목차)
