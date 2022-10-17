@@ -212,6 +212,11 @@ $ sudo docker-compose up -d #web, db, redis(캐시 서버) 실행
     <img src="images/mmp_db.jpg" alt="database 화면">
 </div>
 
+- 시스템 아키텍처
+<div align="center">
+    <img src="images/system_architecture.png" alt="system architecture 화면">
+</div>
+
  - [backend swagger 링크](http://20.214.203.20:8000/swagger)
 <div align="center">
     <img src="images/swagger.PNG" alt="swagger 화면">
