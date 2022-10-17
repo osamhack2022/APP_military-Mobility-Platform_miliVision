@@ -4,6 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:military_mobility_platform_frontend/model/mobility.dart';
 import 'package:military_mobility_platform_frontend/model/reservation.dart';
 import 'package:military_mobility_platform_frontend/model/user.dart';
+import 'package:military_mobility_platform_frontend/model/operation.dart';
+import 'package:military_mobility_platform_frontend/model/accident.dart';
+import 'package:military_mobility_platform_frontend/model/recovery_team.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api.g.dart';
@@ -33,29 +36,29 @@ abstract class APIService {
   Future<void> deleteReservation(@Query('reservation_id') int reservationID);
   
   @POST('/tms/safety_checklist')
-  Future<OperationDTO> confirmSafetyCheck(
-      @Body() OperationDTO dto);
+  Future<SafetyCheckDTO> confirmSafetyCheck(
+      @Body() SafetyCheckDTO dto);
   
   @POST('/tms/add_operation_plan')
-  Future<OperationDTO> makeOperationPlan(
-      @Body() OperationDTO dto);
+  Future<OperationPlanDTO> makeOperationPlan(
+      @Body() OperationPlanDTO dto);
   
   @GET('/tms/finishing_using')
-  Future<OperationDTO> returnVehicle(
-      @Body() OperationDTO dto);
+  Future<OperationFinishDTO> returnVehicle(
+      @Body() OperationFinishDTO dto);
+
+  @GET('/incident/incident')
+  Future<GetAccidentRepDTO> getAccidentReport();
   
   @POST('/incident/incident')
-  Future<AccidentDTO> postAccidentReport(
-      @Body() AccidentDTO dto);
-  
-  @GET('/incident/incident')
-  Future<AccidentDTO> getAccidentReport();
-  
-  @POST('/incident/rescue')
-  Future<RecoveryTeamDTO> postRecoveryTeam(
-      @Body() RecoveryTeamDTO dto);
-  
-  @GET('/incident/rescue')
-  Future<RecoveryTeamDTO> getRecoveryTeam();
+  Future<PostAccidentRepDTO> postAccidentReport(
+      @Body() PostAccidentRepReqDTO dto);
 
+  @GET('/incident/rescue')
+  Future<GetRecoveryTeamDTO> getRecoveryTeam();
+    
+  @POST('/incident/rescue')
+  Future<PostRecoveryTeamDTO> postRecoveryTeam(
+      @Body() PostRecoveryTeamReqDTO dto);
+  
 }
